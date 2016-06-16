@@ -1,0 +1,25 @@
+{
+  "name": "npm-mpv",
+  "version": "0.0.1",
+  "description": "A Node Module for MPV",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/00SteinsGate00/Node-MPV.git"
+  },
+  "keywords": [
+    "MPV",
+    "Audio",
+    "Video",
+    "Stream"
+  ],
+  "author": "Jan Holub",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/00SteinsGate00/Node-MPV/issues"
+  },
+  "homepage": "https://github.com/00SteinsGate00/Node-MPV#readme"
+}
