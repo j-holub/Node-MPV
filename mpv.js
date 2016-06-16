@@ -1,28 +1,39 @@
+// the IPC socket to communicate with mpv
+var socket = require('./ipcConnection');
 
-// Network Sockets
-var net = require('net');
 // Child Process to module to start mpv player
 var spawn = require('child_process').spawn;
 
 
-
 function mpv(){
+
+	// socket file
+	var socketFile = 'mpv.sock';
 
 	// default Arguments
 	// --no-video    ony audio
 	// --input-ipc-server  IPC socket to communicate with mpv
 	//  --idle always run in the background
 	//  -quite  no console prompts. Buffer will overflow otherwise
-	defaultArgs = ['--no-video', '--input-ipc-server=mpv.sock', '--idle', '-quiet'];
+	var defaultArgs = ['--no-video', '--input-ipc-server=' + socketFile, '-idle', '-quiet'];
+
+	// set up socket
+	this.socket = new ipcConnection(socketFile);
 
 	// start mpv instance
-	mpvPlayer = spawn('mpv', defaultArgs);
+	this.mpvPlayer = spawn('mpv', defaultArgs);
 
 	// if mpv crashes restart it again
-	mpvPlayer.on('close', function() {
+	this.mpvPlayer.on('close', function() {
 		console.log("mpv died, restarting...");
-		mpvPlayer = spawn('mpv', defaultArgs);
+		this.mpvPlayer = spawn('mpv', defaultArgs);
+	});
+	
+
+	this.socket.on('message', function(data) {
+		console.log(data.toString());
 	});
 
-
 }
+
+player = new mpv();
