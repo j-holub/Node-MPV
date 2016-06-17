@@ -10,7 +10,11 @@ function mpv(){
 	// status object
 	this.status = {
 		'playing': false,
+		'muted': false,
 	}
+
+	// observed properties
+	this.observed = {};
 
 	// socket file
 	var socketFile = 'mpv.sock';
@@ -56,12 +60,19 @@ function mpv(){
 					this.status.playing = true;
 					console.log("unpause");
 					break;
+				// observed properties
+				case "property-change":
+					this.observed[data.name] = data.data;
+					console.log(`property change ${data.name} ${data.data}`);
+					break;
 				default:
 					console.log(data);
 			}
 			
 		}
-		console.log(this.status);
+		else{
+			console.log("Other Event: " + JSON.stringify(data));
+		}
 
 	}.bind(this));
 
@@ -97,5 +108,35 @@ mpv.prototype = {
 	// stop
 	stop: function() {
 		this.socket.command("stop", []);
+	},
+	// volume control values 0-100
+	volume: function(value) {
+		this.socket.setProperty("volume", value);
+	},
+	// toggles mute
+	mute: function() {
+		if(this.status.muted){
+			this.socket.setProperty("mute", false);
+		}
+		else{
+			this.socket.setProperty("mute", true);
+		}
+		this.status.muted = !this.status.muted;
+	},
+	// observe a property for changes
+	// will be added to event for property changes
+	observeProperty: function(property, id) {
+		this.socket.command("observe_property", [id, property]);
+	},
+	// stop observing a property
+	unobserveProperty: function(id) {
+		this.socket.command("unobserve_property", [id]);
 	}
 }
+
+player = new mpv();
+
+player.loadStream('https://www.youtube.com/watch?v=PJ7E40Ec5ec');
+
+player.observeProperty("volume", 1);
+player.observeProperty("mute", 1);
