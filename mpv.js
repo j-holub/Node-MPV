@@ -24,7 +24,7 @@ function mpv(){
 	// --input-ipc-server  IPC socket to communicate with mpv
 	//  --idle always run in the background
 	//  -quite  no console prompts. Buffer will overflow otherwise
-	var defaultArgs = ['--no-video', '--input-ipc-server=' + socketFile, '-idle', '-quiet'];
+	var defaultArgs = ['--no-video', '--no-audio-display', '--input-ipc-server=' + socketFile, '-idle', '-quiet'];
 
 	// set up socket
 	this.socket = new ipcConnection(socketFile);
@@ -75,6 +75,11 @@ function mpv(){
 		}
 
 	}.bind(this));
+
+	// if spawn fails to start mpv player
+	this.mpvPlayer.on('error', function(error) {
+		console.log("mov player not found");
+	});
 
 }
 
@@ -134,9 +139,3 @@ mpv.prototype = {
 	}
 }
 
-player = new mpv();
-
-player.loadStream('https://www.youtube.com/watch?v=PJ7E40Ec5ec');
-
-player.observeProperty("volume", 1);
-player.observeProperty("mute", 1);
