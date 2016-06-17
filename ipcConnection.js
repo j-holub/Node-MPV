@@ -64,6 +64,8 @@ ipcConnection.prototype = {
 		var message = JSON.stringify(messageJson)
 		this.socket.write(message + "\n");
 	},
+	// property: String
+	// value: property dependant
 	setProperty: function(property, value){
 		// message in JSON Format
 		var messageJson = {

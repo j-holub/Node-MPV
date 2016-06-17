@@ -10,21 +10,27 @@ function mpv(){
 	// status object
 	this.status = {
 		'playing': false,
-		'muted': false,
+		'mute': false,
+		'pause': false,
 	}
 
 	// observed properties
+	// serves as a status object
 	this.observed = {};
 
 	// socket file
 	var socketFile = 'mpv.sock';
 
 	// default Arguments
-	// --no-video    ony audio
+	// --no-video    only audio
+	// --audio-display prevents album covers embedded in audio files from being displayed
 	// --input-ipc-server  IPC socket to communicate with mpv
 	//  --idle always run in the background
 	//  -quite  no console prompts. Buffer will overflow otherwise
 	var defaultArgs = ['--no-video', '--no-audio-display', '--input-ipc-server=' + socketFile, '-idle', '-quiet'];
+
+	// default observed properties
+	var defaultObserved = ["mute", "pause", "duration", "volume", "filename", "path", "media-title"];
 
 	// set up socket
 	this.socket = new ipcConnection(socketFile);
@@ -32,10 +38,25 @@ function mpv(){
 	// start mpv instance
 	this.mpvPlayer = spawn('mpv', defaultArgs);
 
+	// properties observed by default
+	var id = 0;
+	defaultObserved.forEach(function(property) {
+		this.observeProperty(property, id);
+		id += 1;
+	}.bind(this));
+	
+
+
+
 	// if mpv crashes restart it again
 	this.mpvPlayer.on('close', function() {
 		console.log("mpv died, restarting...");
 		this.mpvPlayer = spawn('mpv', defaultArgs);
+	}.bind(this));
+
+	// if spawn fails to start mpv player
+	this.mpvPlayer.on('error', function(error) {
+		console.log("mov player not found");
 	});
 	
 	// handles the data received from the IPC socket
@@ -64,6 +85,7 @@ function mpv(){
 				case "property-change":
 					this.observed[data.name] = data.data;
 					console.log(`property change ${data.name} ${data.data}`);
+					// console.log(this.observed);
 					break;
 				default:
 					console.log(data);
@@ -76,10 +98,6 @@ function mpv(){
 
 	}.bind(this));
 
-	// if spawn fails to start mpv player
-	this.mpvPlayer.on('error', function(error) {
-		console.log("mov player not found");
-	});
 
 }
 
@@ -95,11 +113,11 @@ mpv.prototype = {
 	},
 	// toggles pause
 	togglePause: function() {
-		if(this.status.playing){
-			this.socket.setProperty("pause", true);
+		if(this.observed.pause){
+			this.socket.setProperty("pause", false);
 		}
 		else{
-			this.socket.setProperty("pause", false);
+			this.socket.setProperty("pause", true);
 		}
 	},
 	// pause
@@ -120,13 +138,13 @@ mpv.prototype = {
 	},
 	// toggles mute
 	mute: function() {
-		if(this.status.muted){
+		if(this.status.mute){
 			this.socket.setProperty("mute", false);
 		}
 		else{
 			this.socket.setProperty("mute", true);
 		}
-		this.status.muted = !this.status.muted;
+		this.status.mute = !this.status.mute;
 	},
 	// observe a property for changes
 	// will be added to event for property changes
@@ -138,4 +156,5 @@ mpv.prototype = {
 		this.socket.command("unobserve_property", [id]);
 	}
 }
+
 
