@@ -51,4 +51,28 @@ ipcConnection = function(socketFile) {
 
 }
 
+
+ipcConnection.prototype = {
+	constructor: ipcConnection,
+	// command: String
+	// args: Array
+	command: function(command, args){
+		// message in JSON Format
+		var messageJson = {
+			"command": [command].concat(args)
+		}
+		var message = JSON.stringify(messageJson)
+		this.socket.write(message + "\n");
+	},
+	setProperty: function(property, value){
+		// message in JSON Format
+		var messageJson = {
+			"command": ["set_property", property, value]
+		}
+		var message = JSON.stringify(messageJson)
+		this.socket.write(message + "\n");
+	}
+}
+
+// ipsConnection has to inherit from EventEmitter to emit the message
 util.inherits(ipcConnection, eventEmitter);
