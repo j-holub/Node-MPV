@@ -41,7 +41,7 @@ function mpv(){
 			switch(data.event) {
 				case "idle":
 					this.status.playing = false;
-					console.log("idleidleidle");
+					console.log("idle");
 					break;
 				case "playback-restart":
 					this.status.playing = true;
@@ -54,16 +54,48 @@ function mpv(){
 				case "unpause":
 					// TODO when no file is loaded this will break;
 					this.status.playing = true;
-					console.log("pause");
+					console.log("unpause");
 					break;
 				default:
 					console.log(data);
 			}
 			
 		}
+		console.log(this.status);
 
 	}.bind(this));
 
 }
 
-player = new mpv();
+mpv.prototype = {
+	constructor: mpv,
+	// loads a file into mpv
+	loadFile: function(file) {
+		this.socket.command("loadfile", [file, "replace"]);
+	},
+	// loads a stream into mpv
+	loadStream: function(url) {
+		this.socket.command("loadfile", [url, "replace"]);
+	},
+	// toggles pause
+	togglePause: function() {
+		if(this.status.playing){
+			this.socket.setProperty("pause", true);
+		}
+		else{
+			this.socket.setProperty("pause", false);
+		}
+	},
+	// pause
+	pause: function() {
+		this.socket.setProperty("pause", true);
+	},
+	// play
+	play: function() {
+		this.socket.setProperty("pause", false);
+	},
+	// stop
+	stop: function() {
+		this.socket.command("stop", []);
+	}
+}
