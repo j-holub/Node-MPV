@@ -41,7 +41,10 @@ ipcConnection = function(socketFile) {
 
 		// each message is emitted seperately
 		messages.forEach(function (message) {
-			this.emit('message', message);
+			// empty messages may occur
+			if(message.length > 0){
+				this.emit('message', JSON.parse(message));
+			}
 		}.bind(this));
 
 	}.bind(this));	
