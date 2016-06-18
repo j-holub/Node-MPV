@@ -226,13 +226,3 @@ mpv.prototype = {
 
 // let mpv inhertid from EventEmitter
 util.inherits(mpv, eventEmitter);
-
-var mpv = new mpv();
-mpv.loadStream("https://www.youtube.com/watch?v=FC3y9llDXuM");
-// mpv.mute();
-
-mpv.observeProperty("time-pos", 10);
-
-mpv.on('timeposition', function(time){
-	console.log("Emitted Position: " + time);
-});
