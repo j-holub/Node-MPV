@@ -103,6 +103,8 @@ function mpv(){
 
 mpv.prototype = {
 	constructor: mpv,
+
+
 	// loads a file into mpv
 	loadFile: function(file) {
 		this.socket.command("loadfile", [file, "replace"]);
@@ -111,6 +113,8 @@ mpv.prototype = {
 	loadStream: function(url) {
 		this.socket.command("loadfile", [url, "replace"]);
 	},
+
+
 	// toggles pause
 	togglePause: function() {
 		if(this.observed.pause){
@@ -136,6 +140,9 @@ mpv.prototype = {
 	volume: function(value) {
 		this.socket.setProperty("volume", value);
 	},
+	adjustVolume: function(value) {
+		this.socket.addProperty("volume", value);
+	},
 	// toggles mute
 	mute: function() {
 		if(this.observed.mute){
@@ -145,6 +152,16 @@ mpv.prototype = {
 			this.socket.setProperty("mute", true);
 		}
 	},
+	//  relative search 
+	seek: function(seconds){
+		this.socket.command("seek", [seconds, "relative"]);
+	},
+	// go to position of the song
+	goToPosition: function(seconds){
+		this.socket.command("seek", [seconds, "absolute", "exact"]);
+	},
+
+
 	// observe a property for changes
 	// will be added to event for property changes
 	observeProperty: function(property, id) {
@@ -159,4 +176,5 @@ mpv.prototype = {
 mpv = new mpv();
 mpv.loadFile("https://www.youtube.com/watch?v=PJ7E40Ec5ec");
 
-mpv.observeProperty("time-pos", 10);
+mpv.volume(20);
+mpv.adjustVolume(50);

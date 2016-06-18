@@ -83,7 +83,7 @@ ipcConnection.prototype = {
 		}
 		var message = JSON.stringify(messageJson);
 		this.socket.write(message + "\n");
-	}
+	},
 	// command: String 
 	freeCommand: function(command){
 		this.socket.write(message + "\n");
