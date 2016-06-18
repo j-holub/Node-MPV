@@ -55,12 +55,13 @@ function mpv(){
 	setInterval(function() {
 		// only emit the time position if there is a file playing and it's not paused
 		if(this.observed.filename && !this.observed.pause && currentTimePos != null){
-			this.emit('timeposition', currentTimePos);
+			this.emit("timeposition", currentTimePos);
 		}
 	}.bind(this), 980);
 
 	
 
+	// private member method
 	// will observe all properties defined in the observed JSON dictionary
 	var observeProperties = function() {
 		var id = 1;
@@ -110,15 +111,23 @@ function mpv(){
 			switch(data.event) {
 				case "idle":
 					console.log("idle");
+					// emit stopped event
+					this.emit("stopped");
 					break;
 				case "playback-restart":
 					console.log("playback");
+					// emit play event
+					this.emit("play");
 					break;
 				case "pause":
 					console.log("pause");
+					// emit paused event
+					this.emit("paused");
 					break;
 				case "unpause":
 					console.log("unpause");
+					// emit unpaused event
+					this.emit("unpaused");
 					break;
 				// observed properties
 				case "property-change":
@@ -132,6 +141,8 @@ function mpv(){
 						// updates the observed value or adds it, if it was previously unobserved
 						this.observed[data.name] = data.data;
 						console.log(`property change ${data.name} ${data.data}`);
+						// emit a status change event
+						this.emit('statuschange', this.observed);
 						break;
 					}
 				default:
