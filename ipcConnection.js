@@ -73,6 +73,20 @@ ipcConnection.prototype = {
 		}
 		var message = JSON.stringify(messageJson)
 		this.socket.write(message + "\n");
+	},
+	// property: String
+	// value: number
+	addProperty: function(property, value){
+		// message in JSON Format
+		var messageJson = {
+			"command": ["add", property, value]
+		}
+		var message = JSON.stringify(messageJson);
+		this.socket.write(message + "\n");
+	}
+	// command: String 
+	freeCommand: function(command){
+		this.socket.write(message + "\n");
 	}
 }
 
