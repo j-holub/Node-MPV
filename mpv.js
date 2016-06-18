@@ -7,16 +7,20 @@ var spawn = require('child_process').spawn;
 
 function mpv(){
 
-	// status object
-	this.status = {
-		'playing': false,
-		'mute': false,
-		'pause': false,
-	}
-
 	// observed properties
 	// serves as a status object
-	this.observed = {};
+	// can be enhanced by using the observeProperty function
+	this.observed = {
+		"mute": false,
+		"pause": false,
+		"duration": null,
+		"volume": 100,
+		"filename": null,
+		"path": null,
+		"media-title": null
+	};
+
+	this.observedIDs = {};
 
 	// socket file
 	var socketFile = 'mpv.sock';
@@ -29,29 +33,45 @@ function mpv(){
 	//  -quite  no console prompts. Buffer will overflow otherwise
 	var defaultArgs = ['--no-video', '--no-audio-display', '--input-ipc-server=' + socketFile, '-idle', '-quiet'];
 
-	// default observed properties
-	var defaultObserved = ["mute", "pause", "duration", "volume", "filename", "path", "media-title"];
-
 	// set up socket
 	this.socket = new ipcConnection(socketFile);
 
 	// start mpv instance
 	this.mpvPlayer = spawn('mpv', defaultArgs);
 
-	// properties observed by default
-	var id = 0;
-	defaultObserved.forEach(function(property) {
-		this.observeProperty(property, id);
-		id += 1;
-	}.bind(this));
 	
 
+	// will observe all properties defined in the observed JSON dictionary
+	var observeProperties = function() {
+		var id = 0;
+		// for every property stored in observed
+		Object.keys(this.observed).forEach(function (property) {
+			// safety check
+			if(this.observed.hasOwnProperty(property)){
+				this.observeProperty(property, id);
+				this.observedIDs[id] = property;
+				id += 1;
+			}
+		}.bind(this));
+	}.bind(this);
+	// observe all properties defined by default
+	observeProperties();
 
+
+
+	// ### Events ###
 
 	// if mpv crashes restart it again
 	this.mpvPlayer.on('close', function() {
 		console.log("mpv died, restarting...");
 		this.mpvPlayer = spawn('mpv', defaultArgs);
+		// a small timeout is required to wait for mpv to have restarted
+		// on weak machines this could take a while, thus 1000ms
+		setTimeout(function() {
+			// reobserve all observed properties
+			// this will include those added by the user
+			observeProperties();
+		}.bind(this), 1000);
 	}.bind(this));
 
 	// if spawn fails to start mpv player
@@ -65,27 +85,21 @@ function mpv(){
 		if(data.event){
 			switch(data.event) {
 				case "idle":
-					this.status.playing = false;
 					console.log("idle");
 					break;
 				case "playback-restart":
-					this.status.playing = true;
 					console.log("playback");
 					break;
 				case "pause":
-					this.status.playing = false;
 					console.log("pause");
 					break;
 				case "unpause":
-					// TODO when no file is loaded this will break;
-					this.status.playing = true;
 					console.log("unpause");
 					break;
 				// observed properties
 				case "property-change":
 					this.observed[data.name] = data.data;
 					console.log(`property change ${data.name} ${data.data}`);
-					// console.log(this.observed);
 					break;
 				default:
 					console.log(data);
@@ -165,16 +179,14 @@ mpv.prototype = {
 	// observe a property for changes
 	// will be added to event for property changes
 	observeProperty: function(property, id) {
+		this.observed[property] = null;
+		this.observedIDs[id] = property;
 		this.socket.command("observe_property", [id, property]);
 	},
 	// stop observing a property
 	unobserveProperty: function(id) {
+		delete this.observed[this.observedIDs[id]];
+		delete this.observedIDs[id];
 		this.socket.command("unobserve_property", [id]);
 	}
 }
-
-mpv = new mpv();
-mpv.loadFile("https://www.youtube.com/watch?v=PJ7E40Ec5ec");
-
-mpv.volume(20);
-mpv.adjustVolume(50);
