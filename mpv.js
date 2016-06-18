@@ -138,13 +138,12 @@ mpv.prototype = {
 	},
 	// toggles mute
 	mute: function() {
-		if(this.status.mute){
+		if(this.observed.mute){
 			this.socket.setProperty("mute", false);
 		}
 		else{
 			this.socket.setProperty("mute", true);
 		}
-		this.status.mute = !this.status.mute;
 	},
 	// observe a property for changes
 	// will be added to event for property changes
@@ -157,4 +156,7 @@ mpv.prototype = {
 	}
 }
 
+mpv = new mpv();
+mpv.loadFile("https://www.youtube.com/watch?v=PJ7E40Ec5ec");
 
+mpv.observeProperty("time-pos", 10);
