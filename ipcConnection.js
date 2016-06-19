@@ -23,6 +23,7 @@ ipcConnection = function(socketFile) {
 		console.log("Connected to socket " + socketFile);
 	});
 
+
 	// reestablish connection when lost
 	this.socket.on('close', function() {
 		console.log("mpv socket lost connection, reconnecting...");
@@ -84,9 +85,20 @@ ipcConnection.prototype = {
 		var message = JSON.stringify(messageJson);
 		this.socket.write(message + "\n");
 	},
+	// property: String
+	// request-id: number
+	getProperty: function(property, request_id){
+		// message in JSON Format
+		var messageJson = {
+			"command": ["get_property", property],
+			request_id: request_id
+		}
+		var message = JSON.stringify(messageJson);
+		this.socket.write(message + "\n");
+	},
 	// command: String 
 	freeCommand: function(command){
-		this.socket.write(message + "\n");
+		this.socket.write(command + "\n");
 	}
 }
 

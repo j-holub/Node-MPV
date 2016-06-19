@@ -79,7 +79,6 @@ function mpv(){
 	observeProperties();
 
 
-
 	// ### Events ###
 
 	// if mpv crashes restart it again
@@ -107,7 +106,7 @@ function mpv(){
 	// handles the data received from the IPC socket
 	this.socket.on('message', function(data) {
 		// handle events
-		if(data.event){
+		if(data.hasOwnProperty("event")){
 			switch(data.event) {
 				case "idle":
 					console.log("idle");
@@ -149,6 +148,12 @@ function mpv(){
 					console.log(data);
 			}
 			
+		}
+		// this API assumes that only get_property requests will have a request_id
+		else if(data.hasOwnProperty("request_id")){			
+			console.log("getRequest with Id: " + data.request_id);
+			// emit a getRequest event
+			this.emit("getrequest", data.request_id, data.data);
 		}
 		else{
 			console.log("Other Event: " + JSON.stringify(data));
@@ -232,6 +237,25 @@ mpv.prototype = {
 		delete this.observed[this.observedIDs[id]];
 		delete this.observedIDs[id];
 		this.socket.command("unobserve_property", [id]);
+	},
+
+	// will send a get request for the specified property
+	// the answer will come via a 'getrequest' event containing the id and data
+	getProperty: function(property, id){
+		this.socket.getProperty(property, id);
+	},
+	// set a property specified by the mpv API
+	setProperty: function(property, value){
+		this.socket.setProperty(property, value);
+	},
+	// adds the value to the property
+	addProperty: function(property, value){
+		this.socket.addProperty(property, value);
+	},
+	// send a freely writeable command to mpv.
+	// the required trailing \n will be added
+	command: function(command){
+		this.socket.freeCommand(command);
 	}
 }
 
