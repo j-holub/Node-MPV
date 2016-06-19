@@ -8,9 +8,21 @@ var util = require('util');
 // EventEmitter
 var eventEmitter = require('events').EventEmitter;
 
+// Lodash for some nice stuff
+var _ = require('lodash');
 
 
-function mpv(){
+function mpv(options){
+
+	this.options = {
+		"debug": false,
+		"verbose": false,
+		"socket": "/tmp/node-mpv.sock",
+		"audio-only": false
+	}
+
+	// merge the default options with the one specified by the user
+	this.options = _.defaults(options || {}, this.options);
 
 	// observed properties
 	// serves as a status object
@@ -24,7 +36,6 @@ function mpv(){
 		"path": null,
 		"media-title": null
 	};
-
 	// saves the IDs of observedProperties with their propertyname
 	// key: id  value: property
 	this.observedIDs = {};
@@ -32,19 +43,16 @@ function mpv(){
 	// timeposition of the current song
 	var currentTimePos = null;
 
-	// socket file
-	var socketFile = 'mpv.sock';
-
 	// default Arguments
 	// --no-video    only audio
 	// --audio-display prevents album covers embedded in audio files from being displayed
 	// --input-ipc-server  IPC socket to communicate with mpv
 	//  --idle always run in the background
 	//  -quite  no console prompts. Buffer will overflow otherwise
-	var defaultArgs = ['--no-video', '--no-audio-display', '--input-ipc-server=' + socketFile, '-idle', '-quiet'];
+	var defaultArgs = ['--no-video', '--no-audio-display', '--input-ipc-server=' + this.options.socket, '-idle', '-quiet'];
 
 	// set up socket
-	this.socket = new ipcConnection(socketFile);
+	this.socket = new ipcConnection(this.options);
 
 	// start mpv instance
 	this.mpvPlayer = spawn('mpv', defaultArgs);
@@ -83,7 +91,9 @@ function mpv(){
 
 	// if mpv crashes restart it again
 	this.mpvPlayer.on('close', function() {
-		console.log("mpv died, restarting...");
+		if(this.options.verbose){
+			console.log("MPV Player seems to have died. Restarting...");
+		}
 		this.mpvPlayer = spawn('mpv', defaultArgs);
 		// TODO: reset ALL default parameters
 		currentTimePos = null;
@@ -107,24 +117,34 @@ function mpv(){
 	this.socket.on('message', function(data) {
 		// handle events
 		if(data.hasOwnProperty("event")){
+
+			// if verbose was specified output the event
+			// property-changes are output in the statuschange emit
+			if(this.options.verbose ){
+				if(data.hasOwnProperty("event") && !(data.event === "property-change")){
+					console.log("Message received: " + JSON.stringify(data));
+				}
+			}
+
+
 			switch(data.event) {
 				case "idle":
-					console.log("idle");
+					if(this.options.verbose){console.log("Event: stopped")};
 					// emit stopped event
 					this.emit("stopped");
 					break;
 				case "playback-restart":
-					console.log("playback");
+					if(this.options.verbose){console.log("Event: start")};
 					// emit play event
 					this.emit("start");
 					break;
 				case "pause":
-					console.log("pause");
+					if(this.options.verbose){console.log("Event: pause")};
 					// emit paused event
 					this.emit("paused");
 					break;
 				case "unpause":
-					console.log("unpause");
+					if(this.options.verbose){console.log("Event: unpause")};
 					// emit unpaused event
 					this.emit("unpaused");
 					break;
@@ -139,24 +159,28 @@ function mpv(){
 					else{
 						// updates the observed value or adds it, if it was previously unobserved
 						this.observed[data.name] = data.data;
-						console.log(`property change ${data.name} ${data.data}`);
 						// emit a status change event
 						this.emit('statuschange', this.observed);
+						// output if verbose
+						if(this.options.verbose){
+							console.log("Event: statuschange");
+							console.log(`Property change: ${data.name} - ${data.data}`);
+						}
 						break;
 					}
 				default:
-					console.log(data);
+					
 			}
 			
 		}
 		// this API assumes that only get_property requests will have a request_id
-		else if(data.hasOwnProperty("request_id")){			
-			console.log("getRequest with Id: " + data.request_id);
+		else if(data.hasOwnProperty("request_id")){
+			// output if verbose
+			if(this.options.verbose){
+				console.log(`Get Request: ${data.request_id} - ${data.data}`);
+			} 
 			// emit a getRequest event
 			this.emit("getrequest", data.request_id, data.data);
-		}
-		else{
-			console.log("Other Event: " + JSON.stringify(data));
 		}
 
 	}.bind(this));

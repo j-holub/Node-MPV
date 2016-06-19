@@ -1,16 +1,25 @@
 // Network Sockets
 var net = require('net');
-
 // for inheritence purposes
 var util = require('util');
-
 // EventEmitter
 var eventEmitter = require('events').EventEmitter;
+
+// lodash for cleaner code
+var _ = require('lodash');
 
 // connects to a socket
 // reconnects when connection lost
 // emits 'message' event when data is received from the socket
-ipcConnection = function(socketFile) {
+ipcConnection = function(options) {
+
+	this.options = {
+		"debug": false,
+		"verbose": false,
+		"socket": "/tmp/node-mpv.sock"
+	}
+
+	this.options = _.defaults(options || {}, this.options);
 
 	// intialize the event emitter
 	eventEmitter.call(this);
@@ -19,20 +28,24 @@ ipcConnection = function(socketFile) {
 	this.socket = new net.Socket();
 
 	// connect
-	this.socket.connect({path: socketFile}, function() {
-		console.log("Connected to socket " + socketFile);
-	});
+	this.socket.connect({path: this.options.socket}, function() {
+		if(this.options.verbose){
+			console.log(`Connected to socket "${this.options.socket}`);
+		}
+	}.bind(this));
 
 
 	// reestablish connection when lost
 	this.socket.on('close', function() {
-		console.log("mpv socket lost connection, reconnecting...");
-		this.socket.connect({path: socketFile});
+		if(this.options.verbose){
+			console.log("Lost connection to socket. Atemping to reconnect");
+		}
+		this.socket.connect({path: this.options.socket});
 	}.bind(this));
 
 	//  catch errors when occurrings
 	this.socket.on('error', function(error) {
-		console.log(error);
+		// console.log(error);
 	});
 
 	// received data is delivered upwards by an event
