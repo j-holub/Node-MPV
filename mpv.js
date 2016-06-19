@@ -248,6 +248,12 @@ mpv.prototype = {
 	setProperty: function(property, value){
 		this.socket.setProperty(property, value);
 	},
+	// sets all properties defined in the properties Json object
+	setMultipleProperties: function(properties){
+		Object.keys(properties).forEach(function (property) {
+			this.socket.setProperty(property, properties[property]);
+		}.bind(this));
+	},
 	// adds the value to the property
 	addProperty: function(property, value){
 		this.socket.addProperty(property, value);

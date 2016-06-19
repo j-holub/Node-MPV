@@ -96,6 +96,17 @@ Some important or basic properties are already covered through methods provided 
 * **setProperty** (property, value)
 
   Sets the specified *property* to the specified *value*
+
+* **setMultipleProperties** (properties)
+
+  Calls **setProperty** for every property specified in the arguments Json object. For example
+  
+  ```Javascript
+  setMultipleProperties({
+  		"volume": 70,
+        "fullscreen": true
+  });
+  ```
   
 * **getProperty** (property, id)
 
