@@ -28,7 +28,7 @@ and you're good to go.
 
 This module provides a lot of different methods to interact with mpv, which can be called directly from the player object.
 
-```
+```Javascript
 mpvPlayer.loadFile("/path/to/your/favorite/song.mp3");
 mpvPlayer.volume(70);
 ```
