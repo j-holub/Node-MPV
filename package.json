@@ -1,5 +1,5 @@
 {
-  "name": "npm-mpv",
+  "name": "node-mpv",
   "version": "0.9.1",
   "description": "A Node Module for MPV",
   "main": "index.js",
@@ -11,10 +11,11 @@
     "url": "git+https://github.com/00SteinsGate00/Node-MPV.git"
   },
   "keywords": [
-    "MPV",
+    "mpv",
     "Audio",
     "Video",
-    "Stream"
+    "Stream",
+    "multimedia"
   ],
   "author": "Jan Holub",
   "licenses": [
