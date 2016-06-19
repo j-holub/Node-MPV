@@ -18,7 +18,7 @@ function mpv(options){
 		"debug": false,
 		"verbose": false,
 		"socket": "/tmp/node-mpv.sock",
-		"audio-only": false
+		"audio_only": false
 	}
 
 	// merge the default options with the one specified by the user
@@ -43,13 +43,18 @@ function mpv(options){
 	// timeposition of the current song
 	var currentTimePos = null;
 
-	// default Arguments
-	// --no-video    only audio
-	// --audio-display prevents album covers embedded in audio files from being displayed
+	// default Arguments	
 	// --input-ipc-server  IPC socket to communicate with mpv
 	//  --idle always run in the background
 	//  -quite  no console prompts. Buffer will overflow otherwise
-	var defaultArgs = ['--no-video', '--no-audio-display', '--input-ipc-server=' + this.options.socket, '-idle', '-quiet'];
+	var defaultArgs = ['--input-ipc-server=' + this.options.socket, '-idle', '-quiet'];
+
+	//  audio_only option aditional arguments
+	// --no-video  no video will be displayed
+	// --audio-display  prevents album covers embedded in audio files from being displayed
+	if( this.options.audio_only){
+		defaultArgs = _.concat(defaultArgs, ['--no-video', '--no-audio-display']);
+	}
 
 	// set up socket
 	this.socket = new ipcConnection(this.options);

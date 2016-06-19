@@ -32,13 +32,15 @@ You optionally pass a Json object with options to the constructor. Possible opti
 {
 	"verbose": false,
     "debug": false,
-    "socket": "/tmp/node-mpv.sock"
+    "socket": "/tmp/node-mpv.sock",
+    "audio_only": false
 }
 ```
 
 * `verbose` will print various information on the console
 * `debug` prints error messages
 * `socket` specifies the socket **mpv** opens
+* `audio_only` will add the `--no-video` and `--no-audio-display` argument and start **mpv** in audio only mode
 
 This module provides a lot of different methods to interact with mpv, which can be called directly from the player object.
 
@@ -216,7 +218,8 @@ mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
 
 // This will bind this function to the stopped event
 mpvPlayer.on('stopped', function() {
-	console.log("My favorite song just finished");
+	console.log("Your favorite song just finished, let's start it again!");
+    mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
 });
 
 // Stop to song emitting the stopped event
@@ -233,10 +236,14 @@ mpvPlayer.stop();
 
 ## Changelog
 
+* **0.7.3**
+  * Added `audio_only` option
+  * Videos are now officially supported, but the API is still missing
+
 * **0.7.2**
   * Options object as paramter for the constructor
-  * **debug** and **verbose** flags can be set
-  * an arbitrary **socket** can be specified
+  * `debug` and `verbose` flags can be set
+  * an arbitrary socket` can be specified
 
 * **0.7.0**
   
