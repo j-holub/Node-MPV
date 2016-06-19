@@ -325,11 +325,15 @@ Some important or basic properties are already covered through methods provided 
 
 * **getProperty** (property, id)
 
-  Gets the information about the specified `property`. The answers comes in form of an emitted *getrequest* event containing the specified `id`. This unfortunate, but to JavaScript's single threaded and event driven nature, it was the only way I found.
+  Gets the information about the specified `property`. The answers comes in form of an emitted *getrequest* event containing the specified `id`. This unfortunate, but to JavaScript's single threaded and event driven nature, it was the only way I found
   
 * **addProperty** (property, value)
 
-  Increased the `property` by the specified `value`. Needless to say this can only be used on numerical properties. Negative values are possible.
+  Increased the `property` by the specified `value`. Needless to say this can only be used on numerical properties. Negative values are possible
+
+* **multiplyProperty** (property, value)
+
+  Multiply the specified `property` by `value`
   
 * **cycleProperty** (property)
 
@@ -461,11 +465,11 @@ mpvPlayer.stop();
 
 * Implement WebSocket support
 
-
 ## Changelog
 
 * **0.9.1**
   * Loop function implemented and property added to the default observed values
+  * MultiplyProperty added offer more free interaction with mpv
 
 * **0.9.0**
   * Playlist support added
