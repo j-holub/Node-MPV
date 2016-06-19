@@ -13,7 +13,7 @@ It keeps MPV running in the background with the `--idle` argument all the time a
 
 ## Discalimer
 
-This module is still in development (Version **0.8.0** at the moment) and was not yet published to the official NPM repository.
+This module is still in development (Version **0.8.1** at the moment) and was not yet published to the official NPM repository.
 
 Both audio and video playback is possible, but I don't claim that the **API** is complete.
 
@@ -368,7 +368,11 @@ mpvPlayer.stop();
 
 ## Changelog
 
-* **8.0.0**
+* **0.8.1**
+  * Major code reorganisation
+  * [util](https://github.com/defunctzombie/node-util) is no longer required
+
+* **0.8.0**
   * Added support for various video related commands
   * Subtitle support
 
