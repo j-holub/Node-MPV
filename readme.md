@@ -34,7 +34,7 @@ You optionally pass a Json object with options to the constructor. Possible opti
 
 ```Javascript
 {
-	"verbose": false,
+    "verbose": false,
     "debug": false,
     "socket": "/tmp/node-mpv.sock",
     "audio_only": false
@@ -50,7 +50,8 @@ You can also provide an optional second argument, an Array containing **mpv** co
 
 ```Javascript
 mpvPlayer = new mpvAPI({
-	"verbose": true
+	"verbose": true,
+	"audio_only": true
 },
 [
 	"--fullscreen",
@@ -119,9 +120,60 @@ mpvPlayer.volume(70);
 
   Jumps to the position specified by `seconds`. Going beyond the boundaries of the song results in stop of playback
   
-* **fullscreen**()
+
+
+### Audio
+
+* **addAudioTrack** (file, flag, title, lang)
+
+  Adds an audio file to the video that is loaded.
+  * `file` The audio file to load
+  * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
+  * `title` *(optional)* The name for the audio track in the UI  
+  * `lang` *(optional)* the language of the audio track
+
+  `flag` has the following effects
+
+    * *select* - the added audio track is selected immediately
+    * *auto* - the audio track is not selected
+    * *cached* - select the audio track, but if a audio track file with the same name is already loaded, the new file is not added and the old one is selected instead
+
+* **removeAudioTrack** ()
+
+  Removes the audio track specified by `id`. Works only for external audio tracks
+  
+* **selectAudioTrack** (id)
+
+  Selects the audio track associated with `id`
+  
+* **cycleAudioTracks** ()
+
+ Cycles through the audio tracks
+  
+* **adjustAudioTiming** (seconds)
+
+  Shifts the audio timing by `seconds`
+
+### Video
+
+* **fullscreen** ()
+
+  Goes into fullscreen mode
+
+* **leaveFullscreen** ()
+
+  Leaves fullscreen mode
+
+* **toggleFullscreen** ()
 
   Toggles between fullscreen and windowed mode
+
+* **screenshot** (file, option)
+
+  Takes a screenshot and saves it to `file`. `options` is one of the following
+  * `subtitles` *(default)* Takes a screenshot including the subtitles
+  * `video` Only the image, no texts
+  * `window` The scaled mpv window
 
 ### Subtitles
 
@@ -132,6 +184,12 @@ mpvPlayer.volume(70);
   * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
   * `title` *(optional)* The name for the subtitle file in the UI  
   * `lang` *(optional)* The language of the subtitle
+
+  `flag` has the following effects
+
+    * *select* - the added subtitle is selected immediately
+    * *auto* - the subtitle is not selected
+    * *cached* - select the subtitle, but if a subtitle file with the same name is already loaded, the new file is not added and the old one is selected instead
   
 * **removeSubitlte** (id)
 
@@ -169,43 +227,6 @@ mpvPlayer.volume(70);
 
   Adjust the scale of the subtitles
   
-
-### Audio
-
-* **addAudioTrack** (file, flag, title, lang)
-
-  Adds an audio file to the video that is loaded.
-  * `file` The audio file to load
-  * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
-  * `title` *(optional)* The name for the audio track in the UI  
-  * `lang` *(optional)* the language of the audio track
-
-* **removeAudioTrack** ()
-
-  Removes the audio track specified by `id`. Works only for external audio tracks
-  
-* **selectAudioTrack** (id)
-
-  Selects the audio track associated with `id`
-  
-* **cycleAudioTracks** ()
-
- Cycles through the audio tracks
-  
-* **adjustAudioTiming** (seconds)
-
-  Shifts the audio timing by `seconds`
-
-
-### Screenshots
-
-* **screenshot** (file, option)
-
-  Takes a screenshot and saves it to `file`. `options` is one of the following
-  * `subtitles` *(default)* Takes a screenshot including the subtitles
-  * `video` Only the image, no texts
-  * `window` The scaled mpv window
-
 
   
 ### Properties
@@ -371,6 +392,8 @@ mpvPlayer.stop();
 * **0.8.1**
   * Major code reorganisation
   * [util](https://github.com/defunctzombie/node-util) is no longer required
+  * **fullscreen**() was renamed to **toggleFullscreen**()
+  * **fullscreen**() enters *fullscreen mode*, **leaveFullscreen**() leaves it
 
 * **0.8.0**
   * Added support for various video related commands
