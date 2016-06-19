@@ -2,7 +2,7 @@
   "name": "npm-mpv",
   "version": "0.7.0",
   "description": "A Node Module for MPV",
-  "main": "index.js",
+  "main": "mpv.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

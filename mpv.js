@@ -261,3 +261,7 @@ mpv.prototype = {
 
 // let mpv inhertid from EventEmitter
 util.inherits(mpv, eventEmitter);
+
+
+// export the mpv class as the module
+module.exports = mpv;
