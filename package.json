@@ -1,6 +1,6 @@
 {
   "name": "npm-mpv",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "A Node Module for MPV",
   "main": "mpv.js",
   "scripts": {
@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/00SteinsGate00/Node-MPV#readme",
   "dependencies": {
-      "lodash": ">= 0.1.0"
+      "lodash": ">= 4.0.0"
   }
 }
