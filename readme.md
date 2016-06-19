@@ -358,7 +358,7 @@ Some important or basic properties are already covered through methods provided 
 
    This will add the specified *property* to the *statusupdate* event which is emitted whenever one of the observed properties changes.
   
-   The **Id**s **0**-**11** are already taken by the properties which are observed by default.
+   The **Id**s **0**-**12** are already taken by the properties which are observed by default.
   
 * **unobserveProperty(id)**
 
@@ -408,7 +408,10 @@ The **Node-MPV** module provides various *events* to notify about changes of the
     "volume": 100,
     "filename": null,
     "path": null,
-    "media-title": null
+    "media-title": null,
+    "playlist-pos": 0,
+    "playlist-count": 0,
+    "loop": "no"
   }
   ```
   
@@ -458,8 +461,10 @@ mpvPlayer.stop();
 
 ## Changelog
 
-* **0.9.0**
+* **0.9.1**
+  * Loop function implemented and property added to the default observed values
 
+* **0.9.0**
   * Playlist support added
 
 * **0.8.2**
