@@ -1,8 +1,10 @@
 # Node-MPV
 
-This module keeps an instance of **[mpv player](https://github.com/mpv-player/mpv)** running in the background and communicates over the Json IPC API.
+This module keeps an instance of **[mpv player](https://github.com/mpv-player/mpv)** running in the background and communicates over the Json IPC API. 
 
 It provides functions for the most of the commands needed to control **mpv**. It's easy to use and highly flexible.
+
+It also provides direct access to the IPC socket. Thus this module is not only limited to the methods it provides, but can fully communicate with the **mpv** API.
 
 
 **This module requires [mpv](https://github.com/mpv-player/mpv) to be installed on your system to work**
@@ -10,10 +12,32 @@ It provides functions for the most of the commands needed to control **mpv**. It
 **For streaming playback such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
 
 
+# Install
 
-## Disclaimer
 
-This module is still in development (Version **0.9.1** at the moment) and was not yet published to the official NPM repository.
+```
+npm install node-mpv
+```
+
+#### OS X
+
+```
+brew install mpv youtube-dl
+```
+
+#### Linux (Ubuntu/Debian)
+
+```
+sudo apt-get install mpv youtube-dl
+```
+
+
+**youtube-dl** is only required if you want to stream videos or music from *YouTube*, *SoundCloud* or other websites supported by **youtube-dl**. See [here](https://rg3.github.io/youtube-dl/supportedsites.html) for a list of supported websites.
+
+
+
+
+
 
 # Usage
 
