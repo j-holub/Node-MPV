@@ -116,7 +116,7 @@ function mpv(){
 				case "playback-restart":
 					console.log("playback");
 					// emit play event
-					this.emit("play");
+					this.emit("start");
 					break;
 				case "pause":
 					console.log("pause");
