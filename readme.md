@@ -13,7 +13,7 @@ It keeps MPV running in the background with the `--idle` argument all the time a
 
 ## Discalimer
 
-This module is still in development (Version **0.8.1** at the moment) and was not yet published to the official NPM repository.
+This module is still in development (Version **0.8.2** at the moment) and was not yet published to the official NPM repository.
 
 Both audio and video playback is possible, but I don't claim that the **API** is complete.
 
@@ -174,6 +174,36 @@ mpvPlayer.volume(70);
   * `subtitles` *(default)* Takes a screenshot including the subtitles
   * `video` Only the image, no texts
   * `window` The scaled mpv window
+
+* **rotateVideo** (degrees)
+  
+  Rotates the video clockwise. `degree` can only be multiples of 90 and the rotation is absolute, not relative
+
+* **zoomVideo** (factor)
+
+  Zooms into the video. **0** does not zoom at all, **1** zooms double and so on
+
+* **brightness** (value)
+
+  Sets the brightness to `value`. Allowed values are between **-100** and **100**
+
+* **contrast** (value)
+
+  Sets the contrast to `value`. Allowed values are between **-100** and **100**
+
+* **saturation** (value)
+
+  Sets the saturation to `value`. Allowed values are between **-100** and **100**
+
+* **gamma** (value)
+
+  Sets the gamma to `value`. Allowed values are between **-100** and **100**
+
+* **hue** (value)
+
+  Sets the hue to `value`. Allowed values are between **-100** and **100**
+
+
 
 ### Subtitles
 
@@ -388,6 +418,10 @@ mpvPlayer.stop();
 
 
 ## Changelog
+
+* **0.8.2**
+  * Added function to set the **brightness**, **contrast**, **saturation**, **gamma** and **hue**
+  * Added functions to zoom and rotate the video
 
 * **0.8.1**
   * Major code reorganisation
