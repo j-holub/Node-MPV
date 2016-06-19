@@ -12,10 +12,12 @@ var eventEmitter = require('events').EventEmitter;
 var _ = require('lodash');
 
 
+
 function mpv(options, mpv_args){
 
 	// intialize the event emitter
 	eventEmitter.call(this);
+
 
 	this.options = {
 		"debug": false,
@@ -39,6 +41,10 @@ function mpv(options, mpv_args){
 		"path": null,
 		"media-title": null
 	};
+	var observedVideo = {
+		"fullscreen": false,
+		"sub-visibility": false,
+	}
 	// saves the IDs of observedProperties with their propertyname
 	// key: id  value: property
 	this.observedIDs = {};
@@ -58,17 +64,22 @@ function mpv(options, mpv_args){
 	if( this.options.audio_only){
 		defaultArgs = _.concat(defaultArgs, ['--no-video', '--no-audio-display']);
 	}
+	// add the observed properties only needed for the video version
+	else{
+		 _.merge(this.observed, observedVideo);
+	}
 
 	// add the user specified arguments
 	if(mpv_args){
 		defaultArgs = _.union(defaultArgs, mpv_args);
 	}
 
-	// set up socket
-	this.socket = new ipcConnection(this.options);
 
 	// start mpv instance
 	this.mpvPlayer = spawn('mpv', defaultArgs);
+
+	// set up socket
+	this.socket = new ipcConnection(this.options);
 
 
 	// sets the Interval to emit the current time position
@@ -136,7 +147,12 @@ function mpv(options, mpv_args){
 			// if verbose was specified output the event
 			// property-changes are output in the statuschange emit
 			if(this.options.verbose ){
-				if(data.hasOwnProperty("event") && !(data.event === "property-change")){
+				if(data.hasOwnProperty("event")){
+					if(!(data.event === "property-change")){
+						console.log("Message received: " + JSON.stringify(data));
+					}
+				}
+				else{
 					console.log("Message received: " + JSON.stringify(data));
 				}
 			}
@@ -198,6 +214,7 @@ function mpv(options, mpv_args){
 			this.emit("getrequest", data.request_id, data.data);
 		}
 
+
 	}.bind(this));
 
 
@@ -255,13 +272,82 @@ mpv.prototype = {
 		}
 	},
 	//  relative search 
-	seek: function(seconds){
+	seek: function(seconds) {
 		this.socket.command("seek", [seconds, "relative"]);
 	},
 	// go to position of the song
-	goToPosition: function(seconds){
+	goToPosition: function(seconds) {
 		this.socket.command("seek", [seconds, "absolute", "exact"]);
 	},
+
+	// toggles fullscreen
+	fullscreen: function() {
+		if(this.observed.fullscreen){
+			this.socket.setProperty("fullscreen", false);
+		}
+		else{
+			this.socket.setProperty("fullscreen", true);
+		}
+	},
+
+	// add subtitle file
+	// file path to the subtitle file
+	// flag select / auto /cached
+	// title subtitle title in the UI
+	// lang subitlte language
+	addSubtitles: function(file, flag, title, lang) {
+		var args = [file];
+		// add the flag if specified
+		if(flag){ args = _.concat(args, flag)};
+		// add the title if specified
+		if(title){ args = _.concat(args, title)};
+		// add the language if specified
+		if(lang){ args = _.concat(args, lang)};
+		// finally add the argument
+		this.socket.command("sub-add", args);
+	},
+	// delete subtitle specified by the id
+	removeSubtitles: function(id) {
+		this.socket.command("sub-remove", [id]);
+	},
+	// cycle through subtitles
+	cycleSubtitles: function() {
+		this.socket.cycleProperty("sub");
+	},
+	// selects subitle according to the id
+	selectSubtitle: function(id) {
+		this.socket.setProperty("sub", id);
+	},
+	// toggle subtitle visibility
+	toggleSubtitleVisibility: function() {
+		if(this.observed["sub-visibility"]){
+			this.socket.setProperty("sub-visibility", false);
+		}
+		else{
+			this.socket.setProperty("sub-visibility", true);
+		}
+	},
+	// shows selected subtitle
+	showSubtitles: function() {
+		this.socket.setProperty("sub-visibility", true);
+	},
+	// hides subtitles
+	hideSubtitles: function() {
+		this.socket.setProperty("sub-visibility", false);
+	},
+	// adjusts the subtitles timing
+	adjustSubtitleTiming: function(seconds){
+		this.socket.setProperty("sub-delay", seconds);
+	},
+	// jumps linesToSkip many lines forward in the video
+	subtitleSeek: function(lines) {
+		this.socket.command("sub-seek", [lines]);
+	},
+	// scales to font size of the subtitles
+	subtitleScale: function(scale) {
+		this.setProperty("sub-scale", scale);
+	},
+
 
 
 	// observe a property for changes
@@ -297,9 +383,13 @@ mpv.prototype = {
 	addProperty: function(property, value){
 		this.socket.addProperty(property, value);
 	},
+	// send a command with arguments to mpv
+	command: function(command, args){
+		this.socket.command(command, args);
+	},
 	// send a freely writeable command to mpv.
 	// the required trailing \n will be added
-	command: function(command){
+	freeCommand: function(command){
 		this.socket.freeCommand(command);
 	}
 }

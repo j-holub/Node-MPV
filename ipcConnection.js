@@ -13,8 +13,6 @@ var _ = require('lodash');
 // emits 'message' event when data is received from the socket
 ipcConnection = function(options) {
 
-	console.log("Heyo");
-
 	this.options = {
 		"debug": false,
 		"verbose": false,
@@ -41,10 +39,8 @@ ipcConnection = function(options) {
 	this.socket.on('close', function() {
 		if(this.options.debug){
 			console.log("Lost connection to socket. Atemping to reconnect");
-		}
-		
+		}		
 		// connect to socket
-		console.log("fooofoofooo");
 		this.socket.connect({path: this.options.socket}, function() {
 			if(this.options.verbose || this.options.debug){
 				console.log(`Connected to socket "${this.options.socket}`);
@@ -87,6 +83,7 @@ ipcConnection.prototype = {
 			"command": [command].concat(args)
 		}
 		var message = JSON.stringify(messageJson)
+		console.log(message);
 		this.socket.write(message + "\n");
 	},
 	// property: String
