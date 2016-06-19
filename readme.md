@@ -15,12 +15,12 @@ It provides functions for the most of the commands needed to control **mpv**. It
 
 This module is still in development (Version **0.9.1** at the moment) and was not yet published to the official NPM repository.
 
-## Usage
+# Usage
 
 Simply create an instance of the player
 
 ```Javascript
-mpvAPI = require("./mpv.js");
+mpvAPI = require("./index.js");
 mpvPlayer = new mpvAPI();
 ```
 
@@ -74,9 +74,9 @@ mpvPlayer.on('stopped', function() {
 });
 ```
 
-## Methods
+# Methods
 
-### Load Content
+## Load Content
 
 * **loadFile** (file)
   
@@ -88,7 +88,7 @@ mpvPlayer.on('stopped', function() {
 
   This function should be used to load *YouTube* and *SoundCloud* playlists, as **loadPlaylist** will not work.
   
-### Controlling MPV
+## Controlling MPV
 
 * **play** ()
 
@@ -134,7 +134,7 @@ mpvPlayer.on('stopped', function() {
 
   Loops the current title `times`often. If set to *"inf"* the title is looped forever
   
-### Playlists
+## Playlists
 
   * **loadPlaylist** (playlist, mode="replace")
 
@@ -177,7 +177,7 @@ mpvPlayer.on('stopped', function() {
 
 
 
-### Audio
+## Audio
 
 * **addAudioTrack** (file, flag, title, lang)
 
@@ -216,7 +216,7 @@ mpvPlayer.on('stopped', function() {
   If the `--auto-pitch-correction` flag (on by default) is used, this will not pitch the audio and uses a scaletempo audio filter
 
 
-### Video
+## Video
 
 * **fullscreen** ()
 
@@ -267,7 +267,7 @@ mpvPlayer.on('stopped', function() {
 
 
 
-### Subtitles
+## Subtitles
 
 * **addSubtilte** (file, flag, title, lang)
 
@@ -321,7 +321,7 @@ mpvPlayer.on('stopped', function() {
   
 
   
-### Properties
+## Properties
 
 These methods can be used to alter *properties* or send arbitary *commands* to the running **mpv player**. Information about what *commands* and *properties* are available can be found in the [list of commands](https://mpv.io/manual/stable/#list-of-input-commands) and [list of properties](https://mpv.io/manual/stable/#properties) sections of the **mpv** documentation.
 
@@ -379,7 +379,7 @@ The most common commands are already covered by this modules **API**. This part 
   
   A trailing "**\n**" will be added to the command.
 
-### Observing
+## Observing
  
  * **observeProperty** (property, id)
 
@@ -393,7 +393,7 @@ The most common commands are already covered by this modules **API**. This part 
   
   Unobserving default properties may break the module.
   
-## Events
+# Events
 
 The **Node-MPV** module provides various *events* to notify about changes of the **mpv player's** state.
 
@@ -461,6 +461,47 @@ The **Node-MPV** module provides various *events* to notify about changes of the
     
     This object can expanded through the *observeProperty* method making it possible to watch any state you desire, given it is provided by **mpv**
     
+    
+# Observing
+
+  **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.  
+
+`observeProperty(property, id);`
+
+This will add the `property` to status update object emitted by the **statuschange** event. Everytime that property changes such an event will be triggered.
+
+By calling `unobserveProperty(id)` the property associated with that `id` is removed from the **statuschange**
+
+By default **node-mpv** is already observing some useful properties by default.
+
+```Javascript
+{
+  "mute": Boolean,
+  "pause": Boolean,
+  "duration": Number,
+  "volume": Number,
+  "filename": String,
+  "path": String,
+  "media-title": String,
+  "playlist-pos": Number,
+  "playlist-count": Number,
+  "loop": Number // this one can be set to "inf" for endless looping
+}
+```
+
+If **node-mpv** is not run in `audio_only` mode the following two properties will be observed, too
+
+```Javascript
+{
+  "fullscreen": Boolean,
+  "sub-visibility": Boolean
+}
+```
+    
+  The IDs **0** - **12** are already used for the default properties. Unobserving them will most likely break the module.
+  
+  For more information on the **statuschange** part, check the event section.
+    
 ## Example
 
 ```Javascript
@@ -476,20 +517,24 @@ mpvPlayer.on('stopped', function() {
     mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
 });
 
+// Set the volume to 50%
+mpvPlayer.volume(50);
+
 // Stop to song emitting the stopped event
 mpvPlayer.stop();
 ```
    
 ## ToDo
 
+* Fix the "Possible EventEmitter memory leak detected" bug
 * Implement WebSocket support
 
 ## Changelog
 
 * **0.9.1**
-  * Loop function implemented and property added to the default observed values
-  * MultiplyProperty added offer more free interaction with mpv
-  * Added a function to adjust the playback speed
+  * **Loop** function implemented and property added to the default observed values
+  * **MultiplyProperty** added offer more free interaction with mpv
+  * Added a function to adjust the playback **speed**
 
 * **0.9.0**
   * Playlist support added
