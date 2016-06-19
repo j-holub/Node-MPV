@@ -1,19 +1,22 @@
 # Node-MPV
 
-This is an NPM Module to control **[mpv player](https://github.com/mpv-player/mpv)** through the IPC Json API.
+This is an NPM Module to control **[mpv player](https://github.com/mpv-player/mpv)** through the Json IPC API.
 
-It keeps MPV running in the background all the time and provides an easy-to-use interface.
+It keeps MPV running in the background with the `--idle` argument all the time and provides an easy-to-use interface, to control the player.
 
-**This module requires mpv to be installed on your system to work**
+
+**This module requires [mpv](https://github.com/mpv-player/mpv) to be installed on your system to work**
+
+**For streaming playback such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
 
 
 ## Discalimer
 
-This module is still in development (Version **0.7.0** at the moment) and was not yet published to the official NPM repository.
+This module is still in development (Version **0.7.3** at the moment) and was not yet published to the official NPM repository.
 
-So far this module officially only provides usage for audio playback and still lacks playlist support. It will also only work with local sockets so far.
+Both audio and video playback is possible. However on the video side the **API** is not yet implemented. Using functions like `command(command)` and `setProperty(property, value)` everything can already be fully controlled.
 
-The  API provides however functions to freely send any command to the **mpv player**. This can be used to change properties concerning Video playback as well.
+The **API** offers free command input to **mpv**'s Json IPC protoctol.
 
 ## Usage
 
@@ -41,6 +44,18 @@ You optionally pass a Json object with options to the constructor. Possible opti
 * `debug` prints error messages
 * `socket` specifies the socket **mpv** opens
 * `audio_only` will add the `--no-video` and `--no-audio-display` argument and start **mpv** in audio only mode
+
+You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
+
+```Javascript
+mpvPlayer = new mpvAPI({
+	"verbose": true
+},
+[
+	"--fullscreen",
+    "--fps=60"
+]);
+```
 
 This module provides a lot of different methods to interact with mpv, which can be called directly from the player object.
 

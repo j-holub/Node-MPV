@@ -12,7 +12,7 @@ var eventEmitter = require('events').EventEmitter;
 var _ = require('lodash');
 
 
-function mpv(options){
+function mpv(options, mpv_args){
 
 	this.options = {
 		"debug": false,
@@ -47,13 +47,18 @@ function mpv(options){
 	// --input-ipc-server  IPC socket to communicate with mpv
 	//  --idle always run in the background
 	//  -quite  no console prompts. Buffer will overflow otherwise
-	var defaultArgs = ['--input-ipc-server=' + this.options.socket, '-idle', '-quiet'];
+	var defaultArgs = ['--input-ipc-server=' + this.options.socket, '--idle', '--quiet'];
 
 	//  audio_only option aditional arguments
 	// --no-video  no video will be displayed
 	// --audio-display  prevents album covers embedded in audio files from being displayed
 	if( this.options.audio_only){
 		defaultArgs = _.concat(defaultArgs, ['--no-video', '--no-audio-display']);
+	}
+
+	// add the user specified arguments
+	if(mpv_args){
+		defaultArgs = _.union(defaultArgs, mpv_args);
 	}
 
 	// set up socket
