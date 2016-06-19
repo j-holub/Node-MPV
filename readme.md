@@ -26,6 +26,20 @@ mpvPlayer = new mpvAPI();
 
 and you're good to go.
 
+You optionally pass a Json object with options to the constructor. Possible options, along with their default values are the following
+
+```Javascript
+{
+	"verbose": false,
+    "debug": false,
+    "socket": "/tmp/node-mpv.sock"
+}
+```
+
+* `verbose` will print various information on the console
+* `debug` prints error messages
+* `socket` specifies the socket **mpv** opens
+
 This module provides a lot of different methods to interact with mpv, which can be called directly from the player object.
 
 ```Javascript
@@ -211,15 +225,18 @@ mpvPlayer.stop();
    
 ## ToDo
 
-* Add proper *debug* and *verbose* mode
 * Allow custom arguments
-* Allow for specifying a socket
 * Implement WebSocket support
 * Add playlist support
 * Add proper video support
 
 
 ## Changelog
+
+* **0.7.2**
+  * Options object as paramter for the constructor
+  * **debug** and **verbose** flags can be set
+  * an arbitrary **socket** can be specified
 
 * **0.7.0**
   
