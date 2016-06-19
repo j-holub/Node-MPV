@@ -1,8 +1,8 @@
 # Node-MPV
 
-This is an NPM Module to control **[mpv player](https://github.com/mpv-player/mpv)** through the Json IPC API.
+This module keeps an instance of *[mpv player](https://github.com/mpv-player/mpv)** running in the background and communicates over the Json IPC API.
 
-It keeps MPV running in the background with the `--idle` argument all the time and provides an easy-to-use interface, to control the player.
+It provides functions for the most of the commands needed to control **mpv**. It's easy to use and highly flexible.
 
 
 **This module requires [mpv](https://github.com/mpv-player/mpv) to be installed on your system to work**
@@ -13,11 +13,7 @@ It keeps MPV running in the background with the `--idle` argument all the time a
 
 ## Discalimer
 
-This module is still in development (Version **0.9.0** at the moment) and was not yet published to the official NPM repository.
-
-Both audio and video playback is possible, but I don't claim that the **API** is complete.
-
-The **API** offers free command input to **mpv**'s Json IPC protoctol and allows methods for easily adjusting arbitrary *properties* provided by the **mpv API**. With that any command can executed.
+This module is still in development (Version **0.9.1** at the moment) and was not yet published to the official NPM repository.
 
 ## Usage
 
@@ -133,33 +129,33 @@ mpvPlayer.volume(70);
       * `replace` *(default)* Replaces the old playist with the new one
       * `append`  Appends the new playlist to the active one
 
-   * **next** (mode="weak")
+  * **next** (mode="weak")
 
      Skips the current song. `mode`can be one of the following two
 
        * `weak` *(default*) If the song is the last song in the playlist it is not skipped
        * `strong` The song is skipped and playback is stopped
 
-   * **prev** (mode="weak")
+  * **prev** (mode="weak")
 
      Skips the current song. `mode`can be one of the following two
 
        * `weak` *(default*) If the song is the first song in the playlist it is not stopped
        * `strong` The song is skipped and playback is stopped
 
-   * **clearPlaylist** ()
+  * **clearPlaylist** ()
 
      Clears the playlist
 
-   * **playlistRemove** (index)
+  * **playlistRemove** (index)
 
      Removes the song at `index` from the playlist. If `index` is set to "current" the current song is removed and playback stops
 
-   * **playlistMove** (index1, index2)
+  * **playlistMove** (index1, index2)
 
      Moves the song at `index1` to the position at `index2`
 
-    * **shuffle** ()
+  * **shuffle** ()
 
       Shuffles the play into a random order
 
@@ -306,7 +302,7 @@ mpvPlayer.volume(70);
 
 These methods can be used to alter *properties* or send arbitary *commands* to the running **mpv player**. Information about what *commands* and *properties* are available can be found in the [list of commands](https://mpv.io/manual/stable/#list-of-input-commands) and [list of properties](https://mpv.io/manual/stable/#properties) sections of the **mpv** documentation.
 
-Some important or basic properties are already covered through methods provided by this module.
+The most common commands are already covered by this modules **API**. This part enables you to send any command you want over the IPC. With this you are not limited the methods defined by this module.
 
 * **setProperty** (property, value)
 
@@ -374,7 +370,7 @@ Some important or basic properties are already covered through methods provided 
   
   Unobserving default properties may break the module.
   
-### Events
+## Events
 
 The **Node-MPV** module provides various *events* to notify about changes of the **mpv player's** state.
 
