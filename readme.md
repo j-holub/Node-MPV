@@ -10,26 +10,14 @@ It keeps MPV running in the background with the `--idle` argument all the time a
 **For streaming playback such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
 
 
-## Discalimer
-# Node-MPV
-
-This is an NPM Module to control **[mpv player](https://github.com/mpv-player/mpv)** through the Json IPC API.
-
-It keeps MPV running in the background with the `--idle` argument all the time and provides an easy-to-use interface, to control the player.
-
-
-**This module requires [mpv](https://github.com/mpv-player/mpv) to be installed on your system to work**
-
-**For streaming playback such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
-
 
 ## Discalimer
 
-This module is still in development (Version **0.7.3** at the moment) and was not yet published to the official NPM repository.
+This module is still in development (Version **0.8.0** at the moment) and was not yet published to the official NPM repository.
 
-Both audio and video playback is possible. However on the video side the **API** is not yet implemented. Using functions like `command(command)` and `setProperty(property, value)` everything can already be fully controlled.
+Both audio and video playback is possible, but I don't claim that the **API** is complete.
 
-The **API** offers free command input to **mpv**'s Json IPC protoctol.
+The **API** offers free command input to **mpv**'s Json IPC protoctol and allows methods for easily adjusting arbitrary *properties* provided by the **mpv API**. With that any command can executed.
 
 ## Usage
 
@@ -131,6 +119,55 @@ mpvPlayer.volume(70);
 
   Jumps to the position specified by *seconds*. Going beyond the boundaries of the song results in stop of playback
   
+### Subtitles
+
+* **addSubtilte** (file, flag, title, lang)
+
+  Adds a subtitle file to the video that is loaded.
+  * `file` refers to the subtitle file to load
+  * `flag` *(optional)* can be one of "select" (default), "auto or "cached"
+  * `title` *(optional)* for the subtitle file in the UI  
+  * `lang` *(optional)* the language of the subtitle
+  
+* **removeSubitlte** (id)
+
+  Removes the subtitle file specified by `id`. Works only for external subtitles
+  
+* **selectSubitlte** (id)
+
+  Selects the subtitle associated with `id`
+  
+* **cycleSubtitles** ()
+
+  Cycles through all available subtitles
+  
+* **toggleSubtitleVisibility** ()
+
+  Toggles between hidden and visible subtitles
+  
+* **showSubtitles** ()
+
+  Shows the subtitles
+  
+* **hideSubtitles** ()
+
+  Hides the subtitles
+  
+* **adjustSubtitleTiming** (seconds)
+
+  Shifts the subtitle timing by `seconds`
+
+* **subtitleSeek** (lines)
+
+  Jumps as many lines of subtitles as defined by `lines`. Can be negative. This will also seek in the video.
+  
+* **subitlteScale** (scale)
+
+  Adjust the scale of the subtitles
+  
+
+  
+
 ### Setting Properties
 
 These methods can be used to alter *properties* or send arbitary *commands* to the running **mpv player**. Information about what *commands* and *properties* are available can be found in the [list of commands](https://mpv.io/manual/stable/#list-of-input-commands) and [list of properties](https://mpv.io/manual/stable/#properties) sections of the **mpv** documentation.
@@ -354,11 +391,11 @@ mpvPlayer.volume(70);
 
 * **loadFile** (file)
   
-  Will load the file and start playing it
+  Will load the `file` and start playing it
   
 * **loadStream** (url)
   
-  Exactly the same as **loadFile** but loads a Stream from an url, for example *YouTube* or *SoundCloud*.
+  Exactly the same as **loadFile** but loads a stream specified by `url`, for example *YouTube* or *SoundCloud*.
   
 ### Controlling MPV
 
@@ -388,21 +425,110 @@ mpvPlayer.volume(70);
   
 * **volume** (volumeLevel)
 
-  Sets volume to *volumeLevel*. Allowed values are between **0-100**. All values above and below will just set the volume to **0** or **100** respectively
+  Sets volume to `volumeLevel`. Allowed values are between **0-100**. All values above and below will just set the volume to **0** or **100** respectively
   
 * **adjustVolume** (value)
 
-  Adjusts the volume with the specified *value*. If this results in the volume going below **0** or above **100** it will be set to **0** or **100** respectively
+  Adjusts the volume with the specified `value`. If this results in the volume going below **0** or above **100** it will be set to **0** or **100** respectively
   
 * **seek** (seconds)
 
-  Will jump back or forth in the song for the specified amount of *seconds*. Going beyond the duration of  the song results in stop of playback
+  Will jump back or forth in the song for the specified amount of `seconds`. Going beyond the duration of  the song results in stop of playback
   
 * **goToPosition** (seconds)
 
-  Jumps to the position specified by *seconds*. Going beyond the boundaries of the song results in stop of playback
+  Jumps to the position specified by `seconds`. Going beyond the boundaries of the song results in stop of playback
   
-### Setting Properties
+* **fullscreen**()
+
+  Toggles between fullscreen and windowed mode
+
+### Subtitles
+
+* **addSubtilte** (file, flag, title, lang)
+
+  Adds a subtitle file to the video that is loaded.
+  * `file` The subtitle file to load
+  * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
+  * `title` *(optional)* The name for the subtitle file in the UI  
+  * `lang` *(optional)* The language of the subtitle
+  
+* **removeSubitlte** (id)
+
+  Removes the subtitle file specified by `id`. Works only for external subtitle
+  
+* **selectSubitlte** (id)
+
+  Selects the subtitle associated with `id`
+  
+* **cycleSubtitles** ()
+
+  Cycles through all available subtitles
+  
+* **toggleSubtitleVisibility** ()
+
+  Toggles between hidden and visible subtitle
+  
+* **showSubtitles** ()
+
+  Shows the subtitle
+  
+* **hideSubtitles** ()
+
+  Hides the subtitles
+  
+* **adjustSubtitleTiming** (seconds)
+
+  Shifts the subtitle timing by `seconds`
+
+* **subtitleSeek** (lines)
+
+  Jumps as many lines of subtitles as defined by `lines`. Can be negative. This will also seek in the video.
+  
+* **subitlteScale** (scale)
+
+  Adjust the scale of the subtitles
+  
+
+### Audio
+
+* **addAudioTrack** (file, flag, title, lang)
+
+  Adds an audio file to the video that is loaded.
+  * `file` The audio file to load
+  * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
+  * `title` *(optional)* The name for the audio track in the UI  
+  * `lang` *(optional)* the language of the audio track
+
+* **removeAudioTrack** ()
+
+  Removes the audio track specified by `id`. Works only for external audio tracks
+  
+* **selectAudioTrack** (id)
+
+  Selects the audio track associated with `id`
+  
+* **cycleAudioTracks** ()
+
+Cycles through the audio tracks
+  
+* **adjustAudioTiming** (seconds)
+
+  Shifts the audio timing by `seconds`
+
+
+### Screenshots
+
+* **screenshot** (file, option)
+
+  Takes a screenshot and saves it to `file`. `options` is one of the following
+  * `subtitles` *(default)* Takes a screenshot including the subtitles
+  * `video` Only the image, no texts
+  * `window` The scaled mpv window
+
+
+  
+### Properties
 
 These methods can be used to alter *properties* or send arbitary *commands* to the running **mpv player**. Information about what *commands* and *properties* are available can be found in the [list of commands](https://mpv.io/manual/stable/#list-of-input-commands) and [list of properties](https://mpv.io/manual/stable/#properties) sections of the **mpv** documentation.
 
@@ -410,7 +536,7 @@ Some important or basic properties are already covered through methods provided 
 
 * **setProperty** (property, value)
 
-  Sets the specified *property* to the specified *value*
+  Sets the specified `property` to the specified `value`
 
 * **setMultipleProperties** (properties)
 
@@ -422,32 +548,53 @@ Some important or basic properties are already covered through methods provided 
         "fullscreen": true
   });
   ```
-  
+
 * **getProperty** (property, id)
 
-  Gets the information about the specified *property*. The answers comes in form of an emitted *getrequest* event containing the specified *id*. This unfortunate, but to JavaScript's single threaded and event driven nature, it was the only way I found.
+  Gets the information about the specified `property`. The answers comes in form of an emitted *getrequest* event containing the specified `id`. This unfortunate, but to JavaScript's single threaded and event driven nature, it was the only way I found.
   
 * **addProperty** (property, value)
 
-  Increased the *property* by the specified *value*. Needless to say this can only be used on numerical properties.
+  Increased the `property` by the specified `value`. Needless to say this can only be used on numerical properties. Negative values are possible.
   
-* **observeProperty** (property, id)
+* **cycleProperty** (property)
 
-  This will add the specified *property* to the *statusupdate* event which is emitted whenever one of the observed properties changes.
+  Cycles the values of an arbitrary property
   
-  The **Id**s **0**-**7** are already taken by the properties which are observed by default.
+* **command** (command, args)
+
+  Sends the `command` to the **mpv** player with the arguments specified in `args`
+  The Json command 
+  
+  ```Javascript
+  `{"command": ["loadfile", "audioSong.mp3"]}`
+  ```
+  
+  becomes a function call	
+  
+  ```Javascript
+  `command("loadfile",["audioSong.mp3"]`
+  ```
+
+* **freeCommand** (command)
+
+  This will send an arbitrary *command* to the **mpv player**. It must however follow the specification of the **Json IPC protocol**. Its syntax can be found in the [documentation](https://mpv.io/manual/stable/#json-ipc). 
+  
+  A trailing "**\n**" will be added to the command.
+
+### Observing
+ 
+ * **observeProperty** (property, id)
+
+   This will add the specified *property* to the *statusupdate* event which is emitted whenever one of the observed properties changes.
+  
+   The **Id**s **0**-**9** are already taken by the properties which are observed by default.
   
 * **unobserveProperty(id)**
 
   This will remove the property associated with the specified *id* from the *statusupdate*.
   
   Unobserving default properties may break the module.
-  
-* **command** (command)
-
-  This will send an arbitrary *command* to the **mpv player**. It must however follow the specification of the **Json IPC protocol**. Its syntax can be found in the [documentation](https://mpv.io/manual/stable/#json-ipc). 
-  
-  A trailing "**\n**" will be added to the command.
   
 ### Events
 
@@ -473,6 +620,10 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   When a song or video is currently playing and the playback is not paused, this event will emit the current position in *seconds* roughly every second.
 
+* **getrequest** \<id, data\>
+
+  Delivers the reply to a function call to the *getRequest* method
+
 * **statuschange** \<status object\>
 
   Whenever the status of one of the observed properties changes, this event will be emitted providing the complete *status object*
@@ -491,20 +642,24 @@ The **Node-MPV** module provides various *events* to notify about changes of the
   }
   ```
   
-  This object can expanded through the *observeProperty* method making it possible to watch any state you desire, given it is provided by **mpv**
+    If the player is running in *video mode* the following properties are present as well.
+
+  ```Javascript
+  {
+    "fullscreen": false,
+    "sub-visibility": false
+  }
+  ```
   
-  * *filename*
-  
+  * `filename`
     When playing a local file this contains the filename. When playing for example a *YouTube* stream, this will only contain the trailing url
     
-  * *path*
-
+  * `path`
     Provides the absolute path to the music file or the full url of  a stream
     
-  * *media-title*
-
-    If available in the file this will contain the *title*. When streaming from *YouTube* this will be set to the video's name
+  * `media-title` If available in the file this will contain the *title*. When streaming from *YouTube* this will be set to the video's name
     
+    This object can expanded through the *observeProperty* method making it possible to watch any state you desire, given it is provided by **mpv**
     
 ## Example
 
@@ -527,13 +682,15 @@ mpvPlayer.stop();
    
 ## ToDo
 
-* Allow custom arguments
 * Implement WebSocket support
 * Add playlist support
-* Add proper video support
 
 
 ## Changelog
+
+* ** 8.0.0**
+  * Added support for various video related commands
+  * Subtitle support
 
 * **0.7.4**
   * Custom command line arguments can now be provided to **mpv**

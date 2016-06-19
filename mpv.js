@@ -374,6 +374,10 @@ mpv.prototype = {
 	selectAudioTrack: function(id) {
 		this.socket.setProperty("audio", id);
 	},
+	// cycles through the audio track
+	cycleAudioTracks: function() {
+		this.socket.cycleProperty("audio");
+	}
 	// adjusts the timing of the audio track
 	adjustAudioTiming: function(seconds){
 		this.socket.setProperty("audio-delay", seconds);
@@ -420,7 +424,11 @@ mpv.prototype = {
 	// adds the value to the property
 	addProperty: function(property, value){
 		this.socket.addProperty(property, value);
-	},
+	},	
+	// cycles a arbitrary property
+	cycleProperty: function(property){
+		this.socket.cycleProperty(property);
+	}
 	// send a command with arguments to mpv
 	command: function(command, args){
 		this.socket.command(command, args);
