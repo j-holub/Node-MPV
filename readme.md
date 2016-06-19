@@ -119,6 +119,10 @@ mpvPlayer.volume(70);
 * **goToPosition** (seconds)
 
   Jumps to the position specified by `seconds`. Going beyond the boundaries of the song results in stop of playback
+
+* **loop** (times)
+
+  Loops the current title `times`often. If set to *"inf"* the title is looped forever
   
 ### Playlists
 
@@ -456,7 +460,6 @@ mpvPlayer.stop();
 ## ToDo
 
 * Implement WebSocket support
-* Add playlist support
 
 
 ## Changelog
