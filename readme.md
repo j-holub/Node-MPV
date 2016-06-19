@@ -92,9 +92,9 @@ mpvPlayer.volume(70);
 
   Pauses playback
   
-* **unpause** ()
+* **resume** ()
 
-  Unpauses from *pause* mode
+  Resumes from *pause* mode
 
 * **togglePause** ()
 
@@ -301,7 +301,7 @@ Some important or basic properties are already covered through methods provided 
 
 The **Node-MPV** module provides various *events* to notify about changes of the **mpv player's** state.
 
-* **start**
+* **started**
 
   Whenever **mpv** starts playing a song or video
 
@@ -313,9 +313,9 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   Whenever **mpv** was paused
 
-* **unpaused**
+* **resumed**
 
-  Whenever **mpv** was unpaused
+  Whenever **mpv** was resumed
 
 * **timeposition** \<seconds\>
 
@@ -394,6 +394,9 @@ mpvPlayer.stop();
   * [util](https://github.com/defunctzombie/node-util) is no longer required
   * **fullscreen**() was renamed to **toggleFullscreen**()
   * **fullscreen**() enters *fullscreen mode*, **leaveFullscreen**() leaves it
+  * **unpause**() renamed to **resume**()
+  * **unpaused** event renamed to **resumed**
+  * **start** event renamed to **started**
 
 * **0.8.0**
   * Added support for various video related commands
