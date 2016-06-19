@@ -13,7 +13,7 @@ It keeps MPV running in the background with the `--idle` argument all the time a
 
 ## Discalimer
 
-This module is still in development (Version **0.8.2** at the moment) and was not yet published to the official NPM repository.
+This module is still in development (Version **0.9.0** at the moment) and was not yet published to the official NPM repository.
 
 Both audio and video playback is possible, but I don't claim that the **API** is complete.
 
@@ -120,6 +120,45 @@ mpvPlayer.volume(70);
 
   Jumps to the position specified by `seconds`. Going beyond the boundaries of the song results in stop of playback
   
+### Playlists
+
+  * **loadPlaylist** (playlist, mode="replace")
+
+    Loads a playlist file. `mode` can be one of the two folllowing
+
+      * `replace` *(default)* Replaces the old playist with the new one
+      * `append`  Appends the new playlist to the active one
+
+   * **next** (mode="weak")
+
+     Skips the current song. `mode`can be one of the following two
+
+       * `weak` *(default*) If the song is the last song in the playlist it is not skipped
+       * `strong` The song is skipped and playback is stopped
+
+   * **prev** (mode="weak")
+
+     Skips the current song. `mode`can be one of the following two
+
+       * `weak` *(default*) If the song is the first song in the playlist it is not stopped
+       * `strong` The song is skipped and playback is stopped
+
+   * **clearPlaylist** ()
+
+     Clears the playlist
+
+   * **playlistRemove** (index)
+
+     Removes the song at `index` from the playlist. If `index` is set to "current" the current song is removed and playback stops
+
+   * **playlistMove** (index1, index2)
+
+     Moves the song at `index1` to the position at `index2`
+
+    * **shuffle** ()
+
+      Shuffles the play into a random order
+
 
 
 ### Audio
@@ -319,7 +358,7 @@ Some important or basic properties are already covered through methods provided 
 
    This will add the specified *property* to the *statusupdate* event which is emitted whenever one of the observed properties changes.
   
-   The **Id**s **0**-**9** are already taken by the properties which are observed by default.
+   The **Id**s **0**-**11** are already taken by the properties which are observed by default.
   
 * **unobserveProperty(id)**
 
@@ -418,6 +457,10 @@ mpvPlayer.stop();
 
 
 ## Changelog
+
+* **0.9.0**
+
+  * Playlist support added
 
 * **0.8.2**
   * Added function to set the **brightness**, **contrast**, **saturation**, **gamma** and **hue**
