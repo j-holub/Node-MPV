@@ -14,6 +14,9 @@ var _ = require('lodash');
 
 function mpv(options, mpv_args){
 
+	// intialize the event emitter
+	eventEmitter.call(this);
+
 	this.options = {
 		"debug": false,
 		"verbose": false,
