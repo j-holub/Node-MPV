@@ -1,6 +1,6 @@
 # Node-MPV
 
-This module keeps an instance of *[mpv player](https://github.com/mpv-player/mpv)** running in the background and communicates over the Json IPC API.
+This module keeps an instance of **[mpv player](https://github.com/mpv-player/mpv)** running in the background and communicates over the Json IPC API.
 
 It provides functions for the most of the commands needed to control **mpv**. It's easy to use and highly flexible.
 
@@ -11,7 +11,7 @@ It provides functions for the most of the commands needed to control **mpv**. It
 
 
 
-## Discalimer
+## Disclaimer
 
 This module is still in development (Version **0.9.1** at the moment) and was not yet published to the official NPM repository.
 
@@ -62,6 +62,18 @@ mpvPlayer.loadFile("/path/to/your/favorite/song.mp3");
 mpvPlayer.volume(70);
 ```
 
+Events are used to detect changes
+
+```Javascript
+mpvPlayer.on('statuschange', function(status){
+	console.log(status);
+});
+
+mpvPlayer.on('stopped', function() {
+	console.log("Gimme more music");
+});
+```
+
 ## Methods
 
 ### Load Content
@@ -73,6 +85,8 @@ mpvPlayer.volume(70);
 * **loadStream** (url)
   
   Exactly the same as **loadFile** but loads a stream specified by `url`, for example *YouTube* or *SoundCloud*.
+
+  This function should be used to load *YouTube* and *SoundCloud* playlists, as **loadPlaylist** will not work.
   
 ### Controlling MPV
 
@@ -125,6 +139,8 @@ mpvPlayer.volume(70);
   * **loadPlaylist** (playlist, mode="replace")
 
     Loads a playlist file. `mode` can be one of the two folllowing
+
+    This function does not work with *YouTube* or *SoundCloud* playlists. Use **loadFile** or **loadStream** instead
 
       * `replace` *(default)* Replaces the old playist with the new one
       * `append`  Appends the new playlist to the active one
@@ -187,11 +203,18 @@ mpvPlayer.volume(70);
   
 * **cycleAudioTracks** ()
 
- Cycles through the audio tracks
+  Cycles through the audio tracks
   
 * **adjustAudioTiming** (seconds)
 
   Shifts the audio timing by `seconds`
+
+* **speed** (scale)
+
+  Controls the playback speed by `scale` which can take any value between **0.01** and **100**
+
+  If the `--auto-pitch-correction` flag (on by default) is used, this will not pitch the audio and uses a scaletempo audio filter
+
 
 ### Video
 
@@ -466,6 +489,7 @@ mpvPlayer.stop();
 * **0.9.1**
   * Loop function implemented and property added to the default observed values
   * MultiplyProperty added offer more free interaction with mpv
+  * Added a function to adjust the playback speed
 
 * **0.9.0**
   * Playlist support added
