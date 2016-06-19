@@ -91,7 +91,7 @@ function mpv(options){
 
 	// if mpv crashes restart it again
 	this.mpvPlayer.on('close', function() {
-		if(this.options.verbose){
+		if(this.options.debug){
 			console.log("MPV Player seems to have died. Restarting...");
 		}
 		this.mpvPlayer = spawn('mpv', defaultArgs);
@@ -110,8 +110,10 @@ function mpv(options){
 
 	// if spawn fails to start mpv player
 	this.mpvPlayer.on('error', function(error) {
-		console.log("mov player not found");
-	});
+		if(this.options.debug){
+			console.log(error);	
+		}
+	}.bind(this));
 	
 	// handles the data received from the IPC socket
 	this.socket.on('message', function(data) {

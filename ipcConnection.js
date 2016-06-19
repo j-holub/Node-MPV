@@ -29,7 +29,7 @@ ipcConnection = function(options) {
 
 	// connect
 	this.socket.connect({path: this.options.socket}, function() {
-		if(this.options.verbose){
+		if(this.options.debug){
 			console.log(`Connected to socket "${this.options.socket}`);
 		}
 	}.bind(this));
@@ -37,16 +37,23 @@ ipcConnection = function(options) {
 
 	// reestablish connection when lost
 	this.socket.on('close', function() {
-		if(this.options.verbose){
+		if(this.options.debug){
 			console.log("Lost connection to socket. Atemping to reconnect");
 		}
-		this.socket.connect({path: this.options.socket});
+		// connect to socket
+		this.socket.connect({path: this.options.socket}, function() {
+			if(this.options.verbose || this.options.debug){
+				console.log(`Connected to socket "${this.options.socket}`);
+			}
+		}.bind(this));
 	}.bind(this));
 
 	//  catch errors when occurrings
 	this.socket.on('error', function(error) {
-		// console.log(error);
-	});
+		if(this.options.debug){
+			console.log(error);
+		}
+	}.bind(this));
 
 	// received data is delivered upwards by an event
 	this.socket.on('data', function(data) {
