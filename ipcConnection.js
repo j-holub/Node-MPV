@@ -83,7 +83,6 @@ ipcConnection.prototype = {
 			"command": [command].concat(args)
 		}
 		var message = JSON.stringify(messageJson)
-		console.log(message);
 		this.socket.write(message + "\n");
 	},
 	// property: String
