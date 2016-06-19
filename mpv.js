@@ -280,6 +280,7 @@ mpv.prototype = {
 		this.socket.command("seek", [seconds, "absolute", "exact"]);
 	},
 
+
 	// toggles fullscreen
 	fullscreen: function() {
 		if(this.observed.fullscreen){
@@ -289,6 +290,7 @@ mpv.prototype = {
 			this.socket.setProperty("fullscreen", true);
 		}
 	},
+
 
 	// add subtitle file
 	// file path to the subtitle file
@@ -348,6 +350,13 @@ mpv.prototype = {
 		this.setProperty("sub-scale", scale);
 	},
 
+	// takes a screenshot
+	// option subtitles / video / window
+	screenshot: function(file, option){
+		var args = [file];
+		if(option){args = _.concat(args, option)};
+		this.command("screenshot-to-file", args);
+	},
 
 
 	// observe a property for changes
