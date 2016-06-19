@@ -236,12 +236,7 @@ mpv.prototype = {
 
 	// toggles pause
 	togglePause: function() {
-		if(this.observed.pause){
-			this.socket.setProperty("pause", false);
-		}
-		else{
-			this.socket.setProperty("pause", true);
-		}
+		this.socket.cycleProperty("pause");
 	},
 	// pause
 	pause: function() {
@@ -264,12 +259,7 @@ mpv.prototype = {
 	},
 	// toggles mute
 	mute: function() {
-		if(this.observed.mute){
-			this.socket.setProperty("mute", false);
-		}
-		else{
-			this.socket.setProperty("mute", true);
-		}
+		this.socket.cycleProperty("mute");
 	},
 	//  relative search 
 	seek: function(seconds) {
@@ -283,12 +273,7 @@ mpv.prototype = {
 
 	// toggles fullscreen
 	fullscreen: function() {
-		if(this.observed.fullscreen){
-			this.socket.setProperty("fullscreen", false);
-		}
-		else{
-			this.socket.setProperty("fullscreen", true);
-		}
+		this.socket.cycleProperty("fullscreen");
 	},
 
 
@@ -322,12 +307,7 @@ mpv.prototype = {
 	},
 	// toggle subtitle visibility
 	toggleSubtitleVisibility: function() {
-		if(this.observed["sub-visibility"]){
-			this.socket.setProperty("sub-visibility", false);
-		}
-		else{
-			this.socket.setProperty("sub-visibility", true);
-		}
+		this.socket.cycleProperty("sub-visibility");
 	},
 	// shows selected subtitle
 	showSubtitles: function() {
@@ -377,7 +357,7 @@ mpv.prototype = {
 	// cycles through the audio track
 	cycleAudioTracks: function() {
 		this.socket.cycleProperty("audio");
-	}
+	},
 	// adjusts the timing of the audio track
 	adjustAudioTiming: function(seconds){
 		this.socket.setProperty("audio-delay", seconds);
@@ -428,7 +408,7 @@ mpv.prototype = {
 	// cycles a arbitrary property
 	cycleProperty: function(property){
 		this.socket.cycleProperty(property);
-	}
+	},
 	// send a command with arguments to mpv
 	command: function(command, args){
 		this.socket.command(command, args);
