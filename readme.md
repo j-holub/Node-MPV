@@ -41,14 +41,10 @@ sudo apt-get install mpv youtube-dl
 
 # Usage
 
-Simply create an instance of the player
-
 ```Javascript
 mpv = require('node-mpv');
 mpvPlayer = new mpv();
 ```
-
-and you're good to go.
 
 You optionally pass a Json object with options to the constructor. Possible options, along with their default values are the following
 
@@ -546,7 +542,7 @@ If **node-mpv** is not run in `audio_only` mode the following two properties wil
  
  As of **mpv** version **0.17.0**, the `playlist-count` property is not updated as one would expect. It is not updated on **playlistRemove** and **append**. I already filed an [issue](https://github.com/mpv-player/mpv/issues/3267) about that and the problem was already fixed. If you need this feature you will have to build and install **mpv** yourself. Instructions for that can be found on the projects [GitHub page](https://github.com/mpv-player).
     
-## Example
+# Example
 
 ```Javascript
 var mpvAPI = require('./mpv.js');
@@ -568,12 +564,14 @@ mpvPlayer.volume(50);
 mpvPlayer.stop();
 ```
    
-## ToDo
+# ToDo
 
-* Fix the "Possible EventEmitter memory leak detected" bug
 * Implement WebSocket support
 
-## Changelog
+# Changelog
+
+* **0.9.4**
+  * Fixed EventListener leak bug 
 
 * **0.9.3**
   * Added **append** functionality for playlists
