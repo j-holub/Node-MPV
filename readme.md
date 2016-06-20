@@ -542,6 +542,10 @@ If **node-mpv** is not run in `audio_only` mode the following two properties wil
   
   For more information on the **statuschange** part, check the event section.
     
+ ### Bug with observing playlist-count
+ 
+ As of **mpv** version **0.17.0**, the `playlist-count` property is not updated as one would expect. It is not updated on **playlistRemove** and **append**. I already filed an [issue](https://github.com/mpv-player/mpv/issues/3267) about that and the problem was already fixed. If you need this feature you will have to build and install **mpv** yourself. Instructions for that can be found on the projects [GitHub page](https://github.com/mpv-player).
+    
 ## Example
 
 ```Javascript
