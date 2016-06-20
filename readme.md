@@ -1,8 +1,8 @@
 # Node-MPV
 
-This module keeps an instance of **[mpv player](https://github.com/mpv-player/mpv)** running in the background and communicates over the Json IPC API. 
+A wrapper to comfortably use **[mpv player](https://github.com/mpv-player/mpv)** with **node**.js. It provides functions for the most of the commands needed to control the player. It's easy to use and highly flexible.
 
-It provides functions for the most of the commands needed to control **mpv**. It's easy to use and highly flexible.
+The module keeps an instance of **mpv** running in the background (using mpv's `--idle`) and communicates over the Json IPC API. 
 
 It also provides direct access to the IPC socket. Thus this module is not only limited to the methods it provides, but can fully communicate with the **mpv** API.
 
@@ -70,31 +70,31 @@ You can also provide an optional second argument, an Array containing **mpv** co
 
 ```Javascript
 mpvPlayer = new mpv({
-	"verbose": true,
-	"audio_only": true
+  "verbose": true,
+  "audio_only": true
 },
 [
-	"--fullscreen",
-    	"--fps=60"
+  "--fullscreen",
+      "--fps=60"
 ]);
 ```
 
-This module provides a lot of different methods to interact with mpv, which can be called directly from the player object.
+Mpv is then easily controllable via simple function calls.
 
 ```Javascript
 mpvPlayer.loadFile("/path/to/your/favorite/song.mp3");
 mpvPlayer.volume(70);
 ```
 
-Events are used to detect changes
+Events are used to detect changes.
 
 ```Javascript
 mpvPlayer.on('statuschange', function(status){
-	console.log(status);
+  console.log(status);
 });
 
 mpvPlayer.on('stopped', function() {
-	console.log("Gimme more music");
+  console.log("Gimme more music");
 });
 ```
 
@@ -102,15 +102,24 @@ mpvPlayer.on('stopped', function() {
 
 ## Load Content
 
-* **loadFile** (file)
+* **loadFile** (file, mode="replace")
   
-  Will load the `file` and start playing it
+  Will load the `file` and starts playing it. This behaviour can be changed using the `mode` option
+  
+  * `replace`*(default)* replace current title and play the file immediately
+  * `append` appends the title to the playlist
+  * `append-play` appends the title to the playlist. If the playlist was empty this title is played
+
+  There is another `append` function in the **playlist** section, which can be used to append files and streams.
   
 * **loadStream** (url)
   
   Exactly the same as **loadFile** but loads a stream specified by `url`, for example *YouTube* or *SoundCloud*.
+  
+  `mode` is the same as in **loadFile**.
 
-  This function should be used to load *YouTube* and *SoundCloud* playlists, as **loadPlaylist** will not work.
+  This function should be used to load *YouTube* and *SoundCloud* playlists, as **loadPlaylist** will not work with those.
+ 
   
 ## Controlling MPV
 
@@ -168,6 +177,13 @@ mpvPlayer.on('stopped', function() {
 
       * `replace` *(default)* Replaces the old playist with the new one
       * `append`  Appends the new playlist to the active one
+
+  * **append** (file, mode="append")
+
+    Appends `file` (which can also be an url) to the playlist.
+    
+    * `append` *(default)* Append the title
+    * `append-play` When the playlist was empty the title will be started
 
   * **next** (mode="weak")
 
@@ -361,7 +377,7 @@ The most common commands are already covered by this modules **API**. This part 
   
   ```Javascript
   setMultipleProperties({
-  		"volume": 70,
+      "volume": 70,
         "fullscreen": true
   });
   ```
@@ -391,7 +407,7 @@ The most common commands are already covered by this modules **API**. This part 
   `{"command": ["loadfile", "audioSong.mp3"]}`
   ```
   
-  becomes a function call	
+  becomes a function call 
   
   ```Javascript
   `command("loadfile",["audioSong.mp3"]`
@@ -537,7 +553,7 @@ mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
 
 // This will bind this function to the stopped event
 mpvPlayer.on('stopped', function() {
-	console.log("Your favorite song just finished, let's start it again!");
+  console.log("Your favorite song just finished, let's start it again!");
     mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
 });
 
@@ -554,6 +570,9 @@ mpvPlayer.stop();
 * Implement WebSocket support
 
 ## Changelog
+
+* **0.9.3**
+  * Added **append** functionality for playlists
 
 * **0.9.1**
   * **Loop** function implemented and property added to the default observed values
