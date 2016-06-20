@@ -44,8 +44,8 @@ sudo apt-get install mpv youtube-dl
 Simply create an instance of the player
 
 ```Javascript
-mpvAPI = require("./index.js");
-mpvPlayer = new mpvAPI();
+mpv = require('node-mpv');
+mpvPlayer = new mpv();
 ```
 
 and you're good to go.
@@ -69,13 +69,13 @@ You optionally pass a Json object with options to the constructor. Possible opti
 You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
 
 ```Javascript
-mpvPlayer = new mpvAPI({
+mpvPlayer = new mpv({
 	"verbose": true,
 	"audio_only": true
 },
 [
 	"--fullscreen",
-    "--fps=60"
+    	"--fps=60"
 ]);
 ```
 
