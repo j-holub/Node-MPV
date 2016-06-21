@@ -564,78 +564,7 @@ mpvPlayer.volume(50);
 mpvPlayer.stop();
 ```
    
-# ToDo
-
-* Implement WebSocket support
 
 # Changelog
 
-* **0.9.4**
-  * Fixed EventListener leak bug 
-
-* **0.9.3**
-  * Added **append** functionality for playlists
-
-* **0.9.1**
-  * **Loop** function implemented and property added to the default observed values
-  * **MultiplyProperty** added offer more free interaction with mpv
-  * Added a function to adjust the playback **speed**
-
-* **0.9.0**
-  * Playlist support added
-
-* **0.8.2**
-  * Added function to set the **brightness**, **contrast**, **saturation**, **gamma** and **hue**
-  * Added functions to zoom and rotate the video
-
-* **0.8.1**
-  * Major code reorganisation
-  * [util](https://github.com/defunctzombie/node-util) is no longer required
-  * **fullscreen**() was renamed to **toggleFullscreen**()
-  * **fullscreen**() enters *fullscreen mode*, **leaveFullscreen**() leaves it
-  * **unpause**() renamed to **resume**()
-  * **unpaused** event renamed to **resumed**
-  * **start** event renamed to **started**
-
-* **0.8.0**
-  * Added support for various video related commands
-  * Subtitle support
-
-* **0.7.4**
-  * Custom command line arguments can now be provided to **mpv**
-  * As of this version [lodash](https://lodash.com) **4.0.0** or higher is required
-  * Minor fixes
-
-* **0.7.3**
-  * Added `audio_only` option
-  * Videos are now officially supported, but the API is still missing
-
-* **0.7.2**
-  * Options object as paramter for the constructor
-  * `debug` and `verbose` flags can be set
-  * an arbitrary socket` can be specified
-
-* **0.7.0**
-  
-  * Added **events**
-  
-* **0.6.0**
-
-  * Allowed for free **commands**
-  * Free **setProperty** and **getProperty** methods
-
-* **0.5.0**
-
-  * **Observing** arbitrary properties
-
-* **0.4.0**
-
-  * Various control methods
-
-* **0.3.0**
-
-  * First API version
-
-* **0.2.0**
-
-  * Implemented communication interface via a local socket to talk to **mpv**
+See [changelog](CHANGELOG.md) for more information or API breaking changes
