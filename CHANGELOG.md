@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **0.9.5**
+  * Fixed Meteor support
+
 * **0.9.4**
   * Fixed EventListener leak bug 
 
