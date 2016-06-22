@@ -11,6 +11,10 @@ It also provides direct access to the IPC socket. Thus this module is not only l
 
 **For streaming playback such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
 
+### Important
+
+This module is still pre **1.0.0**, the API might still change. Check the [changelog](CHANGELOG.md) for breaking changes.
+
 
 # Install
 
