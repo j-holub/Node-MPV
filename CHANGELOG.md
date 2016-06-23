@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **0.9.6**
+  * The interval, how often the timeposition event occurs can now be set to any value
+
 * **0.9.5**
   * Fixed Meteor support
 

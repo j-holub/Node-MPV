@@ -57,7 +57,8 @@ You optionally pass a Json object with options to the constructor. Possible opti
     "verbose": false,
     "debug": false,
     "socket": "/tmp/node-mpv.sock",
-    "audio_only": false
+    "audio_only": false,
+    "time_update": 1
 }
 ```
 
@@ -65,6 +66,7 @@ You optionally pass a Json object with options to the constructor. Possible opti
 * `debug` prints error messages
 * `socket` specifies the socket **mpv** opens
 * `audio_only` will add the `--no-video` and `--no-audio-display` argument and start **mpv** in audio only mode
+* `time_update` the time interval in seconds, how often **mpv** should report the current time position, when playing a title
 
 You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
 
@@ -455,7 +457,9 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
 * **timeposition** \<seconds\>
 
-  When a song or video is currently playing and the playback is not paused, this event will emit the current position in *seconds* roughly every second.
+  When a song or video is currently playing and the playback is not paused, this event will emit the current position in *seconds*.
+  
+  When creating the **mpv** instance you can set a parameter, how often this event should occur. Default is every second
 
 * **getrequest** \<id, data\>
 
