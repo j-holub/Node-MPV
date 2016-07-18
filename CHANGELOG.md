@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **0.10.0**
+  * The command line argument for the IPC socket has changed in mpv version **0.17.0**. The module didn't work for older Versions of mpv. This is fixed now
+
 * **0.9.6**
   * The interval, how often the timeposition event occurs can now be set to any value
 

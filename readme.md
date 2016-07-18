@@ -77,7 +77,7 @@ mpvPlayer = new mpv({
 },
 [
   "--fullscreen",
-      "--fps=60"
+  "--fps=60"
 ]);
 ```
 
@@ -572,6 +572,18 @@ mpvPlayer.volume(50);
 mpvPlayer.stop();
 ```
    
+# Known Issues
+
+The command line argument to start the IPC socket has changed in mpv version **0.17.0** from `--input-unix-socket` to `--input-ipc-socket`. This module uses regular expressions to find the version number from the `mpv --version` output. If mpv is compiled from source, the version number is stated as **UNKNOWN** and this module will assume, that you use the latest version and use the new command.
+
+**If you use self compiled version stating UNKNOWN as the version number below mpv version 0.17.0 this module will NOT work.**
+
+To check this enter the following in your command shell
+
+```
+mpv --version
+```
+  
 
 # Changelog
 
