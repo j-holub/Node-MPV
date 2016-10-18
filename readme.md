@@ -59,6 +59,7 @@ You optionally pass a Json object with options to the constructor. Possible opti
     "socket": "/tmp/node-mpv.sock",
     "audio_only": false,
     "time_update": 1
+    "ipcCommand": null
 }
 ```
 
@@ -67,6 +68,7 @@ You optionally pass a Json object with options to the constructor. Possible opti
 * `socket` specifies the socket **mpv** opens
 * `audio_only` will add the `--no-video` and `--no-audio-display` argument and start **mpv** in audio only mode
 * `time_update` the time interval in seconds, how often **mpv** should report the current time position, when playing a title
+* `ipc_command` allows to set the ipc command to start the ipc socket. Possible options are **--input-unix-socket** and **--input-ipc-server**. This is usually not needed since  **Node-MPV** is able to determine the correct command by itself, for the most part
 
 You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
 
@@ -574,16 +576,27 @@ mpvPlayer.stop();
    
 # Known Issues
 
+## IPC Command
+
 The command line argument to start the IPC socket has changed in mpv version **0.17.0** from `--input-unix-socket` to `--input-ipc-socket`. This module uses regular expressions to find the version number from the `mpv --version` output. If mpv is compiled from source, the version number is stated as **UNKNOWN** and this module will assume, that you use the latest version and use the new command.
 
-**If you use self compiled version stating UNKNOWN as the version number below mpv version 0.17.0 this module will NOT work.**
+**If you use self compiled version stating UNKNOWN as the version number below mpv version 0.17.0 you have to use the ipc_command option with '--input-unix-socket'.**
 
 To check this enter the following in your command shell
 
 ```
 mpv --version
 ```
+
+## MPV Player 0.18.1
+
+MPV Player version **0.18.1** has some issues that the player crashes sometimes, when sending it commands through the *ipc socket*. If you're using version **0.18.0** try to use a newer (or older) version.
   
+To check your version number enter the following in your command shell
+
+```
+mpv --version
+```
 
 # Changelog
 
