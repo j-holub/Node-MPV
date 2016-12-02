@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **0.12.0**
+  * The user can provied the path to a mpv binary in case mpv player is not in the PATH
+
 * **0.11.0**
   * The code to determine the correct ipc command is now more robust
   * Added option to pass the ipc command by hand
