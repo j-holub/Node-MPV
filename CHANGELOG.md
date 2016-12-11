@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **0.12.1**
+  * Fixed the **loop** method
+
 * **0.12.0**
   * The user can provied the path to a mpv binary in case mpv player is not in the PATH
 
@@ -17,7 +20,7 @@
   * Fixed Meteor support
 
 * **0.9.4**
-  * Fixed EventListener leak bug 
+  * Fixed EventListener leak bug
 
 * **0.9.3**
   * Added **append** functionality for playlists
@@ -62,9 +65,9 @@
   * an arbitrary socket` can be specified
 
 * **0.7.0**
-  
+
   * Added **events**
-  
+
 * **0.6.0**
 
   * Allowed for free **commands**
