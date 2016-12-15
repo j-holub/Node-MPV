@@ -1,4 +1,6 @@
 # Node-MPV Changelog
+* **0.12.2**
+  * Fixed the version check when the user provides his/her own binary (Thanks to @SkyZH)
 
 * **0.12.1**
   * Fixed the **loop** method
