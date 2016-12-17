@@ -13,7 +13,8 @@ It also provides direct access to the IPC socket. Thus this module is not only l
 
 ### Important
 
-This module is still pre **1.0.0**, the API might still change. Check the [changelog](CHANGELOG.md) for breaking changes.
+
+In version **0.13.0** the behaviour of `mute()` has changed. Use `toggleMute()` instead.
 
 In version **0.13.0** the behaviour of `mute()` has changed. Use `toggleMute()` instead.
 
@@ -394,13 +395,24 @@ The most common commands are already covered by this modules **API**. This part 
   ```Javascript
   setMultipleProperties({
       "volume": 70,
-        "fullscreen": true
+      "fullscreen": true
   });
   ```
 
-* **getProperty** (property, id)
+* **getProperty** (property, [id])
 
-  Gets the information about the specified `property`. The answers comes in form of an emitted *getrequest* event containing the specified `id`. This unfortunate, but to JavaScript's single threaded and event driven nature, it was the only way I found
+  Gets information about the specified `property`.
+  
+   If an `id` is used, the answer comes via a *getrequest* event containing the `id` and the `property`.
+  
+  If no `id` was set this function returns a [promise](https://www.promisejs.org) delivering the `property`. It can be used as in the example below
+  
+  ```Javascript
+    mpvPlayer.getProperty('duration').then(function(duration) {
+	  console.log("Duration: ", duration);
+	});
+```
+
   
 * **addProperty** (property, value)
 

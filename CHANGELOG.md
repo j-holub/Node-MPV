@@ -1,5 +1,10 @@
 # Node-MPV Changelog
 
+* **1.0.0**
+  * getProperty is able to return a promise, making its use a lot more comfortable
+
+### Pre 1.0.0  
+
 * **0.13.0**
   * **API Chnage:** `mute`'s behaviour was changed to set the player to *mute*
   * `unmute` method added to unmute the player
