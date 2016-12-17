@@ -2,7 +2,7 @@
 
 A wrapper to comfortably use **[mpv player](https://github.com/mpv-player/mpv)** with **node**.js. It provides functions for the most of the commands needed to control the player. It's easy to use and highly flexible.
 
-The module keeps an instance of **mpv** running in the background (using mpv's `--idle`) and communicates over the Json IPC API. 
+The module keeps an instance of **mpv** running in the background (using mpv's `--idle`) and communicates over the Json IPC API.
 
 It also provides direct access to the IPC socket. Thus this module is not only limited to the methods it provides, but can fully communicate with the **mpv** API.
 
@@ -16,7 +16,6 @@ It also provides direct access to the IPC socket. Thus this module is not only l
 
 In version **0.13.0** the behaviour of `mute()` has changed. Use `toggleMute()` instead.
 
-In version **0.13.0** the behaviour of `mute()` has changed. Use `toggleMute()` instead.
 
 
 # Install
@@ -110,30 +109,30 @@ mpvPlayer.on('stopped', function() {
 ## Load Content
 
 * **loadFile** (file, mode="replace")
-  
+
   Will load the `file` and starts playing it. This behaviour can be changed using the `mode` option
-  
+
   * `replace`*(default)* replace current title and play the file immediately
   * `append` appends the title to the playlist
   * `append-play` appends the title to the playlist. If the playlist was empty this title is played
 
   There is another `append` function in the **playlist** section, which can be used to append files and streams.
-  
+
 * **loadStream** (url)
-  
+
   Exactly the same as **loadFile** but loads a stream specified by `url`, for example *YouTube* or *SoundCloud*.
-  
+
   `mode` is the same as in **loadFile**.
 
   This function should be used to load *YouTube* and *SoundCloud* playlists, as **loadPlaylist** will not work with those.
- 
-  
+
+
 ## Controlling MPV
 
 * **play** ()
 
   Starts playback when in *pause* state
-  
+
 * **stop** ()
 
   Stops the playback entirely
@@ -141,7 +140,7 @@ mpvPlayer.on('stopped', function() {
 * **pause** ()
 
   Pauses playback
-  
+
 * **resume** ()
 
   Resumes from *pause* mode
@@ -149,33 +148,33 @@ mpvPlayer.on('stopped', function() {
 * **togglePause** ()
 
   Toggles the *pause* mode
-  
+
 * **mute** ()
 
   *This methods behaviours has changed with version 0.13.0, use toggleMute() instead*
-  
+
   Mutes the player
-  
+
 * **unmute** ()
 
   Unmute the player
-  
+
 * **toggleMute** ()
 
   Toggles between *muted* and *unmuted*
-  
+
 * **volume** (volumeLevel)
 
   Sets volume to `volumeLevel`. Allowed values are between **0-100**. All values above and below will just set the volume to **0** or **100** respectively
-  
+
 * **adjustVolume** (value)
 
   Adjusts the volume with the specified `value`. If this results in the volume going below **0** or above **100** it will be set to **0** or **100** respectively
-  
+
 * **seek** (seconds)
 
   Will jump back or forth in the song for the specified amount of `seconds`. Going beyond the duration of  the song results in stop of playback
-  
+
 * **goToPosition** (seconds)
 
   Jumps to the position specified by `seconds`. Going beyond the boundaries of the song results in stop of playback
@@ -183,7 +182,7 @@ mpvPlayer.on('stopped', function() {
 * **loop** (times)
 
   Loops the current title `times`often. If set to *"inf"* the title is looped forever
-  
+
 ## Playlists
 
   * **loadPlaylist** (playlist, mode="replace")
@@ -198,7 +197,7 @@ mpvPlayer.on('stopped', function() {
   * **append** (file, mode="append")
 
     Appends `file` (which can also be an url) to the playlist.
-    
+
     * `append` *(default)* Append the title
     * `append-play` When the playlist was empty the title will be started
 
@@ -253,15 +252,15 @@ mpvPlayer.on('stopped', function() {
 * **removeAudioTrack** ()
 
   Removes the audio track specified by `id`. Works only for external audio tracks
-  
+
 * **selectAudioTrack** (id)
 
   Selects the audio track associated with `id`
-  
+
 * **cycleAudioTracks** ()
 
   Cycles through the audio tracks
-  
+
 * **adjustAudioTiming** (seconds)
 
   Shifts the audio timing by `seconds`
@@ -295,7 +294,7 @@ mpvPlayer.on('stopped', function() {
   * `window` The scaled mpv window
 
 * **rotateVideo** (degrees)
-  
+
   Rotates the video clockwise. `degree` can only be multiples of 90 and the rotation is absolute, not relative
 
 * **zoomVideo** (factor)
@@ -339,31 +338,31 @@ mpvPlayer.on('stopped', function() {
     * *select* - the added subtitle is selected immediately
     * *auto* - the subtitle is not selected
     * *cached* - select the subtitle, but if a subtitle file with the same name is already loaded, the new file is not added and the old one is selected instead
-  
+
 * **removeSubitlte** (id)
 
   Removes the subtitle file specified by `id`. Works only for external subtitle
-  
+
 * **selectSubitlte** (id)
 
   Selects the subtitle associated with `id`
-  
+
 * **cycleSubtitles** ()
 
   Cycles through all available subtitles
-  
+
 * **toggleSubtitleVisibility** ()
 
   Toggles between hidden and visible subtitle
-  
+
 * **showSubtitles** ()
 
   Shows the subtitle
-  
+
 * **hideSubtitles** ()
 
   Hides the subtitles
-  
+
 * **adjustSubtitleTiming** (seconds)
 
   Shifts the subtitle timing by `seconds`
@@ -371,13 +370,13 @@ mpvPlayer.on('stopped', function() {
 * **subtitleSeek** (lines)
 
   Jumps as many lines of subtitles as defined by `lines`. Can be negative. This will also seek in the video.
-  
+
 * **subitlteScale** (scale)
 
   Adjust the scale of the subtitles
-  
 
-  
+
+
 ## Properties
 
 These methods can be used to alter *properties* or send arbitary *commands* to the running **mpv player**. Information about what *commands* and *properties* are available can be found in the [list of commands](https://mpv.io/manual/stable/#list-of-input-commands) and [list of properties](https://mpv.io/manual/stable/#properties) sections of the **mpv** documentation.
@@ -391,7 +390,7 @@ The most common commands are already covered by this modules **API**. This part 
 * **setMultipleProperties** (properties)
 
   Calls **setProperty** for every property specified in the arguments Json object. For example
-  
+
   ```Javascript
   setMultipleProperties({
       "volume": 70,
@@ -402,18 +401,18 @@ The most common commands are already covered by this modules **API**. This part 
 * **getProperty** (property, [id])
 
   Gets information about the specified `property`.
-  
+
    If an `id` is used, the answer comes via a *getrequest* event containing the `id` and the `property`.
-  
+
   If no `id` was set this function returns a [promise](https://www.promisejs.org) delivering the `property`. It can be used as in the example below
-  
+
   ```Javascript
     mpvPlayer.getProperty('duration').then(function(duration) {
 	  console.log("Duration: ", duration);
 	});
 ```
 
-  
+
 * **addProperty** (property, value)
 
   Increased the `property` by the specified `value`. Needless to say this can only be used on numerical properties. Negative values are possible
@@ -421,46 +420,46 @@ The most common commands are already covered by this modules **API**. This part 
 * **multiplyProperty** (property, value)
 
   Multiply the specified `property` by `value`
-  
+
 * **cycleProperty** (property)
 
   Cycles the values of an arbitrary property
-  
+
 * **command** (command, args)
 
   Sends the `command` to the **mpv** player with the arguments specified in `args`
-  The Json command 
-  
+  The Json command
+
   ```Javascript
   `{"command": ["loadfile", "audioSong.mp3"]}`
   ```
-  
-  becomes a function call 
-  
+
+  becomes a function call
+
   ```Javascript
   `command("loadfile",["audioSong.mp3"]`
   ```
 
 * **freeCommand** (command)
 
-  This will send an arbitrary *command* to the **mpv player**. It must however follow the specification of the **Json IPC protocol**. Its syntax can be found in the [documentation](https://mpv.io/manual/stable/#json-ipc). 
-  
+  This will send an arbitrary *command* to the **mpv player**. It must however follow the specification of the **Json IPC protocol**. Its syntax can be found in the [documentation](https://mpv.io/manual/stable/#json-ipc).
+
   A trailing "**\n**" will be added to the command.
 
 ## Observing
- 
+
  * **observeProperty** (property, id)
 
    This will add the specified *property* to the *statusupdate* event which is emitted whenever one of the observed properties changes.
-  
+
    The **Id**s **0**-**12** are already taken by the properties which are observed by default.
-  
+
 * **unobserveProperty(id)**
 
   This will remove the property associated with the specified *id* from the *statusupdate*.
-  
+
   Unobserving default properties may break the module.
-  
+
 # Events
 
 The **Node-MPV** module provides various *events* to notify about changes of the **mpv player's** state.
@@ -484,7 +483,7 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 * **timeposition** \<seconds\>
 
   When a song or video is currently playing and the playback is not paused, this event will emit the current position in *seconds*.
-  
+
   When creating the **mpv** instance you can set a parameter, how often this event should occur. Default is every second
 
 * **getrequest** \<id, data\>
@@ -494,9 +493,9 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 * **statuschange** \<status object\>
 
   Whenever the status of one of the observed properties changes, this event will be emitted providing the complete *status object*
-  
+
   By default various properties are already observed and the *status object* looks like the following
-  
+
   ```Javascript
   {
     "mute": false,
@@ -511,7 +510,7 @@ The **Node-MPV** module provides various *events* to notify about changes of the
     "loop": "no"
   }
   ```
-  
+
     If the player is running in *video mode* the following properties are present as well.
 
   ```Javascript
@@ -520,18 +519,18 @@ The **Node-MPV** module provides various *events* to notify about changes of the
     "sub-visibility": false
   }
   ```
-  
+
   * `filename`
     When playing a local file this contains the filename. When playing for example a *YouTube* stream, this will only contain the trailing url
-    
+
   * `path`
     Provides the absolute path to the music file or the full url of  a stream
-    
+
   * `media-title` If available in the file this will contain the *title*. When streaming from *YouTube* this will be set to the video's name
-    
+
     This object can expanded through the *observeProperty* method making it possible to watch any state you desire, given it is provided by **mpv**
-    
-    
+
+
 # Observing
 
   **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.  
@@ -567,15 +566,15 @@ If **node-mpv** is not run in `audio_only` mode the following two properties wil
   "sub-visibility": Boolean
 }
 ```
-    
+
   The IDs **0** - **12** are already used for the default properties. Unobserving them will most likely break the module.
-  
+
   For more information on the **statuschange** part, check the event section.
-    
+
  ### Bug with observing playlist-count
- 
+
  As of **mpv** version **0.17.0**, the `playlist-count` property is not updated as one would expect. It is not updated on **playlistRemove** and **append**. I already filed an [issue](https://github.com/mpv-player/mpv/issues/3267) about that and the problem was already fixed. If you need this feature you will have to build and install **mpv** yourself. Instructions for that can be found on the projects [GitHub page](https://github.com/mpv-player).
-    
+
 # Example
 
 ```Javascript
@@ -597,7 +596,7 @@ mpvPlayer.volume(50);
 // Stop to song emitting the stopped event
 mpvPlayer.stop();
 ```
-   
+
 # Known Issues
 
 ## IPC Command
@@ -615,7 +614,7 @@ mpv --version
 ## MPV Player 0.18.1
 
 MPV Player version **0.18.1** has some issues that the player crashes sometimes, when sending commands through the *ipc socket*. If you're using version **0.18.0** try to use a newer (or older) version.
-  
+
 To check your version number enter the following in your command shell
 
 ```
