@@ -1,4 +1,10 @@
 # Node-MPV Changelog
+
+* **0.13.0**
+  * **API Chnage:** `mute`'s behaviour was changed to set the player to *mute*
+  * `unmute` method added to unmute the player
+  * `toggleMute` method added to toggle between *mute* and *unmute* (former `mute`'s behaviour')
+
 * **0.12.2**
   * Fixed the version check when the user provides his/her own binary (Thanks to @SkyZH)
 
