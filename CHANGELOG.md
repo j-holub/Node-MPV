@@ -1,5 +1,10 @@
 # Node-MPV Changelog
 
+* **1.0.0**
+  * getProperty is able to return a promise, making its use a lot more comfortable
+
+### Pre 1.0.0  
+
 * **0.11.0**
   * The code to determine the correct ipc command is now more robust
   * Added option to pass the ipc command by hand
@@ -14,7 +19,7 @@
   * Fixed Meteor support
 
 * **0.9.4**
-  * Fixed EventListener leak bug 
+  * Fixed EventListener leak bug
 
 * **0.9.3**
   * Added **append** functionality for playlists
@@ -59,9 +64,9 @@
   * an arbitrary socket` can be specified
 
 * **0.7.0**
-  
+
   * Added **events**
-  
+
 * **0.6.0**
 
   * Allowed for free **commands**

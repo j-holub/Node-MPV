@@ -13,7 +13,8 @@ It also provides direct access to the IPC socket. Thus this module is not only l
 
 ### Important
 
-This module is still pre **1.0.0**, the API might still change. Check the [changelog](CHANGELOG.md) for breaking changes.
+
+In version **0.13.0** the behaviour of `mute()` has changed. Use `toggleMute()` instead.
 
 
 # Install
@@ -148,6 +149,16 @@ mpvPlayer.on('stopped', function() {
   Toggles the *pause* mode
   
 * **mute** ()
+
+  *This methods behaviours has changed with version 0.13.0, use toggleMute() instead*
+  
+  Mutes the player
+  
+* **unmute** ()
+
+  Unmute the player
+  
+* **toggleMute** ()
 
   Toggles between *muted* and *unmuted*
   
@@ -382,13 +393,24 @@ The most common commands are already covered by this modules **API**. This part 
   ```Javascript
   setMultipleProperties({
       "volume": 70,
-        "fullscreen": true
+      "fullscreen": true
   });
   ```
 
-* **getProperty** (property, id)
+* **getProperty** (property, [id])
 
-  Gets the information about the specified `property`. The answers comes in form of an emitted *getrequest* event containing the specified `id`. This unfortunate, but to JavaScript's single threaded and event driven nature, it was the only way I found
+  Gets information about the specified `property`.
+  
+   If an `id` is used, the answer comes via a *getrequest* event containing the `id` and the `property`.
+  
+  If no `id` was set this function returns a [promise](https://www.promisejs.org) delivering the `property`. It can be used as in the example below
+  
+  ```Javascript
+    mpvPlayer.getProperty('duration').then(function(duration) {
+	  console.log("Duration: ", duration);
+	});
+```
+
   
 * **addProperty** (property, value)
 
@@ -590,7 +612,7 @@ mpv --version
 
 ## MPV Player 0.18.1
 
-MPV Player version **0.18.1** has some issues that the player crashes sometimes, when sending it commands through the *ipc socket*. If you're using version **0.18.0** try to use a newer (or older) version.
+MPV Player version **0.18.1** has some issues that the player crashes sometimes, when sending commands through the *ipc socket*. If you're using version **0.18.0** try to use a newer (or older) version.
   
 To check your version number enter the following in your command shell
 
