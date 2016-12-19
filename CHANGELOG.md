@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **1.0.2**
+  * Documentation fix
+
 * **1.0.1**
   * Fixed the bug, that MPV Player won't be restarted correctly when it crashed a second time (Thanks to @SkyZH)
 

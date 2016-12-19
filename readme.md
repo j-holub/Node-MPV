@@ -56,21 +56,23 @@ You optionally pass a Json object with options to the constructor. Possible opti
 
 ```Javascript
 {
-    "verbose": false,
-    "debug": false,
-    "socket": "/tmp/node-mpv.sock",
     "audio_only": false,
-    "time_update": 1
-    "ipcCommand": null
+    "binary": null,
+    "debug": false,
+    "ipcCommand": null,   
+    "socket": "/tmp/node-mpv.sock",
+    "time_update": 1,
+    "verbose": false,
 }
 ```
 
-* `verbose` will print various information on the console
-* `debug` prints error messages
-* `socket` specifies the socket **mpv** opens
 * `audio_only` will add the `--no-video` and `--no-audio-display` argument and start **mpv** in audio only mode
-* `time_update` the time interval in seconds, how often **mpv** should report the current time position, when playing a title
+* `binary` will use the provied path to a mpv binary instead of using the one found in **$PATH**
+* `debug` prints error messages
 * `ipc_command` allows to set the ipc command to start the ipc socket. Possible options are **--input-unix-socket** and **--input-ipc-server**. This is usually not needed since  **Node-MPV** is able to determine the correct command by itself, for the most part
+* `socket` specifies the socket **mpv** opens
+* `time_update` the time interval in seconds, how often **mpv** should report the current time position, when playing a title
+* `verbose` will print various information on the console
 
 You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
 
@@ -406,11 +408,11 @@ The most common commands are already covered by this modules **API**. This part 
 
   If no `id` was set this function returns a [promise](https://www.promisejs.org) delivering the `property`. It can be used as in the example below
 
-  ```Javascript
+   ```Javascript
     mpvPlayer.getProperty('duration').then(function(duration) {
 	  console.log("Duration: ", duration);
 	});
-```
+   ```
 
 
 * **addProperty** (property, value)
