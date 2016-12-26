@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **1.0.3**
+  * made the module `use strict` compliant (Thanks to @jeffnappi)
+
 * **1.0.2**
   * Documentation fix
 
