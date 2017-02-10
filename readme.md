@@ -450,6 +450,8 @@ The most common commands are already covered by this modules **API**. This part 
 
 ## Observing
 
+  **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.  
+
  * **observeProperty** (property, id)
 
    This will add the specified *property* to the *statusupdate* event which is emitted whenever one of the observed properties changes.
@@ -532,46 +534,6 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
     This object can expanded through the *observeProperty* method making it possible to watch any state you desire, given it is provided by **mpv**
 
-
-# Observing
-
-  **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.  
-
-`observeProperty(property, id);`
-
-This will add the `property` to status update object emitted by the **statuschange** event. Everytime that property changes such an event will be triggered.
-
-By calling `unobserveProperty(id)` the property associated with that `id` is removed from the **statuschange**
-
-By default **node-mpv** is already observing some useful properties by default.
-
-```Javascript
-{
-  "mute": Boolean,
-  "pause": Boolean,
-  "duration": Number,
-  "volume": Number,
-  "filename": String,
-  "path": String,
-  "media-title": String,
-  "playlist-pos": Number,
-  "playlist-count": Number,
-  "loop": Number // this one can be set to "inf" for endless looping
-}
-```
-
-If **node-mpv** is not run in `audio_only` mode the following two properties will be observed, too
-
-```Javascript
-{
-  "fullscreen": Boolean,
-  "sub-visibility": Boolean
-}
-```
-
-  The IDs **0** - **12** are already used for the default properties. Unobserving them will most likely break the module.
-
-  For more information on the **statuschange** part, check the event section.
 
  ### Bug with observing playlist-count
 
