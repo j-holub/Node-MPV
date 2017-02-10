@@ -623,6 +623,22 @@ To check your version number enter the following in your command shell
 mpv --version
 ```
 
+## MPV Hanging or Crashing
+
+If your JS code is correct but you are still experiencing crashes, a good place to start debugging is by disabling the default config and/or plugins.
+
+```Javascript
+mpvPlayer = new mpv({
+  ...
+},
+[
+  "--no-config",
+  "--load-scripts=no"
+]);
+```
+
+For example, `autoload.lua` is known to cause problems when loading files in quick succession from a folder with many files.
+
 # Changelog
 
 See [changelog](CHANGELOG.md) for more information or API breaking changes
