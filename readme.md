@@ -71,7 +71,7 @@ You can optionally pass a Json object with options to the constructor. Possible 
 * `debug` prints error messages
 * `ipc_command` sets the ipc command to start the ipc socket. Possible options are **--input-unix-socket** and **--input-ipc-server**. This is usually not needed since  **Node-MPV** is able to determine the correct command on its own
 * `socket` specifies the socket **mpv** opens
-* `time_update` the time interval in seconds, how often **mpv** should report the current time position, when playing a file
+* `time_update` the time interval in seconds, how often **mpv** should report the current time position, when playing a song or video
 * `verbose` will print various information on the console
 
 You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
@@ -114,11 +114,11 @@ mpvPlayer.on('stopped', function() {
 
   Will load the `file` and start playing it. This behaviour can be changed using the `mode` option
 
-  * `replace`*(default)* replace current file and play it immediately
+  * `replace`*(default)* replace current title and play it immediately
   * `append` appends the file to the playlist
   * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
 
-  There is another `append` function in the **playlist** section, which can be used to append files and streams.
+  There is another `append` function in the **playlist** section, which can be used to append either files or streams.
 
 * **loadStream** (url)
 
@@ -175,15 +175,15 @@ mpvPlayer.on('stopped', function() {
 
 * **seek** (seconds)
 
-  Will jump back or forth in the song for the specified amount of `seconds`. Going beyond the duration of a file results in the playback stopping
+  Will jump back or forth in the song or video for the specified amount of `seconds`. Going beyond the duration of a title results in the playback stopping
 
 * **goToPosition** (seconds)
 
-  Jumps to the position specified by `seconds`. Going beyond the boundaries of a file results in  playback stopping
+  Jumps to the position specified by `seconds`. Going beyond the boundaries of a title results in  playback stopping
 
 * **loop** (times)
 
-  Loops the current file `times` often. If set to *"inf"* the file is looped forever
+  Loops the current title `times` often. If set to *"inf"* the title is looped forever
 
 ## Playlists
 
@@ -200,22 +200,22 @@ mpvPlayer.on('stopped', function() {
 
     Appends `file` (which can also be an url) to the playlist.
 
-    * `append` *(default)* Append the file
-    * `append-play` When the playlist was empty the file will be started
+    * `append` *(default)* Append the title
+    * `append-play` When the playlist is empty the title will be started
 
   * **next** (mode="weak")
 
-     Skips the current file. `mode` can be one of the following two
+     Skips the current title. `mode` can be one of the following two
 
-       * `weak` *(default*) If the file is the last file in the playlist it is not skipped
-       * `strong` The file is skipped and playback is stopped
+       * `weak` *(default*) If the current title is the last one in the playlist it is not skipped
+       * `strong` The title is skipped and playback is stopped
 
   * **prev** (mode="weak")
 
-     Skips the current file. `mode` can be one of the following two
+     Skips the current title. `mode` can be one of the following two
 
-       * `weak` *(default*) If the file is the first song in the playlist it is not stopped
-       * `strong` The file is skipped and playback is stopped
+       * `weak` *(default*) If the title is the first one in the playlist it is not stopped
+       * `strong` The title is skipped and playback is stopped
 
   * **clearPlaylist** ()
 
@@ -223,11 +223,11 @@ mpvPlayer.on('stopped', function() {
 
   * **playlistRemove** (index)
 
-     Removes the file at `index` from the playlist. If `index` is set to "current" the current file is removed and playback stops
+     Removes the title at `index` from the playlist. If `index` is set to "current" the current title is removed and playback stops
 
   * **playlistMove** (index1, index2)
 
-     Moves the file at `index1` to the position at `index2`
+     Moves the title at `index1` to the position at `index2`
 
   * **shuffle** ()
 
