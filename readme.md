@@ -1,15 +1,15 @@
 # Node-MPV
 
-A wrapper to comfortably use **[mpv player](https://github.com/mpv-player/mpv)** with **node**.js. It provides functions for the most of the commands needed to control the player. It's easy to use and highly flexible.
+A wrapper to comfortably use **[mpv player](https://github.com/mpv-player/mpv)** with **node**.js. It provides functions for most of the commands needed to control the player. It's easy to use and highly flexible.
 
 The module keeps an instance of **mpv** running in the background (using mpv's `--idle`) and communicates over the Json IPC API.
 
-It also provides direct access to the IPC socket. Thus this module is not only limited to the methods it provides, but can fully communicate with the **mpv** API.
+It also provides direct access to the IPC socket. Thus this module is not only limited to the methods it provides, but can also fully communicate with the **mpv** API.
 
 
-**This module requires [mpv](https://github.com/mpv-player/mpv) to be installed on your system to work**
+**This module requires [mpv](https://github.com/mpv-player/mpv) installed on your system to work**
 
-**For streaming playback such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
+**For streaming playback of sites such as YouTube or SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
 
 ### Important
 
@@ -52,7 +52,7 @@ mpv = require('node-mpv');
 mpvPlayer = new mpv();
 ```
 
-You optionally pass a Json object with options to the constructor. Possible options, along with their default values are the following
+You can optionally pass a Json object with options to the constructor. Possible options, along with their default values are the following
 
 ```Javascript
 {
@@ -69,9 +69,9 @@ You optionally pass a Json object with options to the constructor. Possible opti
 * `audio_only` will add the `--no-video` and `--no-audio-display` argument and start **mpv** in audio only mode
 * `binary` will use the provied path to a mpv binary instead of using the one found in **$PATH**
 * `debug` prints error messages
-* `ipc_command` allows to set the ipc command to start the ipc socket. Possible options are **--input-unix-socket** and **--input-ipc-server**. This is usually not needed since  **Node-MPV** is able to determine the correct command by itself, for the most part
+* `ipc_command` sets the ipc command to start the ipc socket. Possible options are **--input-unix-socket** and **--input-ipc-server**. This is usually not needed since  **Node-MPV** is able to determine the correct command on its own
 * `socket` specifies the socket **mpv** opens
-* `time_update` the time interval in seconds, how often **mpv** should report the current time position, when playing a title
+* `time_update` the time interval in seconds, how often **mpv** should report the current time position, when playing a song or video
 * `verbose` will print various information on the console
 
 You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
@@ -87,7 +87,7 @@ mpvPlayer = new mpv({
 ]);
 ```
 
-Mpv is then easily controllable via simple function calls.
+**mpv** is then easily controllable via simple function calls.
 
 ```Javascript
 mpvPlayer.loadFile("/path/to/your/favorite/song.mp3");
@@ -112,28 +112,28 @@ mpvPlayer.on('stopped', function() {
 
 * **loadFile** (file, mode="replace")
 
-  Will load the `file` and starts playing it. This behaviour can be changed using the `mode` option
+  Will load the `file` and start playing it. This behaviour can be changed using the `mode` option
 
-  * `replace`*(default)* replace current title and play the file immediately
-  * `append` appends the title to the playlist
-  * `append-play` appends the title to the playlist. If the playlist was empty this title is played
+  * `replace`*(default)* replace current title and play it immediately
+  * `append` appends the file to the playlist
+  * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
 
-  There is another `append` function in the **playlist** section, which can be used to append files and streams.
+  There is another `append` function in the **playlist** section, which can be used to append either files or streams.
 
 * **loadStream** (url)
 
-  Exactly the same as **loadFile** but loads a stream specified by `url`, for example *YouTube* or *SoundCloud*.
+  Exactly the same as **loadFile** but loads a stream specified by `url`, for example from *YouTube* or *SoundCloud*.
 
   `mode` is the same as in **loadFile**.
 
-  This function should be used to load *YouTube* and *SoundCloud* playlists, as **loadPlaylist** will not work with those.
+  This function should be used to load *YouTube* or *SoundCloud* playlists, as **loadPlaylist** will not work with those.
 
 
 ## Controlling MPV
 
 * **play** ()
 
-  Starts playback when in *pause* state
+  Starts playback when in the *pause* state
 
 * **stop** ()
 
@@ -145,11 +145,11 @@ mpvPlayer.on('stopped', function() {
 
 * **resume** ()
 
-  Resumes from *pause* mode
+  Resumes from the *pause* state
 
 * **togglePause** ()
 
-  Toggles the *pause* mode
+  Toggles the *pause* state
 
 * **mute** ()
 
@@ -159,7 +159,7 @@ mpvPlayer.on('stopped', function() {
 
 * **unmute** ()
 
-  Unmute the player
+  Unmutes the player
 
 * **toggleMute** ()
 
@@ -167,7 +167,7 @@ mpvPlayer.on('stopped', function() {
 
 * **volume** (volumeLevel)
 
-  Sets volume to `volumeLevel`. Allowed values are between **0-100**. All values above and below will just set the volume to **0** or **100** respectively
+  Sets volume to `volumeLevel`. Allowed values are between **0-100**. All values below or above will just set the volume to **0** or **100** respectively
 
 * **adjustVolume** (value)
 
@@ -175,15 +175,15 @@ mpvPlayer.on('stopped', function() {
 
 * **seek** (seconds)
 
-  Will jump back or forth in the song for the specified amount of `seconds`. Going beyond the duration of  the song results in stop of playback
+  Will jump back or forth in the song or video for the specified amount of `seconds`. Going beyond the duration of a title results in the playback stopping
 
 * **goToPosition** (seconds)
 
-  Jumps to the position specified by `seconds`. Going beyond the boundaries of the song results in stop of playback
+  Jumps to the position specified by `seconds`. Going beyond the boundaries of a title results in  playback stopping
 
 * **loop** (times)
 
-  Loops the current title `times`often. If set to *"inf"* the title is looped forever
+  Loops the current title `times` often. If set to *"inf"* the title is looped forever
 
 ## Playlists
 
@@ -201,21 +201,21 @@ mpvPlayer.on('stopped', function() {
     Appends `file` (which can also be an url) to the playlist.
 
     * `append` *(default)* Append the title
-    * `append-play` When the playlist was empty the title will be started
+    * `append-play` When the playlist is empty the title will be started
 
   * **next** (mode="weak")
 
-     Skips the current song. `mode`can be one of the following two
+     Skips the current title. `mode` can be one of the following two
 
-       * `weak` *(default*) If the song is the last song in the playlist it is not skipped
-       * `strong` The song is skipped and playback is stopped
+       * `weak` *(default*) If the current title is the last one in the playlist it is not skipped
+       * `strong` The title is skipped and playback is stopped
 
   * **prev** (mode="weak")
 
-     Skips the current song. `mode`can be one of the following two
+     Skips the current title. `mode` can be one of the following two
 
-       * `weak` *(default*) If the song is the first song in the playlist it is not stopped
-       * `strong` The song is skipped and playback is stopped
+       * `weak` *(default*) If the title is the first one in the playlist it is not stopped
+       * `strong` The title is skipped and playback is stopped
 
   * **clearPlaylist** ()
 
@@ -223,15 +223,15 @@ mpvPlayer.on('stopped', function() {
 
   * **playlistRemove** (index)
 
-     Removes the song at `index` from the playlist. If `index` is set to "current" the current song is removed and playback stops
+     Removes the title at `index` from the playlist. If `index` is set to "current" the current title is removed and playback stops
 
   * **playlistMove** (index1, index2)
 
-     Moves the song at `index1` to the position at `index2`
+     Moves the title at `index1` to the position at `index2`
 
   * **shuffle** ()
 
-      Shuffles the play into a random order
+      Shuffles the playlist into a random order
 
 
 
@@ -249,7 +249,7 @@ mpvPlayer.on('stopped', function() {
 
     * *select* - the added audio track is selected immediately
     * *auto* - the audio track is not selected
-    * *cached* - select the audio track, but if a audio track file with the same name is already loaded, the new file is not added and the old one is selected instead
+    * *cached* - select the audio track, but if an audio track file with the same name is already loaded, the new file is not added and the old one is selected instead
 
 * **removeAudioTrack** ()
 
@@ -292,7 +292,7 @@ mpvPlayer.on('stopped', function() {
 
   Takes a screenshot and saves it to `file`. `options` is one of the following
   * `subtitles` *(default)* Takes a screenshot including the subtitles
-  * `video` Only the image, no texts
+  * `video` Only the image, no subtitles
   * `window` The scaled mpv window
 
 * **rotateVideo** (degrees)
@@ -343,7 +343,7 @@ mpvPlayer.on('stopped', function() {
 
 * **removeSubitlte** (id)
 
-  Removes the subtitle file specified by `id`. Works only for external subtitle
+  Removes the subtitle file specified by `id`. Works only for external subtitles
 
 * **selectSubitlte** (id)
 
@@ -355,11 +355,11 @@ mpvPlayer.on('stopped', function() {
 
 * **toggleSubtitleVisibility** ()
 
-  Toggles between hidden and visible subtitle
+  Toggles between hidden and visible subtitles
 
 * **showSubtitles** ()
 
-  Shows the subtitle
+  Shows the subtitles
 
 * **hideSubtitles** ()
 
@@ -383,7 +383,7 @@ mpvPlayer.on('stopped', function() {
 
 These methods can be used to alter *properties* or send arbitary *commands* to the running **mpv player**. Information about what *commands* and *properties* are available can be found in the [list of commands](https://mpv.io/manual/stable/#list-of-input-commands) and [list of properties](https://mpv.io/manual/stable/#properties) sections of the **mpv** documentation.
 
-The most common commands are already covered by this modules **API**. This part enables you to send any command you want over the IPC. With this you are not limited the methods defined by this module.
+The most common commands are already covered by this modules **API**. This part enables you to send any command you want over IPC. With this you are not limited the methods defined by this module.
 
 * **setProperty** (property, value)
 
@@ -417,7 +417,7 @@ The most common commands are already covered by this modules **API**. This part 
 
 * **addProperty** (property, value)
 
-  Increased the `property` by the specified `value`. Needless to say this can only be used on numerical properties. Negative values are possible
+  Increase the `property` by the specified `value`. Needless to say this can only be used on numerical properties. Negative values are possible
 
 * **multiplyProperty** (property, value)
 
@@ -444,11 +444,13 @@ The most common commands are already covered by this modules **API**. This part 
 
 * **freeCommand** (command)
 
-  This will send an arbitrary *command* to the **mpv player**. It must however follow the specification of the **Json IPC protocol**. Its syntax can be found in the [documentation](https://mpv.io/manual/stable/#json-ipc).
+  This will send an arbitrary *command* to the **mpv player**. It must follow the specification of the **Json IPC protocol**. Its syntax can be found in the [documentation](https://mpv.io/manual/stable/#json-ipc).
 
   A trailing "**\n**" will be added to the command.
 
 ## Observing
+
+  **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.  
 
  * **observeProperty** (property, id)
 
@@ -526,52 +528,12 @@ The **Node-MPV** module provides various *events* to notify about changes of the
     When playing a local file this contains the filename. When playing for example a *YouTube* stream, this will only contain the trailing url
 
   * `path`
-    Provides the absolute path to the music file or the full url of  a stream
+    Provides the absolute path to the file or the full url of a stream
 
   * `media-title` If available in the file this will contain the *title*. When streaming from *YouTube* this will be set to the video's name
 
     This object can expanded through the *observeProperty* method making it possible to watch any state you desire, given it is provided by **mpv**
 
-
-# Observing
-
-  **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.  
-
-`observeProperty(property, id);`
-
-This will add the `property` to status update object emitted by the **statuschange** event. Everytime that property changes such an event will be triggered.
-
-By calling `unobserveProperty(id)` the property associated with that `id` is removed from the **statuschange**
-
-By default **node-mpv** is already observing some useful properties by default.
-
-```Javascript
-{
-  "mute": Boolean,
-  "pause": Boolean,
-  "duration": Number,
-  "volume": Number,
-  "filename": String,
-  "path": String,
-  "media-title": String,
-  "playlist-pos": Number,
-  "playlist-count": Number,
-  "loop": Number // this one can be set to "inf" for endless looping
-}
-```
-
-If **node-mpv** is not run in `audio_only` mode the following two properties will be observed, too
-
-```Javascript
-{
-  "fullscreen": Boolean,
-  "sub-visibility": Boolean
-}
-```
-
-  The IDs **0** - **12** are already used for the default properties. Unobserving them will most likely break the module.
-
-  For more information on the **statuschange** part, check the event section.
 
  ### Bug with observing playlist-count
 
@@ -622,6 +584,22 @@ To check your version number enter the following in your command shell
 ```
 mpv --version
 ```
+
+## MPV Hanging or Crashing
+
+If your JS code is correct but you are still experiencing crashes, a good place to start debugging is by disabling the default config and/or plugins.
+
+```Javascript
+mpvPlayer = new mpv({
+  ...
+},
+[
+  "--no-config",
+  "--load-scripts=no"
+]);
+```
+
+For example, `autoload.lua` is known to cause problems when loading files in quick succession from a folder with many files.
 
 # Changelog
 
