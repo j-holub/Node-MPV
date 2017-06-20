@@ -6,10 +6,12 @@ The module keeps an instance of **mpv** running in the background (using mpv's `
 
 It also provides direct access to the IPC socket. Thus this module is not only limited to the methods it provides, but can also fully communicate with the **mpv** API.
 
+Works on **UNIX** and **Windows**.
 
-**This module requires [mpv](https://github.com/mpv-player/mpv) installed on your system to work**
+**This module requires [mpv](https://github.com/mpv-player/mpv) to be installed on your system to work. On Windows you can provide the path to the mpv.exe using the `binary` option, when creating the mpv instance**
 
-**For streaming playback of sites such as YouTube or SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
+**For streaming playback from sources such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
+
 
 ### Important
 
@@ -37,6 +39,10 @@ brew install mpv youtube-dl
 sudo apt-get install mpv youtube-dl
 ```
 
+#### Windows
+
+Go to the respective websites [mpv](https://mpv.io) and [youtube-dl](https://youtube-dl.org) and follow the install instructions.
+
 
 **youtube-dl** is only required if you want to stream videos or music from *YouTube*, *SoundCloud* or other websites supported by **youtube-dl**. See [here](https://rg3.github.io/youtube-dl/supportedsites.html) for a list of supported websites.
 
@@ -60,7 +66,8 @@ You can optionally pass a Json object with options to the constructor. Possible 
     "binary": null,
     "debug": false,
     "ipcCommand": null,   
-    "socket": "/tmp/node-mpv.sock",
+    "socket": "/tmp/node-mpv.sock", // UNIX
+    "socket": "\\\\.\\pipe\\mpvserver", // Windows
     "time_update": 1,
     "verbose": false,
 }
