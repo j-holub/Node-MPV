@@ -1,7 +1,8 @@
 # Node-MPV Changelog
 
-* **1.1.0**
+* **1.1.1**
   * Added a default socket for Windows. The OS is detected automatically (Thanks to @danickfort)
+  * 1.1.0 was unpublished and skipped due to a bug
 
 * **1.0.3**
   * made the module `use strict` compliant (Thanks to @jeffnappi)
