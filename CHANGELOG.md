@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **1.1.2**
+  * Accidentally committed way more than desired. This fixes the mess
+
 * **1.1.1**
   * Added a default socket for Windows. The OS is detected automatically (Thanks to @danickfort)
   * 1.1.0 was unpublished and skipped due to a bug
