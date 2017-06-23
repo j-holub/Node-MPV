@@ -419,21 +419,25 @@ The most common commands are already covered by this modules **API**. This part 
   });
   ```
 
-* **getProperty** (property, [id])
+* **getProperty** (property)
 
-  Gets information about the specified `property`.
-
-   If an `id` is used, the answer comes via a *getrequest* event containing the `id` and the `property`.
-
-  If no `id` was set this function returns a [promise](https://www.promisejs.org) delivering the `property`. It can be used as in the example below
-
-   ```Javascript
-    mpvPlayer.getProperty('duration').then(function(duration) {
-	  console.log("Duration: ", duration);
+ Gets information about the specified `property`.
+ 
+ This function returns a [promise](https://www.promisejs.org) and is used as in the example below
+ 
+  ```Javascript
+    mpvPlayer.getProperty('duration')
+    .then(function(duration) {
+	 	console.log("Duration: ", duration);
 	});
    ```
 
+* **getProperty** (property, id) - *deprecated*
 
+  Gets information about the specified `property`.
+
+  The answer comes via a *getrequest* event containing the`id` and the `property`.
+   
 * **addProperty** (property, value)
 
   Increase the `property` by the specified `value`. Needless to say this can only be used on numerical properties. Negative values are possible
@@ -509,9 +513,9 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   When creating the **mpv** instance you can set a parameter, how often this event should occur. Default is every second
 
-* **getrequest** \<id, data\>
+* **getrequest** \<id, data\> - *deprecated*
 
-  Delivers the reply to a function call to the *getRequest* method
+  Delivers the reply to a function call to the **getProperty** method
 
 * **statuschange** \<status object\>
 
