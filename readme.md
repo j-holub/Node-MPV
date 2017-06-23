@@ -49,13 +49,11 @@ Go to the respective websites [mpv](https://mpv.io) and [youtube-dl](https://you
 
 
 
-
-
 # Usage
 
 ```Javascript
-mpv = require('node-mpv');
-mpvPlayer = new mpv();
+let mpv = require('node-mpv');
+let mpvPlayer = new mpv();
 ```
 
 You can optionally pass a Json object with options to the constructor. Possible options, along with their default values are the following
@@ -84,7 +82,7 @@ You can optionally pass a Json object with options to the constructor. Possible 
 You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
 
 ```Javascript
-mpvPlayer = new mpv({
+let mpvPlayer = new mpv({
   "verbose": true,
   "audio_only": true
 },
@@ -192,16 +190,30 @@ mpvPlayer.on('stopped', function() {
 
   Loops the current title `times` often. If set to *"inf"* the title is looped forever
 
+* **quit** ()
+
+  Quits **mpv**. The player instance cannot be used anymore afterwards. A new one has to be created.
+  
+  ```JavaScript
+  	let player = new mpv();
+  	mpv.quit()
+  	// restarting
+  	player = new mpv();
+  ```
+	This behaviour will be improved with **Version 2** of this module	
+ 
+  
 ## Playlists
 
   * **loadPlaylist** (playlist, mode="replace")
 
     Loads a playlist file. `mode` can be one of the two folllowing
-
-    This function does not work with *YouTube* or *SoundCloud* playlists. Use **loadFile** or **loadStream** instead
-
+   
       * `replace` *(default)* Replaces the old playist with the new one
       * `append`  Appends the new playlist to the active one
+
+	This function does not work with *YouTube* or *SoundCloud* 	playlists. Use **loadFile** or **loadStream** instead
+
 
   * **append** (file, mode="append")
 
