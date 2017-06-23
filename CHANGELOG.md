@@ -1,5 +1,9 @@
 # Node-MPV Changelog
 
+* **1.2.0**
+  * Added a **quit** function. (Thanks to @KeyserSoze1 for the intial help)
+  * Deprecated **getProperty**(property, id). The promise version should be used instead
+
 * **1.1.2**
   * Accidentally committed way more than desired. This fixes the mess
 
