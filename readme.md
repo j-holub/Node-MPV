@@ -15,6 +15,7 @@ Works on **UNIX** and **Windows**.
 
 ### Important
 
+With Version **2.0.0** the API how to initialize and start **MPV** will change. See the **Usage** and **Example** section to see, how it changes.
 
 In version **0.13.0** the behaviour of `mute()` has changed. Use `toggleMute()` instead.
 
@@ -47,18 +48,21 @@ Go to the respective websites [mpv](https://mpv.io) and [youtube-dl](https://you
 **youtube-dl** is only required if you want to stream videos or music from *YouTube*, *SoundCloud* or other websites supported by **youtube-dl**. See [here](https://rg3.github.io/youtube-dl/supportedsites.html) for a list of supported websites.
 
 
-
-
-
-
 # Usage
 
 ```Javascript
-mpv = require('node-mpv');
-mpvPlayer = new mpv();
+let mpv = require('node-mpv');
+
+let mpvPlayer = new mpv();
+mpv.start().then(() => {
+	mpv.loadFile('your/favorite/song.mp3');
+})
+.catch((error) => {
+	console.log(error);
+});
 ```
 
-You can optionally pass a Json object with options to the constructor. Possible options, along with their default values are the following
+You can optionally pass a JSON object with options to the constructor. Possible options, along with their default values are the following
 
 ```Javascript
 {
@@ -91,7 +95,9 @@ mpvPlayer = new mpv({
 [
   "--fullscreen",
   "--fps=60"
-]);
+]).then() => {
+	// Code
+});
 ```
 
 **mpv** is then easily controllable via simple function calls.
@@ -104,16 +110,36 @@ mpvPlayer.volume(70);
 Events are used to detect changes.
 
 ```Javascript
-mpvPlayer.on('statuschange', function(status){
+mpvPlayer.on('statuschange', (status) => {
   console.log(status);
 });
 
-mpvPlayer.on('stopped', function() {
+mpvPlayer.on('stopped', () => {
   console.log("Gimme more music");
 });
 ```
 
 # Methods
+
+## Starting & Stopping
+
+* **start** ()
+  
+  Starts the **MPV** process in the background. Has to be called before the player can be used.
+  
+  *return* - a Promise that resolves when **MPV** is started and is rejected if an error occured
+  
+  ```JavaScript
+  mpv.start().then(() => {
+      // The player can be used here
+  });
+  ```
+  
+* **quit** ()
+
+  Quits **MPV**. The process in the backgroud is terminated and all socket connection is closed.
+  
+  **MPV** can be restarted using **start** ()
 
 ## Load Content
 
@@ -509,16 +535,16 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   ```Javascript
   {
-    "mute": false,
-    "pause": false,
-    "duration": null,
-    "volume": 100,
-    "filename": null,
-    "path": null,
-    "media-title": null,
-    "playlist-pos": 0,
-    "playlist-count": 0,
-    "loop": "no"
+  	 	"mute": false,
+	    "pause": false,
+	    "duration": null,
+    	"volume": 100,
+	    "filename": null,
+	    "path": null,
+   		"media-title": null,
+	    "playlist-pos": 0,
+	    "playlist-count": 0,
+   		"loop": "no"
   }
   ```
 
@@ -526,10 +552,12 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   ```Javascript
   {
-    "fullscreen": false,
-    "sub-visibility": false
+    	"fullscreen": false,
+    	"sub-visibility": false
   }
   ```
+
+### Note
 
   * `filename`
     When playing a local file this contains the filename. When playing for example a *YouTube* stream, this will only contain the trailing url
@@ -541,31 +569,35 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
     This object can expanded through the *observeProperty* method making it possible to watch any state you desire, given it is provided by **mpv**
 
-
- ### Bug with observing playlist-count
+### Bug with observing playlist-count
 
  As of **mpv** version **0.17.0**, the `playlist-count` property is not updated as one would expect. It is not updated on **playlistRemove** and **append**. I already filed an [issue](https://github.com/mpv-player/mpv/issues/3267) about that and the problem was already fixed. If you need this feature you will have to build and install **mpv** yourself. Instructions for that can be found on the projects [GitHub page](https://github.com/mpv-player).
 
 # Example
 
 ```Javascript
-var mpvAPI = require('./mpv.js');
-var mpvPlayer = new mpvAPI();
+let mpvAPI = require('node-mpv');
 
-// This will load and start the song
-mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
+let mpvPlayer = new mpvAPI();
+
+// Start the player
+mpvPlayer.start().then(() => {
+	// This will load and start the song
+	mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
+
+	// Set the volume to 50%
+	mpvPlayer.volume(50);
+	
+	// Stop to song emitting the stopped event
+	mpvPlayer.stop();
+});
 
 // This will bind this function to the stopped event
 mpvPlayer.on('stopped', function() {
-  console.log("Your favorite song just finished, let's start it again!");
-    mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
+	console.log("Your favorite song just finished, let's start it again!");
+	mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
 });
 
-// Set the volume to 50%
-mpvPlayer.volume(50);
-
-// Stop to song emitting the stopped event
-mpvPlayer.stop();
 ```
 
 # Known Issues
@@ -584,7 +616,7 @@ mpv --version
 
 ## MPV Player 0.18.1
 
-MPV Player version **0.18.1** has some issues that the player crashes sometimes, when sending commands through the *ipc socket*. If you're using version **0.18.0** try to use a newer (or older) version.
+MPV Player version **0.18.1** has some issues that the player crashes sometimes, when sending commands through the *ipc socket*. If you're using version **0.18.1** try to use a newer (or older) version.
 
 To check your version number enter the following in your command shell
 
