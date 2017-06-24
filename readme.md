@@ -569,9 +569,7 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
     This object can expanded through the *observeProperty* method making it possible to watch any state you desire, given it is provided by **mpv**
 
-### Bug with observing playlist-count
 
- As of **mpv** version **0.17.0**, the `playlist-count` property is not updated as one would expect. It is not updated on **playlistRemove** and **append**. I already filed an [issue](https://github.com/mpv-player/mpv/issues/3267) about that and the problem was already fixed. If you need this feature you will have to build and install **mpv** yourself. Instructions for that can be found on the projects [GitHub page](https://github.com/mpv-player).
 
 # Example
 
@@ -602,6 +600,14 @@ mpvPlayer.on('stopped', function() {
 
 # Known Issues
 
+## Old MPV Version on Debian
+
+Debian took their stable policy a little to far and **MPV** is still on version **0.6.0**. Unfortunately the **IPC functionality** was only introduced with version **0.7.0**. Thus this module will just **not work** with the debian packaged **MPV**.
+
+The dependecies to build **MPV** are also too old on Debian (but I guess they are stable, right?). Lucky there is [this](https://github.com/mpv-player/mpv-build) project, that helps you to build the dependencies and mpv afterwards.
+
+Using this you can easily get the latest stable **MPV Player** on Debian.
+
 ## IPC Command
 
 The command line argument to start the IPC socket has changed in mpv version **0.17.0** from `--input-unix-socket` to `--input-ipc-socket`. This module uses regular expressions to find the version number from the `mpv --version` output. If mpv is compiled from source, the version number is stated as **UNKNOWN** and this module will assume, that you use the latest version and use the new command.
@@ -613,6 +619,12 @@ To check this enter the following in your command shell
 ```
 mpv --version
 ```
+
+## Bug with observing playlist-count in MPV Player 0.17.0
+
+In **mpv** version **0.17.0**, the `playlist-count` property is not updated on **playlistRemove** and **append**. 
+
+I filed an Issue and this is fixed with **0.17.1**
 
 ## MPV Player 0.18.1
 
