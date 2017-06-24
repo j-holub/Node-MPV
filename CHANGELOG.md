@@ -5,6 +5,7 @@
   * The 1.*.* API is no longer valid
   * Added a **start** and **quit** method
   * MPV is not started automatically on initialization. **start** has to be called
+  * Removed lodash as a dependcy
 
 ### Version 1
 
