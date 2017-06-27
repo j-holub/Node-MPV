@@ -95,7 +95,8 @@ mpvPlayer = new mpv({
 [
   "--fullscreen",
   "--fps=60"
-]).then() => {
+])
+mpvPlayer.start().then(() => {
 	// Code
 });
 ```
