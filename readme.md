@@ -67,6 +67,7 @@ You can optionally pass a JSON object with options to the constructor. Possible 
 ```Javascript
 {
     "audio_only": false,
+    "auto_restart": true,
     "binary": null,
     "debug": false,
     "ipcCommand": null,   
@@ -78,6 +79,7 @@ You can optionally pass a JSON object with options to the constructor. Possible 
 ```
 
 * `audio_only` will add the `--no-video` and `--no-audio-display` argument and start **mpv** in audio only mode
+* `auto_restart` - if set to true, **MPV** is restarted when it has crashed
 * `binary` will use the provied path to a mpv binary instead of using the one found in **$PATH**
 * `debug` prints error messages
 * `ipc_command` sets the ipc command to start the ipc socket. Possible options are **--input-unix-socket** and **--input-ipc-server**. This is usually not needed since  **Node-MPV** is able to determine the correct command on its own
@@ -501,6 +503,18 @@ The most common commands are already covered by this modules **API**. This part 
 # Events
 
 The **Node-MPV** module provides various *events* to notify about changes of the **mpv player's** state.
+
+* **crashed**
+
+ Whenever **mpv** has crashed or is closed by *external* cirumcumstances (not when the `quit()` method is called). If the `auto_restart` option is set to **true** (*default*), **mpv** is restarted again.
+ 
+ Use this event to reload your playlist, videos, etc when the player crashed
+ 
+ ```Javascript
+ player.on('crashed', () => {
+     player.loadFile('Your/Favourite/Song.mp3');
+ });
+ ```
 
 * **started**
 
