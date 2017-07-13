@@ -506,15 +506,19 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
 * **crashed**
 
- Whenever **mpv** has crashed or is closed by *external* cirumcumstances (not when the `quit()` method is called). If the `auto_restart` option is set to **true** (*default*), **mpv** is restarted again.
+ Whenever **mpv** has crashed or the process was killed. If the `auto_restart` option is set to **true** (*default*), **mpv** is restarted again right away.
  
- Use this event to reload your playlist, videos, etc when the player crashed
+ Use this event to for example reload your playlist, videos, etc when the player crashed
  
  ```Javascript
  player.on('crashed', () => {
      player.loadFile('Your/Favourite/Song.mp3');
  });
  ```
+
+* **getrequest** \<id, data\> - *deprecated*
+
+  Delivers the reply to a function call to the *getRequest* method
 
 * **started**
 
@@ -532,15 +536,6 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   Whenever **mpv** was resumed
 
-* **timeposition** \<seconds\>
-
-  When a song or video is currently playing and the playback is not paused, this event will emit the current position in *seconds*.
-
-  When creating the **mpv** instance you can set a parameter, how often this event should occur. Default is every second
-
-* **getrequest** \<id, data\>
-
-  Delivers the reply to a function call to the *getRequest* method
 
 * **statuschange** \<status object\>
 
@@ -571,6 +566,18 @@ The **Node-MPV** module provides various *events* to notify about changes of the
     	"sub-visibility": false
   }
   ```
+
+* **timeposition** \<seconds\>
+
+  When a song or video is currently playing and the playback is not paused, this event will emit the current position in *seconds*.
+
+  When creating the **mpv** instance you can set a parameter, how often this event should occur. Default is every second
+  
+* **quit**
+
+   When mpv player was quit by the user on purpose, this event is emitted. It is **not** emitted, when the `quit()` method was used.
+   
+   Use this to detect if the user has closed the player.
 
 ### Note
 
