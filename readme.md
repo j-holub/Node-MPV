@@ -143,6 +143,10 @@ mpvPlayer.on('stopped', () => {
   Quits **MPV**. The process in the backgroud is terminated and all socket connection is closed.
   
   **MPV** can be restarted using **start** ()
+  
+* **isRunning** () - *boolean*
+
+  Returns whether **mpv** is running or not
 
 ## Load Content
 
