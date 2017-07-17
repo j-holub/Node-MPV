@@ -274,6 +274,24 @@ mpvPlayer.on('stopped', () => {
       Shuffles the playlist into a random order
 
 
+  * **getPlaylistSize** ()
+
+     Returns a *promise* that resolves to the playlist size
+     
+     ```
+     player.getPlaylistSize()
+     .then((size) => {
+         console.log(size);
+     });
+     ```
+     
+  *  **getPlaylistPosition** ()
+
+     Returns a *promise* that resolves to the current playlist position. The position is **0-based**, which means, that positon 1 is 0 and so on.
+     
+  *  **getPlaylistPosition1** ()
+
+     Just like `getPlaylistPosition()` but **1-based**, so the first position is 1 and so on.
 
 ## Audio
 
