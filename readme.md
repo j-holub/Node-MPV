@@ -225,6 +225,49 @@ mpvPlayer.on('stopped', () => {
 
   Loops the current title `times` often. If set to *"inf"* the title is looped forever
 
+## Information
+
+ Because **node-mpv** communicates over a *Unix IPC Socket* with **mpv** it has to wait for the response, if it asks **mpv** for information. To make this more easily usable **promises** are used. All the methods in this section return such a **promise** and can be used like this
+ 
+ ```Javascript
+  getSomeInfo()
+ .then((info) => {
+     console.log(info);
+ });
+ ```
+
+  * **isMuted** ()
+
+    Tells if **mpv** is muted
+    
+  * **isPaused** ()
+
+    Tells if **mpv** is paused
+    
+  * **isSeekable** ()
+
+    Tells if the currently playing title is *seekable* or not. Streams that are not fully loaded might not be seekable. The same goes for *readiostreams* for example.
+    
+  * **getCurrentTitle** ()
+
+    Returns the currently playing title's *media-title* (*as a promise*) if available
+    
+  * **getDuration** ()
+
+    Returns the *duration* (*as a promise*) of the currently playing title if available. For example for *radiostreams* this will not be known.
+    
+  * **getTimePosition** ()
+
+    Returns the current *timeposition* (*as a promise*) for the currently playing title
+  
+  * **getPercentPosition** ()
+
+    Returns the current *timeposition* as a percantage value (*as a promise*) for the currently playing title
+    
+  * **getTimeRemaining** ()
+
+    Returns the *remaining time* (*as a promise*) for the currently playing title, if possible
+
 ## Playlists
 
   * **loadPlaylist** (playlist, mode="replace")
