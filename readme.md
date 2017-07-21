@@ -247,11 +247,7 @@ mpvPlayer.on('stopped', () => {
   * **isSeekable** ()
 
     Tells if the currently playing title is *seekable* or not. Streams that are not fully loaded might not be seekable. The same goes for *readiostreams* for example.
-    
-  * **getCurrentTitle** ()
-
-    Returns the currently playing title's *media-title* (*as a promise*) if available
-    
+        
   * **getDuration** ()
 
     Returns the *duration* (*as a promise*) of the currently playing title if available. For example for *radiostreams* this will not be known.
@@ -267,6 +263,18 @@ mpvPlayer.on('stopped', () => {
   * **getTimeRemaining** ()
 
     Returns the *remaining time* (*as a promise*) for the currently playing title, if possible
+    
+  * **getMetadata** ()
+
+  	Returns the available *metadata* {*as a promise*) for the currently playing title. The promise returns a **JSON Object**
+  	
+  	There are some helper function for quicker access to some *metadata*, they all return *promises* as usual.
+  	
+  	* **getArtist** ()
+  	* **getTitle** ()
+  	* **getAlbum** ()
+  	* **getYear** ()
+    
 
 ## Playlists
 
