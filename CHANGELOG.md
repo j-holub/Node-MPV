@@ -1,4 +1,6 @@
 # Node-MPV Changelog
+* **1.2.1**
+  * Some bugfixes for Windows (Thanks to @vankasteelj)
 
 * **1.2.0**
   * Added a **quit** function. (Thanks to @KeyserSoze1 for the intial help)
