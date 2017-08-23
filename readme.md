@@ -530,6 +530,19 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 * **getrequest** \<id, data\> - *deprecated*
 
   Delivers the reply to a function call to the **getProperty** method
+  
+* **seek** <timeposition object>
+
+  Whenever a `seek()` or `goToPosition()` is called, or some external source searches, this event is emitted providing a **timeposition** object with the following information
+  
+  ```JavaScript
+  {
+    start: <timeposition before seeking>,
+    end:   <timeposition after  seeking>
+  }
+  ```
+  
+   In case the seek can not be finished, for example because the file is changed while seeking, this event is not emitted. It is only emitted when the seeking has successfully finished.
 
 * **statuschange** \<status object\>
 

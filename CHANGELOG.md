@@ -1,4 +1,9 @@
 # Node-MPV Changelog
+
+* **1.3.0**
+  * Added **seek** event
+  * Deprecated `loadFile()` and `loadStream()` which are replaced by `load()``
+
 * **1.2.1**
   * Some bugfixes for Windows (Thanks to @vankasteelj)
 
