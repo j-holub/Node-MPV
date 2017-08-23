@@ -115,7 +115,19 @@ mpvPlayer.on('stopped', function() {
 
 ## Load Content
 
-* **loadFile** (file, mode="replace")
+* **load** (content, mode="replace)
+
+  Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode` option
+
+  * `replace`*(default)* replace current title and play it immediately
+  * `append` appends the file to the playlist
+  * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
+
+  There is another `append` function in the **playlist** section, which can be used to append either files or streams.
+
+* **loadFile** (file, mode="replace") - *deprecated*
+
+  This method is *deprecated* and will be gone in **2.0**, use `load()` instead.
 
   Will load the `file` and start playing it. This behaviour can be changed using the `mode` option
 
@@ -125,7 +137,9 @@ mpvPlayer.on('stopped', function() {
 
   There is another `append` function in the **playlist** section, which can be used to append either files or streams.
 
-* **loadStream** (url)
+* **loadStream** (url) - *deprecated*
+
+  This method is *deprecated* and will be gone in **2.0**, use `load()` instead.
 
   Exactly the same as **loadFile** but loads a stream specified by `url`, for example from *YouTube* or *SoundCloud*.
 
