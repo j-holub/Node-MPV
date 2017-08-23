@@ -54,9 +54,14 @@ Go to the respective websites [mpv](https://mpv.io) and [youtube-dl](https://you
 let mpv = require('node-mpv');
 
 let mpvPlayer = new mpv();
-mpv.start().then(() => {
-	mpv.loadFile('your/favorite/song.mp3');
+mpv.start()
+.then(() => {
+	mpv.load('your/favorite/song.mp3');
+	.then(() => {
+		// file is playing
+	});
 })
+// handle errors here
 .catch((error) => {
 	console.log(error);
 });
@@ -98,7 +103,8 @@ mpvPlayer = new mpv({
   "--fullscreen",
   "--fps=60"
 ])
-mpvPlayer.start().then(() => {
+mpvPlayer.start()
+.then(() => {
 	// Code
 });
 ```
@@ -130,7 +136,7 @@ mpvPlayer.on('stopped', () => {
   
   Starts the **MPV** process in the background. Has to be called before the player can be used.
   
-  *return* - a Promise that resolves when **MPV** is started and is rejected if an error occured
+  *return* - a promise that resolves when **MPV** is started and is rejected if an error occured
   
   ```JavaScript
   mpv.start().then(() => {
@@ -160,13 +166,8 @@ mpvPlayer.on('stopped', () => {
 
   There is another `append` function in the **playlist** section, which can be used to append either files or streams.
 
-* **loadStream** (url)
+*return* - a promise that resolves if everything went fine and the file or stream is playing and is reject with an error message when something went wrong
 
-  Exactly the same as **loadFile** but loads a stream specified by `url`, for example from *YouTube* or *SoundCloud*.
-
-  `mode` is the same as in **loadFile**.
-
-  This function should be used to load *YouTube* or *SoundCloud* playlists, as **loadPlaylist** will not work with those.
 
 
 ## Controlling MPV
@@ -687,15 +688,20 @@ let mpvAPI = require('node-mpv');
 let mpvPlayer = new mpvAPI();
 
 // Start the player
-mpvPlayer.start().then(() => {
+mpvPlayer.start()
+.then(() => {
 	// This will load and start the song
-	mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
-
-	// Set the volume to 50%
-	mpvPlayer.volume(50);
+	mpvPlayer.load('/path/to/your/favorite/song.mp3')
+	.then(() => {
+		// Set the volume to 50%
+		mpvPlayer.volume(50);
 	
-	// Stop to song emitting the stopped event
-	mpvPlayer.stop();
+		// Stop to song emitting the stopped event
+		mpvPlayer.stop();
+	});
+})
+.catch((error) => {
+	console.log(error);
 });
 
 // This will bind this function to the stopped event
