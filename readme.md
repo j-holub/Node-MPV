@@ -133,23 +133,23 @@ mpvPlayer.on('stopped', () => {
 ## Starting & Stopping
 
 * **start** ()
-  
+
   Starts the **MPV** process in the background. Has to be called before the player can be used.
-  
+
   *return* - a promise that resolves when **MPV** is started and is rejected if an error occured
-  
+
   ```JavaScript
   mpv.start().then(() => {
       // The player can be used here
   });
   ```
-  
+
 * **quit** ()
 
   Quits **MPV**. The process in the backgroud is terminated and all socket connection is closed.
-  
+
   **MPV** can be restarted using **start** ()
-  
+
 * **isRunning** () - *boolean*
 
   Returns whether **mpv** is running or not
@@ -166,7 +166,7 @@ mpvPlayer.on('stopped', () => {
 
   There is another `append` function in the **playlist** section, which can be used to append either files or streams.
 
-*return* - a promise that resolves if everything went fine and the file or stream is playing and is reject with an error message when something went wrong
+  *return* - a promise that resolves if everything went fine and the file or stream is playing  (or appened when *mode* was set to `append`) and is reject with an error message when something went wrong
 
 
 
@@ -229,7 +229,7 @@ mpvPlayer.on('stopped', () => {
 ## Information
 
  Because **node-mpv** communicates over a *Unix IPC Socket* with **mpv** it has to wait for the response, if it asks **mpv** for information. To make this more easily usable **promises** are used. All the methods in this section return such a **promise** and can be used like this
- 
+
  ```Javascript
   getSomeInfo()
  .then((info) => {
@@ -240,42 +240,42 @@ mpvPlayer.on('stopped', () => {
   * **isMuted** ()
 
     Tells if **mpv** is muted
-    
+
   * **isPaused** ()
 
     Tells if **mpv** is paused
-    
+
   * **isSeekable** ()
 
     Tells if the currently playing title is *seekable* or not. Streams that are not fully loaded might not be seekable. The same goes for *readiostreams* for example.
-        
+
   * **getDuration** ()
 
     Returns the *duration* (*as a promise*) of the currently playing title if available. For example for *radiostreams* this will not be known.
-    
+
   * **getTimePosition** ()
 
     Returns the current *timeposition* (*as a promise*) for the currently playing title
-  
+
   * **getPercentPosition** ()
 
     Returns the current *timeposition* as a percantage value (*as a promise*) for the currently playing title
-    
+
   * **getTimeRemaining** ()
 
     Returns the *remaining time* (*as a promise*) for the currently playing title, if possible
-    
+
   * **getMetadata** ()
 
   	Returns the available *metadata* {*as a promise*) for the currently playing title. The promise returns a **JSON Object**
-  	
+
   	There are some helper function for quicker access to some *metadata*, they all return *promises* as usual.
-  	
+
   	* **getArtist** ()
   	* **getTitle** ()
   	* **getAlbum** ()
   	* **getYear** ()
-    
+
 
 ## Playlists
 
@@ -294,6 +294,13 @@ mpvPlayer.on('stopped', () => {
 
     * `append` *(default)* Append the title
     * `append-play` When the playlist is empty the title will be started
+
+    *return* - a promise that resolves if everything went fine and the file or stream is playing (when *mode* was set to `append-play`) or was appended (when *mode* was set to `append`) and is reject with an error message when something went wrong.
+
+	**Note**
+
+	It is **not** necessarily required to check the promise when using `append` (*default*). Checking whether the file can be played or not is done when it is played, not when it's appended.
+
 
   * **next** (mode="weak")
 
@@ -329,18 +336,18 @@ mpvPlayer.on('stopped', () => {
   * **getPlaylistSize** ()
 
      Returns a *promise* that resolves to the playlist size
-     
+
      ```
      player.getPlaylistSize()
      .then((size) => {
          console.log(size);
      });
      ```
-     
+
   *  **getPlaylistPosition** ()
 
      Returns a *promise* that resolves to the current playlist position. The position is **0-based**, which means, that positon 1 is 0 and so on.
-     
+
   *  **getPlaylistPosition1** ()
 
      Just like `getPlaylistPosition()` but **1-based**, so the first position is 1 and so on.
@@ -581,9 +588,9 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 * **crashed**
 
  Whenever **mpv** has crashed or the process was killed. If the `auto_restart` option is set to **true** (*default*), **mpv** is restarted again right away.
- 
+
  Use this event to for example reload your playlist, videos, etc when the player crashed
- 
+
  ```Javascript
  player.on('crashed', () => {
      player.loadFile('Your/Favourite/Song.mp3');
@@ -593,18 +600,18 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 * **getrequest** \<id, data\> - *deprecated*
 
   Delivers the reply to a function call to the *getRequest* method
-  
+
 * **seek** <timeposition object>
 
   Whenever a `seek()` or `goToPosition()` is called, or some external source searches, this event is emitted providing a **timeposition** object with the following information
-  
+
   ```
   {
       start: <timeposition before seeking>,
       end:   <timeposition after  seeking>
   }
   ```
-  
+
   In case the seek can not be finished, for example because the file is changed while seeking, this event is not emitted. It is only emitted when the seeking has successfully finished.
 
 * **started**
@@ -659,11 +666,11 @@ The **Node-MPV** module provides various *events* to notify about changes of the
   When a song or video is currently playing and the playback is not paused, this event will emit the current position in *seconds*.
 
   When creating the **mpv** instance you can set a parameter, how often this event should occur. Default is every second
-  
+
 * **quit**
 
    When mpv player was quit by the user on purpose, this event is emitted. It is **not** emitted, when the `quit()` method was used.
-   
+
    Use this to detect if the user has closed the player.
 
 ### Note
@@ -695,7 +702,7 @@ mpvPlayer.start()
 	.then(() => {
 		// Set the volume to 50%
 		mpvPlayer.volume(50);
-	
+
 		// Stop to song emitting the stopped event
 		mpvPlayer.stop();
 	});
@@ -736,7 +743,7 @@ mpv --version
 
 ## Bug with observing playlist-count in MPV Player 0.17.0
 
-In **mpv** version **0.17.0**, the `playlist-count` property is not updated on **playlistRemove** and **append**. 
+In **mpv** version **0.17.0**, the `playlist-count` property is not updated on **playlistRemove** and **append**.
 
 I filed an Issue and this is fixed with **0.17.1**
 
