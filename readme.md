@@ -277,6 +277,14 @@ mpvPlayer.on('stopped', () => {
   	* **getYear** ()
 
 
+  * **getFilename** (mode="full")
+
+    Returns the *filename* (or *url*) of the currently playing track (as a *promise*).
+
+	* `full` (default) the full path or url
+	* `stripped` the path stripped to the file or the end of the url
+
+
 ## Playlists
 
   * **loadPlaylist** (playlist, mode="replace")
