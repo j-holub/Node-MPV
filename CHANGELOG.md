@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **1.3.1**
+ * Fixes `next()` and `prev()`. The mode was not propagated to **mpv** and instead of **strong** it is actually **force*
+
 * **1.3.0**
   * Added **seek** event
   * Deprecated `loadFile()` and `loadStream()` which are replaced by `load()``

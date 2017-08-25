@@ -207,22 +207,22 @@ mpvPlayer.on('stopped', function() {
 * **quit** ()
 
   Quits **mpv**. The player instance cannot be used anymore afterwards. A new one has to be created.
-  
+
   ```JavaScript
   	let player = new mpv();
   	mpv.quit()
   	// restarting
   	player = new mpv();
   ```
-	This behaviour will be improved with **Version 2** of this module	
- 
-  
+	This behaviour will be improved with **Version 2** of this module
+
+
 ## Playlists
 
   * **loadPlaylist** (playlist, mode="replace")
 
     Loads a playlist file. `mode` can be one of the two folllowing
-   
+
       * `replace` *(default)* Replaces the old playist with the new one
       * `append`  Appends the new playlist to the active one
 
@@ -241,14 +241,14 @@ mpvPlayer.on('stopped', function() {
      Skips the current title. `mode` can be one of the following two
 
        * `weak` *(default*) If the current title is the last one in the playlist it is not skipped
-       * `strong` The title is skipped and playback is stopped
+       * `force` The title is skipped and if it was the last one in the playlist, playback is stopped
 
   * **prev** (mode="weak")
 
-     Skips the current title. `mode` can be one of the following two
+     Jumps to the previous title. `mode` can be one of the following two
 
-       * `weak` *(default*) If the title is the first one in the playlist it is not stopped
-       * `strong` The title is skipped and playback is stopped
+       * `weak` *(default*) If the title is the first one in the playlist nothing happens
+       * `force` If the was the first one in the playlist, playback is stopped
 
   * **clearPlaylist** ()
 
@@ -436,9 +436,9 @@ The most common commands are already covered by this modules **API**. This part 
 * **getProperty** (property)
 
  Gets information about the specified `property`.
- 
+
  This function returns a [promise](https://www.promisejs.org) and is used as in the example below
- 
+
   ```Javascript
     mpvPlayer.getProperty('duration')
     .then(function(duration) {
@@ -451,7 +451,7 @@ The most common commands are already covered by this modules **API**. This part 
   Gets information about the specified `property`.
 
   The answer comes via a *getrequest* event containing the`id` and the `property`.
-   
+
 * **addProperty** (property, value)
 
   Increase the `property` by the specified `value`. Needless to say this can only be used on numerical properties. Negative values are possible
@@ -530,18 +530,18 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 * **getrequest** \<id, data\> - *deprecated*
 
   Delivers the reply to a function call to the **getProperty** method
-  
+
 * **seek** <timeposition object>
 
   Whenever a `seek()` or `goToPosition()` is called, or some external source searches, this event is emitted providing a **timeposition** object with the following information
-  
+
   ```JavaScript
   {
     start: <timeposition before seeking>,
     end:   <timeposition after  seeking>
   }
   ```
-  
+
    In case the seek can not be finished, for example because the file is changed while seeking, this event is not emitted. It is only emitted when the seeking has successfully finished.
 
 * **statuschange** \<status object\>
