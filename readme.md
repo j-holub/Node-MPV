@@ -315,14 +315,20 @@ mpvPlayer.on('stopped', () => {
      Skips the current title. `mode` can be one of the following two
 
        * `weak` *(default*) If the current title is the last one in the playlist it is not skipped
-       * `strong` The title is skipped and playback is stopped
+       * `force` The title is skipped (even if it was the last one) and playback is stopped
+
+     *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
+     The promise is rejected with an error message if the file is not playable.
 
   * **prev** (mode="weak")
 
      Skips the current title. `mode` can be one of the following two
 
        * `weak` *(default*) If the title is the first one in the playlist it is not stopped
-       * `strong` The title is skipped and playback is stopped
+       * `force` The title is skipped (even if it was the first one) and playback is stopped
+
+     *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
+     The promise is rejected with an error message if the file is not playable.
 
   * **clearPlaylist** ()
 
