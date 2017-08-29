@@ -296,6 +296,8 @@ mpvPlayer.on('stopped', () => {
       * `replace` *(default)* Replaces the old playist with the new one
       * `append`  Appends the new playlist to the active one
 
+    *return* - a promise, that is resolved when everything went fine or rejected when an error occus. For example if the playlist file cannot be found or the first song in the playlist cannot be played
+
   * **append** (file, mode="append")
 
     Appends `file` (which can also be an url) to the playlist.
