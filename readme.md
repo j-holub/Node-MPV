@@ -13,11 +13,10 @@ Works on **UNIX** and **Windows**.
 **For streaming playback from sources such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
 
 
-### Important
+## Version 2
 
-
-In version **0.13.0** the behaviour of `mute()` has changed. Use `toggleMute()` instead.
-
+I'm currently developing a version **2** of this API, which can be found [here](https://github.com/00SteinsGate00/Node-MPV/tree/Node-MPV-2).
+Version **2** will change/break some part of the API since it will make quite some use of **Promises**. Due to the asynchronous nature of sending commands over a socket and waiting for a response to see if it actually worked (something that has not been done at all in version **1**) this was necessary. While I'm sorry that I have to break the API for people, it will make the module a lot more robust and better to use, I promise.
 
 
 # Install
@@ -95,7 +94,7 @@ let mpvPlayer = new mpv({
 **mpv** is then easily controllable via simple function calls.
 
 ```Javascript
-mpvPlayer.loadFile("/path/to/your/favorite/song.mp3");
+mpvPlayer.load("/path/to/your/favorite/song.mp3");
 mpvPlayer.volume(70);
 ```
 
@@ -124,28 +123,6 @@ mpvPlayer.on('stopped', function() {
   * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
 
   There is another `append` function in the **playlist** section, which can be used to append either files or streams.
-
-* **loadFile** (file, mode="replace") - *deprecated*
-
-  This method is *deprecated* and will be gone in **2.0**, use `load()` instead.
-
-  Will load the `file` and start playing it. This behaviour can be changed using the `mode` option
-
-  * `replace`*(default)* replace current title and play it immediately
-  * `append` appends the file to the playlist
-  * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
-
-  There is another `append` function in the **playlist** section, which can be used to append either files or streams.
-
-* **loadStream** (url) - *deprecated*
-
-  This method is *deprecated* and will be gone in **2.0**, use `load()` instead.
-
-  Exactly the same as **loadFile** but loads a stream specified by `url`, for example from *YouTube* or *SoundCloud*.
-
-  `mode` is the same as in **loadFile**.
-
-  This function should be used to load *YouTube* or *SoundCloud* playlists, as **loadPlaylist** will not work with those.
 
 
 ## Controlling MPV
@@ -446,12 +423,6 @@ The most common commands are already covered by this modules **API**. This part 
 	});
    ```
 
-* **getProperty** (property, id) - *deprecated*
-
-  Gets information about the specified `property`.
-
-  The answer comes via a *getrequest* event containing the`id` and the `property`.
-
 * **addProperty** (property, value)
 
   Increase the `property` by the specified `value`. Needless to say this can only be used on numerical properties. Negative values are possible
@@ -527,10 +498,6 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   When creating the **mpv** instance you can set a parameter, how often this event should occur. Default is every second
 
-* **getrequest** \<id, data\> - *deprecated*
-
-  Delivers the reply to a function call to the **getProperty** method
-
 * **seek** <timeposition object>
 
   Whenever a `seek()` or `goToPosition()` is called, or some external source searches, this event is emitted providing a **timeposition** object with the following information
@@ -596,12 +563,12 @@ var mpvAPI = require('./mpv.js');
 var mpvPlayer = new mpvAPI();
 
 // This will load and start the song
-mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
+mpvPlayer.load('/path/to/your/favorite/song.mp3');
 
 // This will bind this function to the stopped event
 mpvPlayer.on('stopped', function() {
   console.log("Your favorite song just finished, let's start it again!");
-    mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
+    mpvPlayer.load('/path/to/your/favorite/song.mp3');
 });
 
 // Set the volume to 50%
