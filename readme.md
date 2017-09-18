@@ -450,6 +450,20 @@ The most common commands are already covered by this modules **API**. This part 
   `command("loadfile",["audioSong.mp3"]`
   ```
 
+* **commandJSON** (command)
+
+   Sends a command, specified by a JSON object to mpv. Please refer to the [documentation](https://mpv.io/manual/stable/#json-ipc) for the protocol.
+   
+   ```JavaScript
+   let command = {
+       'command': [
+           'loadfile',
+           'audioSong.mp3'      
+       ]
+   };
+   mpvPlayer.commandJSON(command);
+   ```
+
 * **freeCommand** (command)
 
   This will send an arbitrary *command* to the **mpv player**. It must follow the specification of the **Json IPC protocol**. Its syntax can be found in the [documentation](https://mpv.io/manual/stable/#json-ipc).

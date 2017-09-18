@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **1.4.0**
+ * Added a new method `commandJSON()`
+
 * **1.3.1**
  * Fixes `next()` and `prev()`. The mode was not propagated to **mpv** and instead of **strong** it is actually **force*
 
