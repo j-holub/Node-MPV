@@ -208,12 +208,15 @@ mpvPlayer.on('stopped', function() {
 	This function does not work with *YouTube* or *SoundCloud* 	playlists. Use **loadFile** or **loadStream** instead
 
 
-  * **append** (file, mode="append")
+  * **append** (file, mode="append", options)
 
     Appends `file` (which can also be an url) to the playlist.
-
-    * `append` *(default)* Append the title
-    * `append-play` When the playlist is empty the title will be started
+    
+    * `mode`
+      * `append` *(default)* Append the title
+      * `append-play` When the playlist is empty the title will be started
+    * `options` *(optional)* an array that can be used to pass additional options to **mpv**
+     
 
   * **next** (mode="weak")
 
