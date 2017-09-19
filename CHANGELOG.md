@@ -3,6 +3,7 @@
 * **1.4.0**
  * Added a new method `commandJSON()`
  * Added an *options* parameter to the `load()` and `append()` methods to pass additional options to **mpv**
+ * Added a method `displayASS()` to make using *ass-formatted* subtitles easier. (Thanks to @AxelTerizaki)
 
 * **1.3.1**
  * Fixes `next()` and `prev()`. The mode was not propagated to **mpv** and instead of **strong** it is actually **force*

@@ -392,7 +392,23 @@ mpvPlayer.on('stopped', function() {
 
   Adjust the scale of the subtitles
 
+* **displayASS** (assMessage, duration, position=7)
 
+  Displays **ass-formated** subtitles. A good documentation about **ass** can be found [here](http://docs.aegisub.org/3.2/ASS_Tags/).
+  
+  * `assMessage` the subitle text along with the **ass-tags**
+  * `duration` the time the subtitle should be displayed in *miliseconds*
+  * `position` where the subtitles are displayed. It works like a numpad (**5** being center and so on). The default is **7** - the top left corner
+
+  This method will add `${osd-ass-cc/0}` (along with the position tag) in front of your message, to enable **ass** formating and *parameter expansion*.
+  
+  You cannot show two different subtitles at the same time, the newer one will overwrite the previous one. This is a limitation of **mpv**.
+
+  Unfortunately beforehand defined **ass styles** do not work, you have to style your subtitles using **ass-tags**
+  
+  ```JavaScript
+  player.displayASS('{\\fsp10}Hey I'm a letter spaced subtitle in the center of the screen', 5000, 5);
+  ```
 
 ## Properties
 
