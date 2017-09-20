@@ -156,13 +156,16 @@ mpvPlayer.on('stopped', () => {
 
 ## Load Content
 
-* **loadFile** (file, mode="replace")
 
-  Will load the `file` and start playing it. This behaviour can be changed using the `mode` option
+  * **load** (content, mode="replace, options)
 
-  * `replace`*(default)* replace current title and play it immediately
-  * `append` appends the file to the playlist
-  * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
+  Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode` option
+  
+  * `mode`
+     * `replace`*(default)* replace current title and play it immediately
+     * `append` appends the file to the playlist
+     * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
+    * `options` *(optional)* an array that can be used to pass additional options to **mpv**
 
   There is another `append` function in the **playlist** section, which can be used to append either files or streams.
 
