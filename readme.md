@@ -305,8 +305,10 @@ mpvPlayer.on('stopped', () => {
 
     Appends `file` (which can also be an url) to the playlist.
 
-    * `append` *(default)* Append the title
-    * `append-play` When the playlist is empty the title will be started
+    * `mode`
+      * `append` *(default)* Append the title
+      * `append-play` When the playlist is empty the title will be started
+    * `options` *(optional)* an array that can be used to pass additional options to **mpv**
 
     *return* - a promise that resolves if everything went fine and the file or stream is playing (when *mode* was set to `append-play`) or was appended (when *mode* was set to `append`) and is reject with an error message when something went wrong.
 
