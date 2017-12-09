@@ -117,7 +117,7 @@ mpvPlayer.on('stopped', function() {
 * **load** (content, mode="replace, options)
 
   Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode` option
-  
+
   * `mode`
      * `replace`*(default)* replace current title and play it immediately
      * `append` appends the file to the playlist
@@ -211,12 +211,12 @@ mpvPlayer.on('stopped', function() {
   * **append** (file, mode="append", options)
 
     Appends `file` (which can also be an url) to the playlist.
-    
+
     * `mode`
       * `append` *(default)* Append the title
       * `append-play` When the playlist is empty the title will be started
     * `options` *(optional)* an array that can be used to pass additional options to **mpv**
-     
+
 
   * **next** (mode="weak")
 
@@ -360,7 +360,7 @@ mpvPlayer.on('stopped', function() {
 
   Removes the subtitle file specified by `id`. Works only for external subtitles
 
-* **selectSubtitle** (id)
+* **selectSubtitles** (id)
 
   Selects the subtitle associated with `id`
 
@@ -395,17 +395,17 @@ mpvPlayer.on('stopped', function() {
 * **displayASS** (assMessage, duration, position=7)
 
   Displays **ass-formated** subtitles. A good documentation about **ass** can be found [here](http://docs.aegisub.org/3.2/ASS_Tags/).
-  
+
   * `assMessage` the subitle text along with the **ass-tags**
   * `duration` the time the subtitle should be displayed in *miliseconds*
   * `position` where the subtitles are displayed. It works like a numpad (**5** being center and so on). The default is **7** - the top left corner
 
   This method will add `${osd-ass-cc/0}` (along with the position tag) in front of your message, to enable **ass** formating and *parameter expansion*.
-  
+
   You cannot show two different subtitles at the same time, the newer one will overwrite the previous one. This is a limitation of **mpv**.
 
   Unfortunately beforehand defined **ass styles** do not work, you have to style your subtitles using **ass-tags**
-  
+
   ```JavaScript
   player.displayASS('{\\fsp10}Hey I'm a letter spaced subtitle in the center of the screen', 5000, 5);
   ```
@@ -474,7 +474,7 @@ The most common commands are already covered by this modules **API**. This part 
 * **commandJSON** (command)
 
    Sends a command, specified by a JSON object to mpv. Please refer to the [documentation](https://mpv.io/manual/stable/#json-ipc) for the protocol.
-   
+
    ```JavaScript
    let command = {
        'command': [
