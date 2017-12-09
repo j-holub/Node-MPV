@@ -1,5 +1,9 @@
 # Node-MPV Changelog
 
+* **1.4.1**
+  * Changed `selectSubtitle()` to `selectSubtitles()``
+  * Documentation type fixes in the *subitle* section (Thanks to @p1100i)
+
 * **1.4.0**
  * Added a new method `commandJSON()`
  * Added an *options* parameter to the `load()` and `append()` methods to pass additional options to **mpv**
