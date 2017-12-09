@@ -342,7 +342,7 @@ mpvPlayer.on('stopped', function() {
 
 ## Subtitles
 
-* **addSubtilte** (file, flag, title, lang)
+* **addSubtitles** (file, flag, title, lang)
 
   Adds a subtitle file to the video that is loaded.
   * `file` The subtitle file to load
@@ -356,11 +356,11 @@ mpvPlayer.on('stopped', function() {
     * *auto* - the subtitle is not selected
     * *cached* - select the subtitle, but if a subtitle file with the same name is already loaded, the new file is not added and the old one is selected instead
 
-* **removeSubitlte** (id)
+* **removeSubtitles** (id)
 
   Removes the subtitle file specified by `id`. Works only for external subtitles
 
-* **selectSubitlte** (id)
+* **selectSubtitle** (id)
 
   Selects the subtitle associated with `id`
 
@@ -388,7 +388,7 @@ mpvPlayer.on('stopped', function() {
 
   Jumps as many lines of subtitles as defined by `lines`. Can be negative. This will also seek in the video.
 
-* **subitlteScale** (scale)
+* **subtitleScale** (scale)
 
   Adjust the scale of the subtitles
 
