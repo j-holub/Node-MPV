@@ -1,5 +1,8 @@
 # Node-MPV Changelog
 
+* **1.4.2ü**
+  * Fixed the verison number check to determine the *ipc command* for **mpv** 0.28.0 and later
+
 * **1.4.1**
   * Changed `selectSubtitle()` to `selectSubtitles()``
   * Documentation type fixes in the *subitle* section (Thanks to @p1100i)
