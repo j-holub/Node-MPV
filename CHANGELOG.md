@@ -2,6 +2,7 @@
 
 * **1.4.3**
   * Another fix to determine the *ipc command* for self compiled versions of **mpv**
+  * Fixed multiple options for `load` and `append` not working
 
 * **1.4.2**
   * Fixed the verison number check to determine the *ipc command* for **mpv** 0.28.0 and later

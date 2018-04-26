@@ -122,7 +122,7 @@ mpvPlayer.on('stopped', function() {
      * `replace`*(default)* replace current title and play it immediately
      * `append` appends the file to the playlist
      * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
-    * `options` *(optional)* an array that can be used to pass additional options to **mpv**
+  * `options` *(optional)* an array that can be used to pass additional options to **mpv**
 
   There is another `append` function in the **playlist** section, which can be used to append either files or streams.
 
