@@ -6,6 +6,8 @@ The module keeps an instance of **mpv** running in the background (using mpv's `
 
 It also provides direct access to the IPC socket. Thus this module is not only limited to the methods it provides, but can also fully communicate with the **mpv** API.
 
+This module makes heavy use of [Promises](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Promise) to deal with the asynchronous nature of sending message over a socket and waiting for the reponse.
+
 Works on **UNIX** and **Windows**.
 
 **This module requires [mpv](https://github.com/mpv-player/mpv) to be installed on your system to work. On Windows you can provide the path to the mpv.exe using the `binary` option, when creating the mpv instance**
@@ -15,9 +17,7 @@ Works on **UNIX** and **Windows**.
 
 ### Important
 
-With Version **2.0.0** the API how to initialize and start **MPV** will change. See the **Usage** and **Example** section to see, how it changes.
-
-In version **0.13.0** the behaviour of `mute()` has changed. Use `toggleMute()` instead.
+With Version **2.0.0** the API how to initialize and start **MPV** has changed. See the **Usage** and **Example** section to see, how it changed.
 
 
 
@@ -50,16 +50,22 @@ Go to the respective websites [mpv](https://mpv.io) and [youtube-dl](https://you
 
 # Usage
 
-```Javascript
-let mpv = require('node-mpv');
+Every single method of **Node-MPV** returns a **Promise**, more on that later.
 
-let mpvPlayer = new mpv();
+```Javascript
+const mpvAPI = require('node-mpv');
+const mpv = new mpvAPI();
+
+// starts MPV
 mpv.start()
 .then(() => {
-	mpv.load('your/favorite/song.mp3');
-	.then(() => {
-		// file is playing
-	});
+	// loads a file
+	return mpv.load('your/favorite/song.mp3');
+})
+.then(() => {
+	// file is playing
+	// sets volume to 70%
+	return mpv.volume(70);	
 })
 // handle errors here
 .catch((error) => {
@@ -95,7 +101,7 @@ You can optionally pass a JSON object with options to the constructor. Possible 
 You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
 
 ```Javascript
-mpvPlayer = new mpv({
+const mpv = new mpvAPI({
   "verbose": true,
   "audio_only": true
 },
@@ -103,7 +109,8 @@ mpvPlayer = new mpv({
   "--fullscreen",
   "--fps=60"
 ])
-mpvPlayer.start()
+
+mpv.start()
 .then(() => {
 	// Code
 });
@@ -111,21 +118,51 @@ mpvPlayer.start()
 
 **mpv** is then easily controllable via simple function calls.
 
-```Javascript
-mpvPlayer.loadFile("/path/to/your/favorite/song.mp3");
-mpvPlayer.volume(70);
+```JavaScript
+mpv.loadFile("/path/to/your/favorite/song.mp3");
+```
+```JavaScript
+mpv.volume(70);
 ```
 
 Events are used to detect changes.
 
 ```Javascript
-mpvPlayer.on('statuschange', (status) => {
+mpv.on('statuschange', (status) => {
   console.log(status);
 });
 
-mpvPlayer.on('stopped', () => {
+mpv.on('stopped', () => {
   console.log("Gimme more music");
 });
+```
+
+## Promises
+
+As stated above, *every single method* of **Node-MPV** returns a **Promise**. This means you will have to create a promise chain to control the player. The promise will be *resolved* if everything went fine and possibly returns some information and it will be *rejected* with a proper error message if something went wrong.
+
+```JavaScript
+mpv.start()
+.then(() => {
+	return mpv.load('/path/to/video.mkv');
+})
+.then(() => {
+   return mpv.getDuration();
+})
+.then((duration) => {
+  	console.log(duration);
+	return mpv.getProperty('someProperty');
+})
+.then((property) => {
+	console.log(property);
+})
+// catches all possible errors from above
+.catch((error) => {
+	// Maybe the mpv player could not be started
+	// Maybe the video file does not exist or couldn't be loaded
+	// Maybe someProperty is not a valid property
+   console.log(error);
+}
 ```
 
 # Methods
@@ -139,7 +176,8 @@ mpvPlayer.on('stopped', () => {
   *return* - a promise that resolves when **MPV** is started and is rejected if an error occured
 
   ```JavaScript
-  mpv.start().then(() => {
+  mpv.start()
+  .then(() => {
       // The player can be used here
   });
   ```
@@ -152,7 +190,7 @@ mpvPlayer.on('stopped', () => {
 
 * **isRunning** () - *boolean*
 
-  Returns whether **mpv** is running or not
+  Returns whether **mpv** is running or not. This method is an exception, it **does not** return a Promise
 
 ## Load Content
 
@@ -160,7 +198,7 @@ mpvPlayer.on('stopped', () => {
   * **load** (content, mode="replace, options)
 
   Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode` option
-  
+
   * `mode`
      * `replace`*(default)* replace current title and play it immediately
      * `append` appends the file to the playlist
@@ -231,10 +269,10 @@ mpvPlayer.on('stopped', () => {
 
 ## Information
 
- Because **node-mpv** communicates over a *Unix IPC Socket* with **mpv** it has to wait for the response, if it asks **mpv** for information. To make this more easily usable **promises** are used. All the methods in this section return such a **promise** and can be used like this
+ Because **node-mpv** communicates over a *Unix IPC Socket* with **mpv** it has to wait for the response, if it asks **mpv** for information. To make this more easily usable **Promises** are used. All the methods in this section return such a **Promise** and can be used like this
 
  ```Javascript
-  getSomeInfo()
+ getSomeInfo()
  .then((info) => {
      console.log(info);
  });
@@ -324,7 +362,7 @@ mpvPlayer.on('stopped', () => {
        * `weak` *(default*) If the current title is the last one in the playlist it is not skipped
        * `force` The title is skipped (even if it was the last one) and playback is stopped
 
-     *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
+    *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
      The promise is rejected with an error message if the file is not playable.
 
   * **prev** (mode="weak")
@@ -334,7 +372,7 @@ mpvPlayer.on('stopped', () => {
        * `weak` *(default*) If the title is the first one in the playlist it is not stopped
        * `force` The title is skipped (even if it was the first one) and playback is stopped
 
-     *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
+    *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
      The promise is rejected with an error message if the file is not playable.
 
   * **clearPlaylist** ()
@@ -409,7 +447,7 @@ mpvPlayer.on('stopped', () => {
 
   Controls the playback speed by `scale` which can take any value between **0.01** and **100**
 
-  If the `--auto-pitch-correction` flag (on by default) is used, this will not pitch the audio and uses a scaletempo audio filter
+  If the `--auto-pitch-correction` flag is used (default), this will not pitch the audio and uses a scaletempo audio filter
 
 
 ## Video
@@ -547,11 +585,11 @@ The most common commands are already covered by this modules **API**. This part 
   If no `id` was set this function returns a [promise](https://www.promisejs.org) delivering the `property`. It can be used as in the example below
 
    ```Javascript
-    mpvPlayer.getProperty('duration').then(function(duration) {
-	  console.log("Duration: ", duration);
+    mpv.getProperty('duration')
+    .then((duration) => {
+	  console.log(duration);
 	});
    ```
-
 
 * **addProperty** (property, value)
 
@@ -571,13 +609,13 @@ The most common commands are already covered by this modules **API**. This part 
   The Json command
 
   ```Javascript
-  `{"command": ["loadfile", "audioSong.mp3"]}`
+  {"command": ["loadfile", "audioSong.mp3"]}
   ```
 
   becomes a function call
 
   ```Javascript
-  `command("loadfile",["audioSong.mp3"]`
+  command("loadfile",["audioSong.mp3"]
   ```
 
 * **freeCommand** (command)
@@ -613,8 +651,8 @@ The **Node-MPV** module provides various *events* to notify about changes of the
  Use this event to for example reload your playlist, videos, etc when the player crashed
 
  ```Javascript
- player.on('crashed', () => {
-     player.loadFile('Your/Favourite/Song.mp3');
+ mpv.on('crashed', () => {
+     mpv.load('Your/Favourite/Song.mp3');
  });
  ```
 
@@ -706,36 +744,61 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
     This object can expanded through the *observeProperty* method making it possible to watch any state you desire, given it is provided by **mpv**
 
+# Error Handling
 
+If a method's **promise** is *rejected* it returns an error object. This object looks like the following
+
+``` JavaScript
+{
+    'errcode': Error Code
+    'verbose': Verbal version of the Error Code
+    'method': Method that raised the error
+    'arguments': List of arguments the method was called with
+    'errmessage': More specific error message
+    'options': JSON object with valid options for the method if possible
+}
+```
+
+The following **Error Codes** are available
+
+* **0** Unable to load file or stream
+* **1** Invalid argument
+* **2** Binary not found
+* **3** ipcCommand invalid
+* **4** Unable to bind IPC socket
+* **5** Timeout
+* **6** MPV is already running
+* **7** Could not send IPC message
 
 # Example
 
 ```Javascript
-let mpvAPI = require('node-mpv');
-
-let mpvPlayer = new mpvAPI();
+const mpvAPI = require('node-mpv');
+const mpv = new mpvAPI();
 
 // Start the player
-mpvPlayer.start()
+mpv.start()
 .then(() => {
 	// This will load and start the song
-	mpvPlayer.load('/path/to/your/favorite/song.mp3')
-	.then(() => {
-		// Set the volume to 50%
-		mpvPlayer.volume(50);
-
-		// Stop to song emitting the stopped event
-		mpvPlayer.stop();
-	});
+	return mpv.load('/path/to/your/favorite/song.mp3')
 })
+.then(() => {
+	// Set the volume to 50%
+	return mpv.volume(50);
+})
+.then(() => {
+	// Stop to song emitting the stopped event
+	return mpv.stop();
+})
+// this catches every arror from above
 .catch((error) => {
 	console.log(error);
 });
 
 // This will bind this function to the stopped event
-mpvPlayer.on('stopped', function() {
+mpv.on('stopped', () => {
 	console.log("Your favorite song just finished, let's start it again!");
-	mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
+	mpv.loadFile('/path/to/your/favorite/song.mp3');
 });
 
 ```
