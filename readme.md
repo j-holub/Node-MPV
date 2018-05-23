@@ -160,7 +160,7 @@ mpvPlayer.on('stopped', () => {
   * **load** (content, mode="replace, options)
 
   Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode` option
-  
+
   * `mode`
      * `replace`*(default)* replace current title and play it immediately
      * `append` appends the file to the playlist
@@ -706,7 +706,31 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
     This object can expanded through the *observeProperty* method making it possible to watch any state you desire, given it is provided by **mpv**
 
+# Error Handling
 
+If a method's **promise** is *rejected* it returns an error object. This object looks like the following
+
+``` JavaScript
+{
+    'errcode': Error Code
+    'verbose': Verbal version of the Error Code
+    'method': Method that raised the error
+    'arguments': List of arguments the method was called with
+    'errmessage': More specific error message
+    'options': JSON object with valid options for the method if possible
+}
+```
+
+The following **Error Codes** are available
+
+* **0** Unable to load file or stream
+* **1** Invalid argument
+* **2** Binary not found
+* **3** ipcCommand invalid
+* **4** Unable to bind IPC socket
+* **5** Timeout
+* **6** MPV is already running
+* **7** Could not send IPC message
 
 # Example
 
