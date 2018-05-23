@@ -15,10 +15,13 @@ Works on **UNIX** and **Windows**.
 **For streaming playback from sources such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
 
 
-### Important
+## Important
 
 With Version **2.0.0** the API how to initialize and start **MPV** has changed. See the **Usage** and **Example** section to see, how it changed.
 
+## Migration to Node-MPV 2
+
+If you're already using **Node-MPV 1** please refer to this [Migration Guide](migrationguide.md) to see how to migrate your application to **Node-MPV 2**.
 
 
 # Install
@@ -576,19 +579,17 @@ The most common commands are already covered by this modules **API**. This part 
   });
   ```
 
-* **getProperty** (property, [id])
+* **getProperty** (property)
 
-  Gets information about the specified `property`.
+ Gets information about the specified `property`.
 
-   If an `id` is used, the answer comes via a *getrequest* event containing the `id` and the `property`.
-
-  If no `id` was set this function returns a [promise](https://www.promisejs.org) delivering the `property`. It can be used as in the example below
+ This function returns a [promise](https://www.promisejs.org) and is used as in the example below
 
    ```Javascript
-    mpv.getProperty('duration')
-    .then((duration) => {
-	  console.log(duration);
-	});
+   mpvPlayer.getProperty('duration')
+  .then(function(duration) {
+		console.log(duration);
+   });
    ```
 
 * **addProperty** (property, value)
