@@ -15,9 +15,7 @@ Works on **UNIX** and **Windows**.
 
 ### Important
 
-With Version **2.0.0** the API how to initialize and start **MPV** will change. See the **Usage** and **Example** section to see, how it changes.
-
-In version **0.13.0** the behaviour of `mute()` has changed. Use `toggleMute()` instead.
+With Version **2.0.0** the API how to initialize and start **MPV** has changed. See the **Usage** and **Example** section to see, how it changed.
 
 
 
@@ -51,15 +49,19 @@ Go to the respective websites [mpv](https://mpv.io) and [youtube-dl](https://you
 # Usage
 
 ```Javascript
-let mpv = require('node-mpv');
+const mpvAPI = require('node-mpv');
+const mpv = new mpvAPI();
 
-let mpvPlayer = new mpv();
+// starts MPV
 mpv.start()
 .then(() => {
-	mpv.load('your/favorite/song.mp3');
-	.then(() => {
-		// file is playing
-	});
+	// loads a file
+	return mpv.load('your/favorite/song.mp3');
+})
+.then(() => {
+	// file is playing
+	// sets volume to 70%
+	return mpv.volume(70);	
 })
 // handle errors here
 .catch((error) => {
@@ -95,7 +97,7 @@ You can optionally pass a JSON object with options to the constructor. Possible 
 You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
 
 ```Javascript
-mpvPlayer = new mpv({
+const mpv = new mpvAPI({
   "verbose": true,
   "audio_only": true
 },
@@ -103,7 +105,8 @@ mpvPlayer = new mpv({
   "--fullscreen",
   "--fps=60"
 ])
-mpvPlayer.start()
+
+mpv.start()
 .then(() => {
 	// Code
 });
@@ -111,19 +114,21 @@ mpvPlayer.start()
 
 **mpv** is then easily controllable via simple function calls.
 
-```Javascript
-mpvPlayer.loadFile("/path/to/your/favorite/song.mp3");
-mpvPlayer.volume(70);
+```JavaScript
+mpv.loadFile("/path/to/your/favorite/song.mp3");
+```
+```JavaScript
+mpv.volume(70);
 ```
 
 Events are used to detect changes.
 
 ```Javascript
-mpvPlayer.on('statuschange', (status) => {
+mpv.on('statuschange', (status) => {
   console.log(status);
 });
 
-mpvPlayer.on('stopped', () => {
+mpv.on('stopped', () => {
   console.log("Gimme more music");
 });
 ```
@@ -139,7 +144,8 @@ mpvPlayer.on('stopped', () => {
   *return* - a promise that resolves when **MPV** is started and is rejected if an error occured
 
   ```JavaScript
-  mpv.start().then(() => {
+  mpv.start()
+  .then(() => {
       // The player can be used here
   });
   ```
@@ -409,7 +415,7 @@ mpvPlayer.on('stopped', () => {
 
   Controls the playback speed by `scale` which can take any value between **0.01** and **100**
 
-  If the `--auto-pitch-correction` flag (on by default) is used, this will not pitch the audio and uses a scaletempo audio filter
+  If the `--auto-pitch-correction` flag is used (default), this will not pitch the audio and uses a scaletempo audio filter
 
 
 ## Video
@@ -547,11 +553,11 @@ The most common commands are already covered by this modules **API**. This part 
   If no `id` was set this function returns a [promise](https://www.promisejs.org) delivering the `property`. It can be used as in the example below
 
    ```Javascript
-    mpvPlayer.getProperty('duration').then(function(duration) {
-	  console.log("Duration: ", duration);
+    mpv.getProperty('duration')
+    .then((duration) => {
+	  console.log(duration);
 	});
    ```
-
 
 * **addProperty** (property, value)
 
@@ -571,13 +577,13 @@ The most common commands are already covered by this modules **API**. This part 
   The Json command
 
   ```Javascript
-  `{"command": ["loadfile", "audioSong.mp3"]}`
+  {"command": ["loadfile", "audioSong.mp3"]}
   ```
 
   becomes a function call
 
   ```Javascript
-  `command("loadfile",["audioSong.mp3"]`
+  command("loadfile",["audioSong.mp3"]
   ```
 
 * **freeCommand** (command)
@@ -613,8 +619,8 @@ The **Node-MPV** module provides various *events* to notify about changes of the
  Use this event to for example reload your playlist, videos, etc when the player crashed
 
  ```Javascript
- player.on('crashed', () => {
-     player.loadFile('Your/Favourite/Song.mp3');
+ mpv.on('crashed', () => {
+     mpv.load('Your/Favourite/Song.mp3');
  });
  ```
 
@@ -735,31 +741,32 @@ The following **Error Codes** are available
 # Example
 
 ```Javascript
-let mpvAPI = require('node-mpv');
-
-let mpvPlayer = new mpvAPI();
+const mpvAPI = require('node-mpv');
+const mpv = new mpvAPI();
 
 // Start the player
-mpvPlayer.start()
+mpv.start()
 .then(() => {
 	// This will load and start the song
-	mpvPlayer.load('/path/to/your/favorite/song.mp3')
-	.then(() => {
-		// Set the volume to 50%
-		mpvPlayer.volume(50);
-
-		// Stop to song emitting the stopped event
-		mpvPlayer.stop();
-	});
+	return mpv.load('/path/to/your/favorite/song.mp3')
 })
+.then(() => {
+	// Set the volume to 50%
+	return mpv.volume(50);
+})
+.then(() => {
+	// Stop to song emitting the stopped event
+	return mpv.stop();
+})
+// this catches every arror from above
 .catch((error) => {
 	console.log(error);
 });
 
 // This will bind this function to the stopped event
-mpvPlayer.on('stopped', function() {
+mpv.on('stopped', () => {
 	console.log("Your favorite song just finished, let's start it again!");
-	mpvPlayer.loadFile('/path/to/your/favorite/song.mp3');
+	mpv.loadFile('/path/to/your/favorite/song.mp3');
 });
 
 ```
