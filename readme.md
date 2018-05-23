@@ -6,6 +6,8 @@ The module keeps an instance of **mpv** running in the background (using mpv's `
 
 It also provides direct access to the IPC socket. Thus this module is not only limited to the methods it provides, but can also fully communicate with the **mpv** API.
 
+This module makes heavy use of [Promises](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Promise) to deal with the asynchronous nature of sending message over a socket and waiting for the reponse.
+
 Works on **UNIX** and **Windows**.
 
 **This module requires [mpv](https://github.com/mpv-player/mpv) to be installed on your system to work. On Windows you can provide the path to the mpv.exe using the `binary` option, when creating the mpv instance**
@@ -47,6 +49,8 @@ Go to the respective websites [mpv](https://mpv.io) and [youtube-dl](https://you
 
 
 # Usage
+
+Every single method of **Node-MPV** returns a **Promise**, more on that later.
 
 ```Javascript
 const mpvAPI = require('node-mpv');
@@ -133,6 +137,34 @@ mpv.on('stopped', () => {
 });
 ```
 
+## Promises
+
+As stated above, *every single method* of **Node-MPV** returns a **Promise**. This means you will have to create a promise chain to control the player. The promise will be *resolved* if everything went fine and possibly returns some information and it will be *rejected* with a proper error message if something went wrong.
+
+```JavaScript
+mpv.start()
+.then(() => {
+	return mpv.load('/path/to/video.mkv');
+})
+.then(() => {
+   return mpv.getDuration();
+})
+.then((duration) => {
+  	console.log(duration);
+	return mpv.getProperty('someProperty');
+})
+.then((property) => {
+	console.log(property);
+})
+// catches all possible errors from above
+.catch((error) => {
+	// Maybe the mpv player could not be started
+	// Maybe the video file does not exist or couldn't be loaded
+	// Maybe someProperty is not a valid property
+   console.log(error);
+}
+```
+
 # Methods
 
 ## Starting & Stopping
@@ -158,7 +190,7 @@ mpv.on('stopped', () => {
 
 * **isRunning** () - *boolean*
 
-  Returns whether **mpv** is running or not
+  Returns whether **mpv** is running or not. This method is an exception, it **does not** return a Promise
 
 ## Load Content
 
@@ -237,10 +269,10 @@ mpv.on('stopped', () => {
 
 ## Information
 
- Because **node-mpv** communicates over a *Unix IPC Socket* with **mpv** it has to wait for the response, if it asks **mpv** for information. To make this more easily usable **promises** are used. All the methods in this section return such a **promise** and can be used like this
+ Because **node-mpv** communicates over a *Unix IPC Socket* with **mpv** it has to wait for the response, if it asks **mpv** for information. To make this more easily usable **Promises** are used. All the methods in this section return such a **Promise** and can be used like this
 
  ```Javascript
-  getSomeInfo()
+ getSomeInfo()
  .then((info) => {
      console.log(info);
  });
@@ -330,7 +362,7 @@ mpv.on('stopped', () => {
        * `weak` *(default*) If the current title is the last one in the playlist it is not skipped
        * `force` The title is skipped (even if it was the last one) and playback is stopped
 
-     *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
+    *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
      The promise is rejected with an error message if the file is not playable.
 
   * **prev** (mode="weak")
@@ -340,7 +372,7 @@ mpv.on('stopped', () => {
        * `weak` *(default*) If the title is the first one in the playlist it is not stopped
        * `force` The title is skipped (even if it was the first one) and playback is stopped
 
-     *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
+    *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
      The promise is rejected with an error message if the file is not playable.
 
   * **clearPlaylist** ()
