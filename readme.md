@@ -1,4 +1,4 @@
-# Node-MPV
+# Node-MPV 2
 
 A wrapper to comfortably use **[mpv player](https://github.com/mpv-player/mpv)** with **node**.js. It provides functions for most of the commands needed to control the player. It's easy to use and highly flexible.
 
@@ -22,6 +22,28 @@ With Version **2.0.0** the API how to initialize and start **MPV** has changed. 
 ## Migration to Node-MPV 2
 
 If you're already using **Node-MPV 1** please refer to this [Migration Guide](migrationguide.md) to see how to migrate your application to **Node-MPV 2**.
+
+
+# Table of Contents
+
+* [Install](#install)
+* [Usage](#usage)
+* [Methods](#methods)
+  * [Starting & Stopping](#starting--stopping)
+  * [Load Content](#load-content)
+  * [Controlling MPV](#controlling-mpv)
+  * [Information](#information)
+  * [Playlists](#playlists)
+  * [Audio](#audio)
+  * [Video](#video)
+  * [Subtitles](#subtitles)
+  * [Properties](#properties)
+  * [Observing](#observing)
+* [Events](#events)
+* [Error Handling](#error-handling)
+* [Example](#example)
+* [Known Issues](#known-issues)
+* [Changelog](CHANGELOG.md)
 
 
 # Install
