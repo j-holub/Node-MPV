@@ -68,7 +68,7 @@ mpv.start()
 .then(() => {
 	// file is playing
 	// sets volume to 70%
-	return mpv.volume(70);	
+	return mpv.volume(70);
 })
 // handle errors here
 .catch((error) => {
@@ -165,6 +165,29 @@ mpv.start()
 	// Maybe the video file does not exist or couldn't be loaded
 	// Maybe someProperty is not a valid property
    console.log(error);
+}
+```
+
+## Async / Await
+
+Starting from **Node 8.0.0** Async/Await is fully supported. If you're within an *async function* you can use *await* for better readability and code structure.
+
+The promise code from above becomes this
+
+```JavaScript
+someAsyncFunction = asnyc () => {
+	try{
+		await mpv.start();
+		await mpv.load('path/to/video.mkv');
+		console.log(await mpv.getDuration());
+		console.log(await mpv.getProperty('someProperty'));
+	}
+	catch (error) {
+		// Maybe the mpv player could not be started
+		// Maybe the video file does not exist or couldn't be loaded
+		// Maybe someProperty is not a valid property
+		console.log(error);
+	}
 }
 ```
 
