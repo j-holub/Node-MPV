@@ -84,17 +84,17 @@ const mpv = new mpvAPI();
 // starts MPV
 mpv.start()
 .then(() => {
-	// loads a file
-	return mpv.load('your/favorite/song.mp3');
+    // loads a file
+    return mpv.load('your/favorite/song.mp3');
 })
 .then(() => {
-	// file is playing
-	// sets volume to 70%
-	return mpv.volume(70);
+    // file is playing
+    // sets volume to 70%
+    return mpv.volume(70);
 })
 // handle errors here
 .catch((error) => {
-	console.log(error);
+    console.log(error);
 });
 ```
 
@@ -169,24 +169,24 @@ As stated above, *every single method* of **Node-MPV** returns a **Promise**. Th
 ```JavaScript
 mpv.start()
 .then(() => {
-	return mpv.load('/path/to/video.mkv');
+    return mpv.load('/path/to/video.mkv');
 })
 .then(() => {
-   return mpv.getDuration();
+    return mpv.getDuration();
 })
 .then((duration) => {
-  	console.log(duration);
-	return mpv.getProperty('someProperty');
+    console.log(duration);
+    return mpv.getProperty('someProperty');
 })
 .then((property) => {
-	console.log(property);
+    console.log(property);
 })
 // catches all possible errors from above
 .catch((error) => {
-	// Maybe the mpv player could not be started
-	// Maybe the video file does not exist or couldn't be loaded
-	// Maybe someProperty is not a valid property
-   console.log(error);
+    // Maybe the mpv player could not be started
+    // Maybe the video file does not exist or couldn't be loaded
+    // Maybe someProperty is not a valid property
+    console.log(error);
 }
 ```
 
@@ -198,18 +198,18 @@ The promise code from above becomes this
 
 ```JavaScript
 someAsyncFunction = asnyc () => {
-	try{
-		await mpv.start();
-		await mpv.load('path/to/video.mkv');
-		console.log(await mpv.getDuration());
-		console.log(await mpv.getProperty('someProperty'));
-	}
-	catch (error) {
-		// Maybe the mpv player could not be started
-		// Maybe the video file does not exist or couldn't be loaded
-		// Maybe someProperty is not a valid property
-		console.log(error);
-	}
+    try{
+    	await mpv.start();
+    	await mpv.load('path/to/video.mkv');
+    	console.log(await mpv.getDuration());
+    	console.log(await mpv.getProperty('someProperty'));
+    }
+    catch (error) {
+    	// Maybe the mpv player could not be started
+    	// Maybe the video file does not exist or couldn't be loaded
+    	// Maybe someProperty is not a valid property
+    	console.log(error);
+    }
 }
 ```
 
@@ -251,7 +251,7 @@ someAsyncFunction = asnyc () => {
      * `replace`*(default)* replace current title and play it immediately
      * `append` appends the file to the playlist
      * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
-    * `options` *(optional)* an array that can be used to pass additional options to **mpv**
+  * `options` *(optional)* an array that can be used to pass additional options to **mpv**
 
   There is another `append` function in the **playlist** section, which can be used to append either files or streams.
 
@@ -282,8 +282,6 @@ someAsyncFunction = asnyc () => {
   Toggles the *pause* state
 
 * **mute** ()
-
-  *This methods behaviours has changed with version 0.13.0, use toggleMute() instead*
 
   Mutes the player
 
@@ -319,11 +317,18 @@ someAsyncFunction = asnyc () => {
 
  Because **node-mpv** communicates over a *Unix IPC Socket* with **mpv** it has to wait for the response, if it asks **mpv** for information. To make this more easily usable **Promises** are used. All the methods in this section return such a **Promise** and can be used like this
 
- ```Javascript
+ ```JavaScript
  getSomeInfo()
  .then((info) => {
      console.log(info);
  });
+ ```
+
+ Or with **Async/Await**
+
+ ```JavaScript
+ const info = await getSomeInfo();
+ console.log(info);
  ```
 
   * **isMuted** ()
@@ -443,13 +448,6 @@ someAsyncFunction = asnyc () => {
   * **getPlaylistSize** ()
 
      Returns a *promise* that resolves to the playlist size
-
-     ```
-     player.getPlaylistSize()
-     .then((size) => {
-         console.log(size);
-     });
-     ```
 
   *  **getPlaylistPosition** ()
 
@@ -626,16 +624,9 @@ The most common commands are already covered by this modules **API**. This part 
 
 * **getProperty** (property)
 
- Gets information about the specified `property`.
+  Gets information about the specified `property`.
 
- This function returns a [promise](https://www.promisejs.org) and is used as in the example below
-
-   ```Javascript
-   mpvPlayer.getProperty('duration')
-  .then(function(duration) {
-		console.log(duration);
-   });
-   ```
+  *return* - a promise that resolves to the property value
 
 * **addProperty** (property, value)
 
@@ -692,15 +683,9 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
 * **crashed**
 
- Whenever **mpv** has crashed or the process was killed. If the `auto_restart` option is set to **true** (*default*), **mpv** is restarted again right away.
+  Whenever **mpv** has crashed or the process was killed. If the `auto_restart` option is set to **true** (*default*), **mpv** is restarted again right away.
 
- Use this event to for example reload your playlist, videos, etc when the player crashed
-
- ```Javascript
- mpv.on('crashed', () => {
-     mpv.load('Your/Favourite/Song.mp3');
- });
- ```
+  Use this event to for example reload your playlist, videos, etc when the player crashed
 
 * **getrequest** \<id, data\> - *deprecated*
 
@@ -744,16 +729,16 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   ```Javascript
   {
-  	 	"mute": false,
-	    "pause": false,
-	    "duration": null,
-    	"volume": 100,
-	    "filename": null,
-	    "path": null,
-   		"media-title": null,
-	    "playlist-pos": 0,
-	    "playlist-count": 0,
-   		"loop": "no"
+    "mute": false,
+    "pause": false,
+    "duration": null,
+    "volume": 100,
+    "filename": null,
+    "path": null,
+    "media-title": null,
+    "playlist-pos": 0,
+    "playlist-count": 0,
+    "loop": "no"
   }
   ```
 
@@ -761,8 +746,8 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   ```Javascript
   {
-    	"fullscreen": false,
-    	"sub-visibility": false
+    "fullscreen": false,
+    "sub-visibility": false
   }
   ```
 
@@ -843,8 +828,8 @@ mpv.start()
 
 // This will bind this function to the stopped event
 mpv.on('stopped', () => {
-	console.log("Your favorite song just finished, let's start it again!");
-	mpv.loadFile('/path/to/your/favorite/song.mp3');
+    console.log("Your favorite song just finished, let's start it again!");
+    mpv.loadFile('/path/to/your/favorite/song.mp3');
 });
 
 ```
