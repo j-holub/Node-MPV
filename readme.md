@@ -106,11 +106,12 @@ You can optionally pass a JSON object with options to the constructor. Possible 
     "auto_restart": true,
     "binary": null,
     "debug": false,
-    "ipcCommand": null,   
+    "ipcCommand": null,
     "socket": "/tmp/node-mpv.sock", // UNIX
     "socket": "\\\\.\\pipe\\mpvserver", // Windows
     "time_update": 1,
-    "verbose": false,
+	"verbose": false,
+	"already_running": false,
 }
 ```
 
@@ -122,6 +123,7 @@ You can optionally pass a JSON object with options to the constructor. Possible 
 * `socket` specifies the socket **mpv** opens
 * `time_update` the time interval in seconds, how often **mpv** should report the current time position, when playing a song or video
 * `verbose` will print various information on the console
+* `already_running` will not spawn a mpv process and will instead listen to the ipc socket. Note that in this case, if you send the quit command to quit mpv, you won't be able to restart it from Node since the module will consider it already running.
 
 You can also provide an optional second argument, an Array containing **mpv** command line options. A list of available arguments can be found in the [documentation](https://mpv.io/manual/stable/#options)
 
@@ -235,6 +237,8 @@ someAsyncFunction = asnyc () => {
   Quits **MPV**. The process in the backgroud is terminated and all socket connection is closed.
 
   **MPV** can be restarted using **start** ()
+
+  **NOTE** : If you use the `already_running` option, you won't be able to restart **MPV** with **start** ()
 
 * **isRunning** () - *boolean*
 
@@ -464,7 +468,7 @@ someAsyncFunction = asnyc () => {
   Adds an audio file to the video that is loaded.
   * `file` The audio file to load
   * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
-  * `title` *(optional)* The name for the audio track in the UI  
+  * `title` *(optional)* The name for the audio track in the UI
   * `lang` *(optional)* the language of the audio track
 
   `flag` has the following effects
@@ -554,7 +558,7 @@ someAsyncFunction = asnyc () => {
   Adds a subtitle file to the video that is loaded.
   * `file` The subtitle file to load
   * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
-  * `title` *(optional)* The name for the subtitle file in the UI  
+  * `title` *(optional)* The name for the subtitle file in the UI
   * `lang` *(optional)* The language of the subtitle
 
   `flag` has the following effects
@@ -663,7 +667,7 @@ The most common commands are already covered by this modules **API**. This part 
 
 ## Observing
 
-  **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.  
+  **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.
 
  * **observeProperty** (property, id)
 
