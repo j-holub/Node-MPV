@@ -14,6 +14,12 @@ Works on **UNIX** and **Windows**.
 
 **For streaming playback from sources such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
 
+## This fork
+
+This fork includes these specific fixes :
+
+- Fix for IPCRequestID exception when using latest version of mpv (at least 0.29 git version from August 2019, may also affect earlier versions)
+- Fix formatOptions in case several = characters are present in options parameters when loading up files
 
 ## Important
 
@@ -106,7 +112,7 @@ You can optionally pass a JSON object with options to the constructor. Possible 
     "auto_restart": true,
     "binary": null,
     "debug": false,
-    "ipcCommand": null,   
+    "ipcCommand": null,
     "socket": "/tmp/node-mpv.sock", // UNIX
     "socket": "\\\\.\\pipe\\mpvserver", // Windows
     "time_update": 1,
@@ -464,7 +470,7 @@ someAsyncFunction = asnyc () => {
   Adds an audio file to the video that is loaded.
   * `file` The audio file to load
   * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
-  * `title` *(optional)* The name for the audio track in the UI  
+  * `title` *(optional)* The name for the audio track in the UI
   * `lang` *(optional)* the language of the audio track
 
   `flag` has the following effects
@@ -554,7 +560,7 @@ someAsyncFunction = asnyc () => {
   Adds a subtitle file to the video that is loaded.
   * `file` The subtitle file to load
   * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
-  * `title` *(optional)* The name for the subtitle file in the UI  
+  * `title` *(optional)* The name for the subtitle file in the UI
   * `lang` *(optional)* The language of the subtitle
 
   `flag` has the following effects
@@ -663,7 +669,7 @@ The most common commands are already covered by this modules **API**. This part 
 
 ## Observing
 
-  **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.  
+  **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.
 
  * **observeProperty** (property, id)
 
