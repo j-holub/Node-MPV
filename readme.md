@@ -26,24 +26,39 @@ If you're already using **Node-MPV 1** please refer to this [Migration Guide](mi
 
 # Table of Contents
 
-* [Install](#install)
-* [Usage](#usage)
-* [Methods](#methods)
-  * [Starting & Stopping](#starting--stopping)
-  * [Load Content](#load-content)
-  * [Controlling MPV](#controlling-mpv)
-  * [Information](#information)
-  * [Playlists](#playlists)
-  * [Audio](#audio)
-  * [Video](#video)
-  * [Subtitles](#subtitles)
-  * [Properties](#properties)
-  * [Observing](#observing)
-* [Events](#events)
-* [Error Handling](#error-handling)
-* [Example](#example)
-* [Known Issues](#known-issues)
-* [Changelog](CHANGELOG.md)
+- [Node-MPV 2](#node-mpv-2)
+  - [Important](#important)
+  - [Migration to Node-MPV 2](#migration-to-node-mpv-2)
+- [Table of Contents](#table-of-contents)
+- [Install](#install)
+      - [OS X](#os-x)
+      - [Linux (Ubuntu/Debian)](#linux-ubuntudebian)
+      - [Windows](#windows)
+- [Usage](#usage)
+  - [Promises](#promises)
+  - [Async / Await](#async--await)
+- [Methods](#methods)
+  - [Starting & Stopping](#starting--stopping)
+  - [Load Content](#load-content)
+  - [Controlling MPV](#controlling-mpv)
+  - [Information](#information)
+  - [Playlists](#playlists)
+  - [Audio](#audio)
+  - [Video](#video)
+  - [Subtitles](#subtitles)
+  - [Properties](#properties)
+  - [Observing](#observing)
+- [Events](#events)
+    - [Note](#note)
+- [Error Handling](#error-handling)
+- [Example](#example)
+- [Known Issues](#known-issues)
+  - [Old MPV Version on Debian](#old-mpv-version-on-debian)
+  - [IPC Command](#ipc-command)
+  - [Bug with observing playlist-count in MPV Player 0.17.0](#bug-with-observing-playlist-count-in-mpv-player-0170)
+  - [MPV Player 0.18.1](#mpv-player-0181)
+  - [MPV Hanging or Crashing](#mpv-hanging-or-crashing)
+- [Changelog](#changelog)
 
 
 # Install
@@ -427,6 +442,14 @@ someAsyncFunction = asnyc () => {
 
     *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
      The promise is rejected with an error message if the file is not playable.
+
+  * **jump** (position)
+
+    Jumps to the position in the playlist given by `position`. It's zero based, meaning that the first spot in the playlist
+    is **0**.
+
+    *return* - a promise that resolves to **true** when the player jumped in the playlist and **false** if the the desired position is not possible because it is not within the playlist size.
+    The promise is rejected with an error message if the file is not playable.
 
   * **clearPlaylist** ()
 
