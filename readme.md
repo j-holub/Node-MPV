@@ -258,7 +258,7 @@ someAsyncFunction = asnyc () => {
 ## Load Content
 
 
-  * **load** (content, mode="replace, options)
+  * **load** (content, mode="replace", options)
 
   Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode` option
 
@@ -316,9 +316,15 @@ someAsyncFunction = asnyc () => {
 
   Adjusts the volume with the specified `value`. If this results in the volume going below **0** or above **100** it will be set to **0** or **100** respectively
 
-* **seek** (seconds)
+* **seek** (seconds, mode="relative")
 
-  Will jump back or forth in the song or video for the specified amount of `seconds`. Going beyond the duration of a title results in the playback stopping
+  Will search / jump within the current track. Depeding on `mode`, it is searched onwords from the current positon, or jumped to the set poosition, given by `seconds`
+
+  * `mode`
+    * `relative` (default) Searches x seconds from the current track position
+    * `absolute` Jumps to the position at x seconds in the current track
+
+  *return* - a promise that is resolved once the track is being played again or rejected, if something went wrong
 
 * **goToPosition** (seconds)
 
@@ -330,7 +336,7 @@ someAsyncFunction = asnyc () => {
 
 ## Information
 
- Because **node-mpv** communicates over a *Unix IPC Socket* with **mpv** it has to wait for the response, if it asks **mpv** for information. To make this more easily usable **Promises** are used. All the methods in this section return such a **Promise** and can be used like this
+ Because **node-mpv** communicates over a *Unix IPC Socket* with **mpv** it has to wait for the response, if it asks **mpv** for information. To make this more usable, **Promises** are used. All the methods in this section return such a **Promise** and can be used like this
 
  ```JavaScript
  getSomeInfo()
