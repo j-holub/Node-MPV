@@ -699,15 +699,11 @@ The most common commands are already covered by this modules **API**. This part 
 
  * **observeProperty** (property)
 
-   This will add the specified *property* to the *status* event which is emitted whenever one of the observed properties changes.
+   This will observe `property`, which means, that a **status** event is emitted, whenever this property changes
 
-   The **Id**s **0**-**12** are already taken by the properties which are observed by default.
+* **unobserveProperty** (property)
 
-* **unobserveProperty(id)**
-
-  This will remove the property associated with the specified *id* from the *status*.
-
-  Unobserving default properties may break the module.
+  No further **status** event will be emitted for `property`
 
 # Events
 
