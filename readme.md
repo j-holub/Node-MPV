@@ -168,7 +168,7 @@ mpv.volume(70);
 Events are used to detect changes.
 
 ```Javascript
-mpv.on('statuschange', (status) => {
+mpv.on('status', (status) => {
   console.log(status);
 });
 
@@ -697,15 +697,15 @@ The most common commands are already covered by this modules **API**. This part 
 
   **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.  
 
- * **observeProperty** (property, id)
+ * **observeProperty** (property)
 
-   This will add the specified *property* to the *statusupdate* event which is emitted whenever one of the observed properties changes.
+   This will add the specified *property* to the *status* event which is emitted whenever one of the observed properties changes.
 
    The **Id**s **0**-**12** are already taken by the properties which are observed by default.
 
 * **unobserveProperty(id)**
 
-  This will remove the property associated with the specified *id* from the *statusupdate*.
+  This will remove the property associated with the specified *id* from the *status*.
 
   Unobserving default properties may break the module.
 
@@ -727,10 +727,10 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   Whenever a `seek()` or `goToPosition()` is called, or some external source searches, this event is emitted providing a **timeposition** object with the following information
 
-  ```
+  ```JavaScript
   {
-      start: <timeposition before seeking>,
-      end:   <timeposition after  seeking>
+      "start": <timeposition before seeking>,
+      "end":   <timeposition after  seeking>
   }
   ```
 
@@ -753,35 +753,35 @@ The **Node-MPV** module provides various *events* to notify about changes of the
   Whenever **mpv** was resumed
 
 
-* **statuschange** \<status object\>
+* **status** \<status object\>
 
-  Whenever the status of one of the observed properties changes, this event will be emitted providing the complete *status object*
+  Whenever the status of one of the observed properties changes, this event will be emitted providing the change to that property inthe form of
+
+  ```JavaScript
+    {
+      "property": <propertyname>,
+      "value": <propertyvalue>
+    }
+  ```
 
   By default various properties are already observed and the *status object* looks like the following
+  
+    * **mute**: *false*,
+    * **pause**: *false*,
+    * **duration**: *null*,
+    * **volume**: *100*,
+    * **filename**: *null*,
+    * **path**: *null*,
+    * **media-title**: *null*,
+    * **playlist-pos**: *0*,
+    * **playlist-count**: *0*,
+    * **loop**: *"no*"
 
-  ```Javascript
-  {
-    "mute": false,
-    "pause": false,
-    "duration": null,
-    "volume": 100,
-    "filename": null,
-    "path": null,
-    "media-title": null,
-    "playlist-pos": 0,
-    "playlist-count": 0,
-    "loop": "no"
-  }
-  ```
+  If the player is running in *video mode* the following properties are present as well.
 
-    If the player is running in *video mode* the following properties are present as well.
-
-  ```Javascript
-  {
-    "fullscreen": false,
-    "sub-visibility": false
-  }
-  ```
+    * **fullscreen**: *false*,
+    * **sub-visibility**: *fals*e
+  
 
 * **timeposition** \<seconds\>
 
