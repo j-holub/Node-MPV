@@ -232,9 +232,12 @@ someAsyncFunction = asnyc () => {
 
 ## Starting & Stopping
 
-* **start** ()
+* **start** (mpv_args=[])
 
   Starts the **MPV** process in the background. Has to be called before the player can be used.
+
+    * `mpv_args`
+      List of arguments for the mpv player, the same as when calling the constructor. Possible arguments can be found in the [documentation](https://mpv.io/manual/stable/#options).
 
   *return* - a promise that resolves when **MPV** is started and is rejected if an error occured
 
@@ -260,17 +263,17 @@ someAsyncFunction = asnyc () => {
 
   * **load** (content, mode="replace", options)
 
-  Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode` option
+    Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode` option
 
-  * `mode`
-     * `replace`*(default)* replace current title and play it immediately
-     * `append` appends the file to the playlist
-     * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
-  * `options` *(optional)* an array that can be used to pass additional options to **mpv**
+    * `mode`
+      * `replace`*(default)* replace current title and play it immediately
+      * `append` appends the file to the playlist
+      * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
+    * `options` *(optional)* an array that can be used to pass additional options to **mpv**
 
-  There is another `append` function in the **playlist** section, which can be used to append either files or streams.
+    There is another `append` function in the **playlist** section, which can be used to append either files or streams.
 
-  *return* - a promise that resolves if everything went fine and the file or stream is playing  (or appened when *mode* was set to `append`) and is reject with an error message when something went wrong
+    *return* - a promise that resolves if everything went fine and the file or stream is playing  (or appened when *mode* was set to `append`) and is reject with an error message when something went wrong
 
 
 
