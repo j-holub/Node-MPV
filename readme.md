@@ -37,6 +37,7 @@ If you're already using **Node-MPV 1** please refer to this [Migration Guide](mi
 - [Usage](#usage)
   - [Promises](#promises)
   - [Async / Await](#async--await)
+  - [Hooking into a Running Instance of MPV](#hooking-into-a-running-instance-of-mpv)
 - [Methods](#methods)
   - [Starting & Stopping](#starting--stopping)
   - [Load Content](#load-content)
@@ -134,7 +135,7 @@ You can optionally pass a JSON object with options to the constructor. Possible 
 * `binary` will use the provied path to a mpv binary instead of using the one found in **$PATH**
 * `debug` prints error messages
 * `ipc_command` sets the ipc command to start the ipc socket. Possible options are **--input-unix-socket** and **--input-ipc-server**. This is usually not needed since  **Node-MPV** is able to determine the correct command on its own
-* `socket` specifies the socket **mpv** opens
+* `socket` specifies the socket **mpv** opens. **Node-MPV** will first check, if there's already an **mpv** instance running on that socket and hook into it
 * `time_update` the time interval in seconds, how often **mpv** should report the current time position, when playing a song or video
 * `verbose` will print various information on the console
 
@@ -176,6 +177,7 @@ mpv.on('stopped', () => {
   console.log("Gimme more music");
 });
 ```
+
 
 ## Promises
 
@@ -227,6 +229,12 @@ someAsyncFunction = asnyc () => {
     }
 }
 ```
+
+## Hooking into a Running Instance of MPV
+
+Using the options you can specifiy the *ipc socket*, that should be created to handle the communication between **mpv** and this module. If there is already an instance of **mpv** running, that has been started with `--idle` and `--input-ipc-server=</tmp/somesocket.sock>`, you can hook into that instance by specifying `socket=</tmp/somesocket.sock>`. In this case, **Node-MPV** will *not* create its own instance of **mpv** but use the already running one.
+
+However, it is not possible to enable `auto_restart` or any error handling for an externel **mpv** instance. That has to be handled by that insance itself.
 
 # Methods
 
@@ -875,7 +883,7 @@ Using this you can easily get the latest stable **MPV Player** on Debian.
 
 ## IPC Command
 
-The command line argument to start the IPC socket has changed in mpv version **0.17.0** from `--input-unix-socket` to `--input-ipc-socket`. This module uses regular expressions to find the version number from the `mpv --version` output. If mpv is compiled from source, the version number is stated as **UNKNOWN** and this module will assume, that you use the latest version and use the new command.
+The command line argument to start the IPC socket has changed in mpv version **0.17.0** from `--input-unix-socket` to `--input-ipc-server`. This module uses regular expressions to find the version number from the `mpv --version` output. If mpv is compiled from source, the version number is stated as **UNKNOWN** and this module will assume, that you use the latest version and use the new command.
 
 **If you use self compiled version stating UNKNOWN as the version number below mpv version 0.17.0 you have to use the ipc_command option with '--input-unix-socket'.**
 
