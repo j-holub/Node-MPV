@@ -1,5 +1,11 @@
 # Node-MPV Changelog
 
+* **1.5.0**
+  * Changed `loop()` such that it loops foreveer if no argument is passed. Passing `inf` still works
+  * Added a `loopPlaylist()` function, that works exactly as `loop()`, but for playlists
+  * Added a `clearLoop()` method, that stops looping the current trac
+  * Added a `clearLoopPlaylist()` method, that stops looping the playlist
+
 * **1.4.3**
   * Another fix to determine the *ipc command* for self compiled versions of **mpv**
   * Fixed multiple options for `load` and `append` not working
@@ -8,16 +14,16 @@
   * Fixed the verison number check to determine the *ipc command* for **mpv** 0.28.0 and later
 
 * **1.4.1**
-  * Changed `selectSubtitle()` to `selectSubtitles()``
+  * Changed `selectSubtitle()` to `selectSubtitles()`
   * Documentation type fixes in the *subitle* section (Thanks to @p1100i)
 
 * **1.4.0**
- * Added a new method `commandJSON()`
- * Added an *options* parameter to the `load()` and `append()` methods to pass additional options to **mpv**
- * Added a method `displayASS()` to make using *ass-formatted* subtitles easier. (Thanks to @AxelTerizaki)
+  * Added a new method `commandJSON()`
+  * Added an *options* parameter to the `load()` and `append()` methods to pass additional options to **mpv**
+  * Added a method `displayASS()` to make using *ass-formatted* subtitles easier. (Thanks to @AxelTerizaki)
 
 * **1.3.1**
- * Fixes `next()` and `prev()`. The mode was not propagated to **mpv** and instead of **strong** it is actually **force*
+  * Fixes `next()` and `prev()`. The mode was not propagated to **mpv** and instead of **strong** it is actually **force*
 
 * **1.3.0**
   * Added **seek** event

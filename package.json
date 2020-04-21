@@ -1,6 +1,6 @@
 {
   "name": "node-mpv",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "A Node module for MPV",
   "main": "index.js",
   "scripts": {
