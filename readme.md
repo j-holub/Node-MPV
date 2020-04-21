@@ -180,8 +180,14 @@ mpvPlayer.on('stopped', function() {
   Jumps to the position specified by `seconds`. Going beyond the boundaries of a title results in  playback stopping
 
 * **loop** (times)
+  
+  * `times` (optional) if set, the track will only be looped `times` often
 
-  Loops the current title `times` often. If set to *"inf"* the title is looped forever
+  Loops the current track
+  
+* **clearLoop** ()
+    
+    Stops looping the current track
 
 * **quit** ()
 
@@ -247,6 +253,17 @@ mpvPlayer.on('stopped', function() {
   * **shuffle** ()
 
       Shuffles the playlist into a random order
+
+  * **loopPlaylist** (times)
+
+    * `times` (optional) if set, the playlist will only be looped `times` often
+
+    Loops the entire playlist
+
+  * **clearLoopPlaylist** ()
+    
+    Stops looping the playlist
+
 
 
 
