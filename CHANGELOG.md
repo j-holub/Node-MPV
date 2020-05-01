@@ -10,6 +10,7 @@
   * `load()`, `append()`, `loadPlaylist()`, `prev()` and `next()` are a lot more robust and check if the file or stream could be played or not
   * Added the possibility to hook into a running instance of **mpv**
   * `start()` can also take mpv arguments
+  * `mute()`, `unmute()` and `toggleMute()` are now one function `mute()` that can take a boolean as an argument
   * Removed the IDs from `observeProperty()`. It's all handled in the background now
   * Added a lot of *Information Methods*
   * `goto()` was renamed to `jump()`

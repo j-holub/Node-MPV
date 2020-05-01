@@ -309,17 +309,11 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 
   Toggles the *pause* state
 
-* **mute** ()
+* **mute** (set)
 
-  Mutes the player
+  Mutes or unmutes the player. The mute state can either be toggled or set explicitly
 
-* **unmute** ()
-
-  Unmutes the player
-
-* **toggleMute** ()
-
-  Toggles between *muted* and *unmuted*
+  * `set` (optional) If not set, the mute state is toggled. If set to true the player is muted, if set to false the player is unmuted, regardless of the current state
 
 * **volume** (volumeLevel)
 

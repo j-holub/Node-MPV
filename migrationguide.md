@@ -9,6 +9,8 @@ If you've been using *Version 1* of **Node-MPV** here's how you can migrate your
 		- [Chaining Promises](#chaining-promises)
 	- [Statuschange event](#statuschange-event)
 	- [Observing properties](#observing-properties)
+	- [Changed Methods](#changed-methods)
+			- [`mute()`](#mute)
 	
 
 ## Starting MPV
@@ -150,3 +152,21 @@ await mpv.observeProperty('display-fps');
 await mpv.unobserveProperty('display-fps');
 ```
 
+## Changed Methods
+
+Some methods were changed in the way they are used or called
+
+#### `mute()`
+
+The methods `mute()`, `unmute()` and `toggleMute()` are now one single method called `mute()`  that can take an argument. The code below shows the Version 1 style together with the Version 2 counterparts
+
+```JavaScript
+// Version 1 Code
+mpv.mute();
+mpv.unmute();
+mpv.toggleMute();
+// Version 2 Code
+await mpv.mute(true);
+await mpv.mute(false);
+await mpv.mute();
+```
