@@ -2,18 +2,21 @@
 
 
 * **2.0.0**
-  * The 1.*.* API is no longer valid
-  * Added a `start()` and `quit()` method
-  * MPV is not started automatically on initialization. `start()` has to be called
+  * The 1.\*.\* API is no longer valid
+  * Added a `start()` and `quit()` method. MPV is not started automatically on initialization. `start()` has to be called
   * Every method returns a **Promise** to is resolved if it worked and rejected if it didn't
   * Added a proper error message object to tell you what went wrong
-  * Overall better error checking
+  * The `statuschange` event was renamed to `status` and now fires for properties independently
   * `load()`, `append()`, `loadPlaylist()`, `prev()` and `next()` are a lot more robust and check if the file or stream could be played or not
-  * Added a lot **Information Methods*
+  * Added the possibility to hook into a running instance of **mpv**
+  * `start()` can also take mpv arguments
+  * Removed the IDs from `observeProperty()`. It's all handled in the background now
+  * Added a lot of *Information Methods*
+  * `goto()` was renamed to `jump()`
+  * Removed *deprecated* methods from **Version1**, namely `loadFile()` and `loadStream()`
   * Removed lodash as a dependency
   * Removed Pormise as a dependency
   * Changed CUID dependency to **2.1.1** to remove the memory footprint (Thanks to @AxelTerizaki)
-  * Removed *deprecated* methods from **Version1**, namely `loadFile()` and `loadStream()`
 
 ### Version 1
 
