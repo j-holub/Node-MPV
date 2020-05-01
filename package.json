@@ -28,7 +28,5 @@
     "url": "https://github.com/00SteinsGate00/Node-MPV/issues"
   },
   "homepage": "https://github.com/00SteinsGate00/Node-MPV#readme",
-  "dependencies": {
-    "cuid": "^2.1.1"
-  }
+  "dependencies": {}
 }

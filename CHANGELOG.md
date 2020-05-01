@@ -14,9 +14,10 @@
   * Added a lot of *Information Methods*
   * `goto()` was renamed to `jump()`
   * Removed *deprecated* methods from **Version1**, namely `loadFile()` and `loadStream()`
-  * Removed lodash as a dependency
-  * Removed Pormise as a dependency
-  * Changed CUID dependency to **2.1.1** to remove the memory footprint (Thanks to @AxelTerizaki)
+  * Removed `lodash` as a dependency
+  * Removed `Promise` as a dependency
+  * Removed `cuid` as a dependency
+
 
 ### Version 1
 
