@@ -236,6 +236,8 @@ Using the options you can specifiy the *ipc socket*, that should be created to h
 
 However, it is not possible to enable `auto_restart` or any error handling for an externel **mpv** instance. That has to be handled by that insance itself.
 
+Since it is not possible to determine if an **mpv** instance, that has been started externally, has crashed or was properly quit, both events `crashed` and `quit` will be emitted if hooking into an existing instance. See the [Events](#events) section for more.
+
 # Methods
 
 ## Starting & Stopping
