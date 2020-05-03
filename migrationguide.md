@@ -10,7 +10,8 @@ If you've been using *Version 1* of **Node-MPV** here's how you can migrate your
 	- [Statuschange event](#statuschange-event)
 	- [Observing properties](#observing-properties)
 	- [Changed Methods](#changed-methods)
-			- [`mute()`](#mute)
+			- [mute](#mute)
+		- [loop](#loop)
 	
 
 ## Starting MPV
@@ -156,7 +157,7 @@ await mpv.unobserveProperty('display-fps');
 
 Some methods were changed in the way they are used or called
 
-#### `mute()`
+#### mute
 
 The methods `mute()`, `unmute()` and `toggleMute()` are now one single method called `mute()`  that can take an argument. The code below shows the Version 1 style together with the Version 2 counterparts
 
@@ -170,3 +171,7 @@ await mpv.mute(true);
 await mpv.mute(false);
 await mpv.mute();
 ```
+
+### loop
+
+Loop can be used exactly how it was used in Version 1 without causing any problems. However, the method can also be used without passing a parameter now, which will toggle the mute state between *on* and *off*

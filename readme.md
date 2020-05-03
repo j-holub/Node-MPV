@@ -339,7 +339,9 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 
 * **loop** (times)
 
-  Loops the current title `times` often. If set to *"inf"* the title is looped forever
+  * `times` (optional) can be any *number > 0*, `inf` or `no`. Will loop of a fixed number of times (number), infinitely (`inf`) or will stop looping (`no`)
+ 
+  If `times` is not set, this will *toggle* the mute status between not looping and infinitely looping. If `times` is set, it will loop accoding to the passed value.
 
 ## Information
 
