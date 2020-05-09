@@ -341,7 +341,7 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 
   * `times` (optional) can be any *number > 0*, `inf` or `no`. Will loop of a fixed number of times (number), infinitely (`inf`) or will stop looping (`no`)
  
-  If `times` is not set, this will *toggle* the mute status between not looping and infinitely looping. If `times` is set, it will loop accoding to the passed value.
+  If `times` is **not set**, this will *toggle* the mute status between not looping and infinitely looping. If `times` is set, it will loop the track as often as the passed value.
 
 ## Information
 
@@ -494,6 +494,12 @@ Since it is not possible to determine if an **mpv** instance, that has been star
   *  **getPlaylistPosition1** ()
 
      Just like `getPlaylistPosition()` but **1-based**, so the first position is 1 and so on.
+
+  * **loopPlaylist** (times)
+
+  * `times` (optional) can be any *number > 0*, `inf` or `no`. Will loop of a fixed number of times (number), infinitely (`inf`) or will stop looping (`no`)
+ 
+  If `times` **is not** set, this will *toggle* the mute status between not looping and infinitely looping the playlist. If `times` **is** set, it will loop the playlist as often as the passed value.
 
 ## Audio
 

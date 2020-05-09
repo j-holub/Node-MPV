@@ -12,6 +12,7 @@ If you've been using *Version 1* of **Node-MPV** here's how you can migrate your
 	- [Changed Methods](#changed-methods)
 			- [mute](#mute)
 		- [loop](#loop)
+		- [loopPaylist & clearLoopPlaylist](#looppaylist--clearloopplaylist)
 	
 
 ## Starting MPV
@@ -175,3 +176,7 @@ await mpv.mute();
 ### loop
 
 Loop can be used exactly how it was used in Version 1 without causing any problems. However, the method can also be used without passing a parameter now, which will toggle the mute state between *on* and *off*
+
+### loopPaylist & clearLoopPlaylist
+
+The two methods `loopPlaylist()` and `clearLoopPlaylist()` are now one method `loopPlaylist`, which works exactly as the new `loop()` method, described in the paragraph before.
