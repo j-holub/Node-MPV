@@ -1,5 +1,29 @@
 # Node-MPV Changelog
 
+* **2.0.0**
+  * The 1.\*.\* API is no longer valid
+  * Added a `start()` and `quit()` method. MPV is not started automatically on initialization. `start()` has to be called
+  * Every method returns a **Promise** to is resolved if it worked and rejected if it didn't
+  * Added a proper error message object to tell you what went wrong
+  * The `statuschange` event was renamed to `status` and now fires for properties independently
+  * `load()`, `append()`, `loadPlaylist()`, `prev()` and `next()` are a lot more robust and check if the file or stream could be played or not
+  * Added the possibility to hook into a running instance of **mpv**
+  * `start()` can also take mpv arguments
+  * `mute()`, `unmute()` and `toggleMute()` are now one function `mute()` that can take a boolean as an argument
+  * `loop()` can now also toggle the mute state by not passing an argument
+  * `loopPlaylist()` and `clearLoopPlaylist()` were combined into `loopPlaylist()`, which works exactly as `loop()`
+  * Removed the IDs from `observeProperty()`. It's all handled in the background now
+  * Added a lot of *Information Methods*
+  * `goto()` was renamed to `jump()`
+  * Removed *deprecated* methods from **Version1**, namely `loadFile()` and `loadStream()`
+  * Removed `lodash` as a dependency
+  * Removed `Promise` as a dependency
+  * Removed `cuid` as a dependency
+
+
+
+### Version 1
+
 * **1.5.0**
   * Changed `loop()` such that it loops foreveer if no argument is passed. Passing `inf` still works
   * Added a `loopPlaylist()` function, that works exactly as `loop()`, but for playlists
@@ -36,6 +60,7 @@
   * Added a **quit** function. (Thanks to @KeyserSoze1 for the intial help)
   * Deprecated **getProperty**(property, id). The promise version should be used instead
 
+
 * **1.1.2**
   * Accidentally committed way more than desired. This fixes the mess
 
@@ -53,7 +78,7 @@
   * Fixed the bug, that MPV Player won't be restarted correctly when it crashed a second time (Thanks to @SkyZH)
 
 * **1.0.0**
-  * getProperty is able to return a promise, making its use a lot more comfortable
+  * getProperty is able to return a promise, making its use a lot more comfortable (Thanks to @iamale)
 
 ### Pre 1.0.0  
 
@@ -66,14 +91,14 @@
   * Fixed the version check when the user provides his/her own binary (Thanks to @SkyZH)
 
 * **0.12.1**
-  * Fixed the **loop** method
+  * Fixed the **loop** method (Thanks to @f00a04b4f13eec8a254e44cd529d4c88)
 
 * **0.12.0**
-  * The user can provied the path to a mpv binary in case mpv player is not in the PATH
+  * The user can provide the path to a mpv binary in case mpv player is not in the PATH (Thanks to @iamale)
 
 * **0.11.0**
   * The code to determine the correct ipc command is now more robust
-  * Added option to pass the ipc command by hand
+  * Added option to pass the ipc command by hand (Thanks to @wendelb)
 
 * **0.10.0**
   * The command line argument for the IPC socket has changed in mpv version **0.17.0**. The module didn't work for older Versions of mpv. This is fixed now

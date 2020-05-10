@@ -2,3 +2,9 @@
 test.js
 # node modules
 node_modules
+
+# VS Code Workspace files
+*.code-workspace
+
+# mp3 files used for testing
+*.mp3
