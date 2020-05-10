@@ -1,8 +1,8 @@
 # Node-MPV 2
 
-A wrapper, that allows you, to comfortably use **[mpv player](https://github.com/mpv-player/mpv)** with **NodeJs**. It offers an API for the most relevant functionalities and is highly flexible. The module keeps an instance of **mpv** running in the background (using mpv's `--idle`) and communicates over **mpv's** JSON IPC (Inter Process Communication) API.
+A wrapper, that allows you, to comfortably use **[mpv player](https://github.com/mpv-player/mpv)** with **NodeJs**. It offers an API for the most relevant functionalities and is highly flexible. The module keeps an instance of **MPV** running in the background (using MVP's `--idle`) and communicates over **MPV's** JSON IPC (Inter-Process Communication) API.
 
-However, it doesn't stop there, it also privdes direct access to the IPC socket itself. Thus this module is not limited to the methods it provides, but an be used with the full extent of what **mpv** has to offer, even if some command is not supported by **Node-MPV**.
+However, it doesn't stop there, it also provides direct access to the IPC socket itself. Thus this module is not limited to the methods it provides, but can used with the full extent of what **MPV** has to offer, even if some command is not supported by **Node-MPV**.
 
 Works on **UNIX** and **Windows**.
 
@@ -17,7 +17,7 @@ If you are looking for source code of the original Version 1 of this package, yo
 npm install node-mpv@"^1.x.x"
 ```
 
-This will install and update to the latest **1.x.x** verison, but never to anything >= **2.x.x**. With this, you will automatically get bug fixes for version 1, without having to worry about any API breaking changes. Keep in mind, that I most likely won't add any new features to Version 1, but only provide bug fixes. Also you should considder switching to Version 2, there is even a handy [migration guide](migrationguide.md).
+This will install and update to the latest **1.x.x** version, but never to anything >= **2.x.x**. With this, you will automatically get bug fixes for version 1, without having to worry about any API breaking changes. Keep in mind, that I most likely won't add any new features to Version 1, but only provide bug fixes. Also, you should consider switching to Version 2, there is even a handy [migration guide](migrationguide.md).
 
 ## Migration to Node-MPV 2
 
@@ -88,8 +88,6 @@ sudo apt-get install mpv youtube-dl
 #### Windows
 
 Go to the respective websites [mpv](https://mpv.io) and [youtube-dl](https://youtube-dl.org) and follow the install instructions.
-
-
 
 
 
@@ -184,7 +182,7 @@ mpv.on('stopped', () => {
 
 ## Promises
 
-If, for some reason, you don't want to use the `async/await` synthax, you can use Promises the old fashioned way. *Every single method* of **Node-MPV** returns a **Promise**. This means you will have to create a promise chain to control the player. The promise will be *resolved* if everything went fine and possibly returns some information and it will be *rejected* with a proper error message if something went wrong.
+If, for some reason, you don't want to use the `async/await` syntax, you can use Promises the old fashioned way. *Every single method* of **Node-MPV** returns a **Promise**. This means you will have to create a promise chain to control the player. The promise will be *resolved* if everything went fine and possibly returns some information and it will be *rejected* with a proper error message if something went wrong.
 
 ```JavaScript
 mpv.start()
@@ -231,11 +229,11 @@ someAsyncFunction = asnyc () => {
 
 ## Hooking into a Running Instance of MPV
 
-Using the options you can specifiy the *ipc socket*, that should be created to handle the communication between **mpv** and this module. If there is already an instance of **mpv** running, that has been started with `--idle` and `--input-ipc-server=</tmp/somesocket.sock>`, you can hook into that instance by specifying `socket=</tmp/somesocket.sock>`. In this case, **Node-MPV** will *not* create its own instance of **mpv** but use the already running one.
+Using the options you can specify the *IPC socket*, that should be created to handle the communication between **MPV** and this module. If there is already an instance of **MPV** running, that has been started with `--idle` and `--input-ipc-server=</tmp/somesocket.sock>`, you can hook into that instance by specifying `socket=</tmp/somesocket.sock>`. In this case, **Node-MPV** will *not* create its own instance of **MPV** but use the already running one.
 
-However, it is not possible to enable `auto_restart` or any error handling for an externel **mpv** instance. That has to be handled by that insance itself.
+However, it is not possible to enable `auto_restart` or any error handling for an external **MPV** instance. That has to be handled by that instance itself.
 
-Since it is not possible to determine if an **mpv** instance, that has been started externally, has crashed or was properly quit, both events `crashed` and `quit` will be emitted if hooking into an existing instance. See the [Events](#events) section for more.
+Since it is not possible to determine if an **MPV** instance, that has been started externally, has crashed or was properly quit, both events `crashed` and `quit` will be emitted if hooking into an existing instance. See the [Events](#events) section for more.
 
 # API
 
@@ -245,44 +243,42 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 
   Starts the **MPV** process in the background. Has to be called before the player can be used.
 
-    * `mpv_args`
-      List of arguments for the mpv player, the same as when calling the constructor. Possible arguments can be found in the [documentation](https://mpv.io/manual/stable/#options).
+  * `mpv_args`
+  List of arguments for the MPV player, the same as when calling the constructor. Possible arguments can be found in the   [documentation](https://mpv.io/manual/stable/#options).
 
-  *return* - a promise that resolves when **MPV** is started and is rejected if an error occured
+  *return* - a promise that resolves when **MPV** is started and is rejected if an error occurs
 
   ```JavaScript
   mpv.start()
   .then(() => {
-      // The player can be used here
+   // The player can be used here
   });
   ```
 
 * **quit** ()
 
-  Quits **MPV**. The process in the backgroud is terminated and all socket connection is closed.
-
-  **MPV** can be restarted using **start** ()
+  Quits **MPV**. The process in the background is terminated and all socket connection is closed. **MPV** can be restarted using **start** ()
 
 * **isRunning** () - *boolean*
 
-  Returns whether **mpv** is running or not. This method is an exception, it **does not** return a Promise
+  Returns whether **MPV** is running or not. This method is an exception, it **does not** return a Promise
 
 ## Load Content
 
 
-  * **load** (content, mode="replace", options)
+ * **load** (content, mode="replace", options)
 
-    Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode` option
+    Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode`  option
 
     * `mode`
-      * `replace`*(default)* replace current title and play it immediately
-      * `append` appends the file to the playlist
-      * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
-    * `options` *(optional)* an array that can be used to pass additional options to **mpv**
+    * `replace`*(default)* replace the current title and play it immediately
+    * `append` appends the file to the playlist
+    * `append-play` appends the file to the playlist. If the playlist is empty this file will be played
+    * `options` *(optional)* an array that can be used to pass additional options to **MPV**
 
     There is another `append` function in the **playlist** section, which can be used to append either files or streams.
-
-    *return* - a promise that resolves if everything went fine and the file or stream is playing  (or appened when *mode* was set to `append`) and is reject with an error message when something went wrong
+  
+    *return* - a promise that resolves if everything went fine and the file or stream is playing (or appended when *mode* was   set  to `append`) and is rejected with an error message when something went wrong
 
 
 
@@ -312,7 +308,7 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 
   Mutes or unmutes the player. The mute state can either be toggled or set explicitly
 
-  * `set` (optional) If not set, the mute state is toggled. If set to true the player is muted, if set to false the player is unmuted, regardless of the current state
+   * `set` (optional) If not set, the mute state is toggled. If set to true the player is muted, if set to false the player is unmuted, regardless of the current state
 
 * **volume** (volumeLevel)
 
@@ -324,179 +320,159 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 
 * **seek** (seconds, mode="relative")
 
-  Will search / jump within the current track. Depeding on `mode`, it is searched onwords from the current positon, or jumped to the set poosition, given by `seconds`
+  Will search/jump within the current track. Depending on `mode`, it is searched onwards from the current position, or jumped to the set position, given by `seconds`
 
-  * `mode`
-    * `relative` (default) Searches x seconds from the current track position
-    * `absolute` Jumps to the position at x seconds in the current track
+   * `mode`
+   * `relative` (default) Searches x seconds from the current track position
+   * `absolute` Jumps to the position at x seconds in the current track
 
-  *return* - a promise that is resolved once the track is being played again or rejected, if something went wrong
+  *return* - a promise that is resolved once the track is being played again or rejected if something went wrong
 
 * **goToPosition** (seconds)
 
-  Jumps to the position specified by `seconds`. Going beyond the boundaries of a title results in  playback stopping
+  Jumps to the position specified by `seconds`. Going beyond the boundaries of a title results in playback stopping
 
 * **loop** (times)
 
-  * `times` (optional) can be any *number > 0*, `inf` or `no`. Will loop of a fixed number of times (number), infinitely (`inf`) or will stop looping (`no`)
+   * `times` (optional) can be any *number > 0*, `inf` or `no`. Will loop of a fixed number of times (number), infinitely (`inf`) or will stop looping (`no`)
  
   If `times` is **not set**, this will *toggle* the mute status between not looping and infinitely looping. If `times` is set, it will loop the track as often as the passed value.
 
 ## Information
 
- Because **node-mpv** communicates over a *Unix IPC Socket* with **mpv** it has to wait for the response, if it asks **mpv** for information. To make this more usable, **Promises** are used. All the methods in this section return such a **Promise** and can be used like this
+* **isMuted** ()
 
- ```JavaScript
- getSomeInfo()
- .then((info) => {
-     console.log(info);
- });
- ```
+  Tells if **MPV** is muted
 
- Or with **Async/Await**
+* **isPaused** ()
 
- ```JavaScript
- const info = await getSomeInfo();
- console.log(info);
- ```
+  Tells if **MPV** is paused
 
-  * **isMuted** ()
+* **isSeekable** ()
 
-    Tells if **mpv** is muted
+  Tells if the currently playing title is *seekable* or not. Streams that are not fully loaded might not be seekable. The same goes for *radio streams* for example.
 
-  * **isPaused** ()
+* **getDuration** ()
 
-    Tells if **mpv** is paused
+  Returns the *duration* (*as a promise*) of the currently playing title if available. For example for *radio streams* this will not be known.
 
-  * **isSeekable** ()
+* **getTimePosition** ()
 
-    Tells if the currently playing title is *seekable* or not. Streams that are not fully loaded might not be seekable. The same goes for *readiostreams* for example.
+  Returns the current *timeposition* (*as a promise*) for the currently playing title
 
-  * **getDuration** ()
+* **getPercentPosition** ()
 
-    Returns the *duration* (*as a promise*) of the currently playing title if available. For example for *radiostreams* this will not be known.
+  Returns the current *timeposition* as a percentage value (*as a promise*) for the currently playing title
 
-  * **getTimePosition** ()
+* **getTimeRemaining** ()
 
-    Returns the current *timeposition* (*as a promise*) for the currently playing title
+  Returns the *remaining time* (*as a promise*) for the currently playing title, if possible
 
-  * **getPercentPosition** ()
+* **getMetadata** ()
 
-    Returns the current *timeposition* as a percantage value (*as a promise*) for the currently playing title
+  Returns the available *metadata* {*as a promise*) for the currently playing title. The promise returns a **JSON Object**
 
-  * **getTimeRemaining** ()
+  There are some helper functions for quick access to some *metadata*, they all return *promises* as usual.
 
-    Returns the *remaining time* (*as a promise*) for the currently playing title, if possible
-
-  * **getMetadata** ()
-
-  	Returns the available *metadata* {*as a promise*) for the currently playing title. The promise returns a **JSON Object**
-
-  	There are some helper function for quicker access to some *metadata*, they all return *promises* as usual.
-
-  	* **getArtist** ()
-  	* **getTitle** ()
-  	* **getAlbum** ()
-  	* **getYear** ()
+* **getArtist** ()
+* **getTitle** ()
+* **getAlbum** ()
+* **getYear** ()
 
 
-  * **getFilename** (mode="full")
+* **getFilename** (mode="full")
 
-    Returns the *filename* (or *url*) of the currently playing track (as a *promise*).
+  * `full` (default) the full path or url
+  * `stripped` the path stripped to the file or the end of the url
 
-	* `full` (default) the full path or url
-	* `stripped` the path stripped to the file or the end of the url
-
+  Returns the *filename* (or *url*) of the currently playing track (as a *promise*).
 
 ## Playlists
 
-  * **loadPlaylist** (playlist, mode="replace")
+* **loadPlaylist** (playlist, mode="replace")
 
-    Loads a playlist file. `mode` can be one of the two folllowing
+  Loads a playlist file. `mode` can be one of the two following
 
-    This function does not work with *YouTube* or *SoundCloud* playlists. Use **loadFile** or **loadStream** instead
+   * `replace` *(default)* Replaces the old playlist with the new one
+   * `append` Appends the new playlist to the active one
 
-      * `replace` *(default)* Replaces the old playist with the new one
-      * `append`  Appends the new playlist to the active one
+  This function does not work with *YouTube* or *SoundCloud* playlists. Use **loadFile** or **loadStream** instead
 
-    *return* - a promise, that is resolved when everything went fine or rejected when an error occus. For example if the playlist file cannot be found or the first song in the playlist cannot be played
+  *return* - a promise, that is resolved when everything went fine or rejected when an error occurs. For example, if the playlist file cannot be found or the first song in the playlist cannot be played
 
-  * **append** (file, mode="append")
+* **append** (file, mode="append")
 
-    Appends `file` (which can also be an url) to the playlist.
+  Appends `file` (which can also be an url) to the playlist.
 
-    * `mode`
-      * `append` *(default)* Append the title
-      * `append-play` When the playlist is empty the title will be started
-    * `options` *(optional)* an array that can be used to pass additional options to **mpv**
+   * `mode`
+   * `append` *(default)* Append the title
+   * `append-play` When the playlist is empty the title will be started
+   * `options` *(optional)* an array that can be used to pass additional options to **mpv**
 
-    *return* - a promise that resolves if everything went fine and the file or stream is playing (when *mode* was set to `append-play`) or was appended (when *mode* was set to `append`) and is reject with an error message when something went wrong.
+  *return* - a promise that resolves if everything went fine and the file or stream is playing (when *mode* was set to `append-play`) or was appended (when *mode* was set to `append`) and is rejected with an error message when something went wrong.
 
-	**Note**
-
-	It is **not** necessarily required to check the promise when using `append` (*default*). Checking whether the file can be played or not is done when it is played, not when it's appended.
+  It is **not** necessarily required to check the promise when using `append` (*default*). Checking whether the file can be played or not is done when it is played, not when it's appended.
 
 
-  * **next** (mode="weak")
+* **next** (mode="weak")
 
-     Skips the current title. `mode` can be one of the following two
+   Skips the current title. `mode` can be one of the following two
 
-       * `weak` *(default*) If the current title is the last one in the playlist it is not skipped
-       * `force` The title is skipped (even if it was the last one) and playback is stopped
+   * `weak` *(default*) If the current title is the last one in the playlist it is not skipped
+   * `force` The title is skipped (even if it was the last one) and playback is stopped
 
-    *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
-     The promise is rejected with an error message if the file is not playable.
+  *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
+  Throws an error message if the file is not playable.
 
-  * **prev** (mode="weak")
+* **prev** (mode="weak")
 
-     Skips the current title. `mode` can be one of the following two
+  Skips the current title. `mode` can be one of the following two
 
-       * `weak` *(default*) If the title is the first one in the playlist it is not stopped
-       * `force` The title is skipped (even if it was the first one) and playback is stopped
+   * `weak` *(default*) If the title is the first one in the playlist it is not stopped
+   * `force` The title is skipped (even if it was the first one) and playback is stopped
 
-    *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
-     The promise is rejected with an error message if the file is not playable.
+  *return* - a promise that resolves to **true** when the track was skipped and **false** otherwise.
+  Throws an error message if the file is not playable.
 
-  * **jump** (position)
+* **jump** (position)
 
-    Jumps to the position in the playlist given by `position`. It's zero based, meaning that the first spot in the playlist
-    is **0**.
+  Jumps to the position in the playlist given by `position`. It's zero-based, meaning that the first spot in the playlist is **0**.
 
-    *return* - a promise that resolves to **true** when the player jumped in the playlist and **false** if the the desired position is not possible because it is not within the playlist size.
-    The promise is rejected with an error message if the file is not playable.
+  *return* - a promise that resolves to **true** when the player jumped in the playlist and **false** if the desired position is not possible because it is not within the playlist size.
 
-  * **clearPlaylist** ()
+  Throws an error message if the file is not playable.
 
-     Clears the playlist
+* **clearPlaylist** ()
 
-  * **playlistRemove** (index)
+  Clears the playlist
 
-     Removes the title at `index` from the playlist. If `index` is set to "current" the current title is removed and playback stops
+* **playlistRemove** (index)
 
-  * **playlistMove** (index1, index2)
+  Removes the title at `index` from the playlist. If `index` is set to "current" the current title is removed and playback stops
 
-     Moves the title at `index1` to the position at `index2`
+* **playlistMove** (index1, index2)
 
-  * **shuffle** ()
+  Moves the title at `index1` to the position at `index2`
 
-      Shuffles the playlist into a random order
+* **shuffle** ()
 
+  Shuffles the playlist into a random order
 
-  * **getPlaylistSize** ()
+* **getPlaylistSize** ()
 
-     Returns a *promise* that resolves to the playlist size
+  Returns a *promise* that resolves to the playlist size
 
-  *  **getPlaylistPosition** ()
+* **getPlaylistPosition** ()
 
-     Returns a *promise* that resolves to the current playlist position. The position is **0-based**, which means, that positon 1 is 0 and so on.
+  Returns a *promise* that resolves to the current playlist position. The position is **0-based**, which means, that positon 1 is 0 and so on.
 
-  *  **getPlaylistPosition1** ()
+* **getPlaylistPosition1** ()
 
-     Just like `getPlaylistPosition()` but **1-based**, so the first position is 1 and so on.
+  Just like `getPlaylistPosition()` but **1-based**, so the first position is 1 and so on.
 
-  * **loopPlaylist** (times)
+* **loopPlaylist** (times)
 
-  * `times` (optional) can be any *number > 0*, `inf` or `no`. Will loop of a fixed number of times (number), infinitely (`inf`) or will stop looping (`no`)
+   * `times` (optional) can be any *number > 0*, `inf` or `no`. Will loop of a fixed number of times (number), infinitely (`inf`) or will stop looping (`no`)
  
   If `times` **is not** set, this will *toggle* the mute status between not looping and infinitely looping the playlist. If `times` **is** set, it will loop the playlist as often as the passed value.
 
@@ -505,16 +481,16 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 * **addAudioTrack** (file, flag, title, lang)
 
   Adds an audio file to the video that is loaded.
-  * `file` The audio file to load
-  * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
-  * `title` *(optional)* The name for the audio track in the UI  
-  * `lang` *(optional)* the language of the audio track
+   * `file` The audio file to load
+   * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
+   * `title` *(optional)* The name for the audio track in the UI 
+   * `lang` *(optional)* the language of the audio track
 
   `flag` has the following effects
 
-    * *select* - the added audio track is selected immediately
-    * *auto* - the audio track is not selected
-    * *cached* - select the audio track, but if an audio track file with the same name is already loaded, the new file is not added and the old one is selected instead
+   * *select* - the added audio track is selected immediately
+   * *auto* - the audio track is not selected
+   * *cached* - select the audio track, but if an audio track file with the same name is already loaded, the new file is not added and the old one is selected instead
 
 * **removeAudioTrack** ()
 
@@ -536,7 +512,7 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 
   Controls the playback speed by `scale` which can take any value between **0.01** and **100**
 
-  If the `--auto-pitch-correction` flag is used (default), this will not pitch the audio and uses a scaletempo audio filter
+  If the `--auto-pitch-correction` flag is used (default), this will not pitch the audio and uses a scale tempo audio filter
 
 
 ## Video
@@ -556,9 +532,9 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 * **screenshot** (file, option)
 
   Takes a screenshot and saves it to `file`. `options` is one of the following
-  * `subtitles` *(default)* Takes a screenshot including the subtitles
-  * `video` Only the image, no subtitles
-  * `window` The scaled mpv window
+   * `subtitles` *(default)* Takes a screenshot including the subtitles
+   * `video` Only the image, no subtitles
+   * `window` The scaled MPV window
 
 * **rotateVideo** (degrees)
 
@@ -595,16 +571,16 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 * **addSubtilte** (file, flag, title, lang)
 
   Adds a subtitle file to the video that is loaded.
-  * `file` The subtitle file to load
-  * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
-  * `title` *(optional)* The name for the subtitle file in the UI  
-  * `lang` *(optional)* The language of the subtitle
+   * `file` The subtitle file to load
+   * `flag` *(optional)* Can be one of "select" (default), "auto" or "cached"
+   * `title` *(optional)* The name for the subtitle file in the UI 
+   * `lang` *(optional)* The language of the subtitle
 
   `flag` has the following effects
 
-    * *select* - the added subtitle is selected immediately
-    * *auto* - the subtitle is not selected
-    * *cached* - select the subtitle, but if a subtitle file with the same name is already loaded, the new file is not added and the old one is selected instead
+   * *select* - the added subtitle is selected immediately
+   * *auto* - the subtitle is not selected
+   * *cached* - select the subtitle, but if a subtitle file with the same name is already loaded, the new file is not added and the old one is selected instead
 
 * **removeSubitlte** (id)
 
@@ -644,11 +620,12 @@ Since it is not possible to determine if an **mpv** instance, that has been star
 
 
 
+
 ## Properties
 
-These methods can be used to alter *properties* or send arbitary *commands* to the running **mpv player**. Information about what *commands* and *properties* are available can be found in the [list of commands](https://mpv.io/manual/stable/#list-of-input-commands) and [list of properties](https://mpv.io/manual/stable/#properties) sections of the **mpv** documentation.
+These methods can be used to alter *properties* or send arbitrary *commands* to the running **MPV player**. Information about what *commands* and *properties* are available can be found in the [list of commands](https://mpv.io/manual/stable/#list-of-input-commands) and [list of properties](https://mpv.io/manual/stable/#properties) sections of the **MPV** documentation.
 
-The most common commands are already covered by this modules **API**. This part enables you to send any command you want over IPC. With this you are not limited the methods defined by this module.
+The most common commands are already covered by this module. However, this part enables you to send any command you want over the IPC socket. Using this, you aren't limited to the methods defined by this module.
 
 * **setProperty** (property, value)
 
@@ -656,12 +633,12 @@ The most common commands are already covered by this modules **API**. This part 
 
 * **setMultipleProperties** (properties)
 
-  Calls **setProperty** for every property specified in the arguments Json object. For example
+  Calls **setProperty** for every property specified in the arguments JSON object. For example
 
   ```Javascript
   setMultipleProperties({
-      "volume": 70,
-      "fullscreen": true
+    "volume": 70,
+    "fullscreen": true
   });
   ```
 
@@ -673,7 +650,7 @@ The most common commands are already covered by this modules **API**. This part 
 
 * **addProperty** (property, value)
 
-  Increase the `property` by the specified `value`. Needless to say this can only be used on numerical properties. Negative values are possible
+  Increase the `property` by the specified `value`. Needless to say, this can only be used on numerical properties. Negative values are possible
 
 * **multiplyProperty** (property, value)
 
@@ -685,8 +662,8 @@ The most common commands are already covered by this modules **API**. This part 
 
 * **command** (command, args)
 
-  Sends the `command` to the **mpv** player with the arguments specified in `args`
-  The Json command
+  Sends the `command` to the **MPV** player with the arguments specified in `args`
+  The JSON command
 
   ```Javascript
   {"command": ["loadfile", "audioSong.mp3"]}
@@ -700,17 +677,19 @@ The most common commands are already covered by this modules **API**. This part 
 
 * **freeCommand** (command)
 
-  This will send an arbitrary *command* to the **mpv player**. It must follow the specification of the **Json IPC protocol**. Its syntax can be found in the [documentation](https://mpv.io/manual/stable/#json-ipc).
+  This will send an arbitrary *command* to the **MPV player**. It must follow the specification of the **Json IPC protocol**. Its syntax can be found in the [documentation](https://mpv.io/manual/stable/#json-ipc).
 
   A trailing "**\n**" will be added to the command.
 
+
+
 ## Observing
 
-  **node-mpv** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function.  
+**Node-MPV** allows you to observe any property the [mpv API](https://mpv.io/manual/stable/#property-list) offers you, by simply using the **observeProperty** function. 
 
- * **observeProperty** (property)
+* **observeProperty** (property)
 
-   This will observe `property`, which means, that a **status** event is emitted, whenever this property changes
+  This will observe `property`, which means, that a **status** event is emitted, whenever this property changes
 
 * **unobserveProperty** (property)
 
@@ -718,11 +697,11 @@ The most common commands are already covered by this modules **API**. This part 
 
 # Events
 
-The **Node-MPV** module provides various *events* to notify about changes of the **mpv player's** state.
+  The **Node-MPV** module provides various *events* to notify about changes of the **MPV player's** state.
 
 * **crashed**
 
-  Whenever **mpv** has crashed or the process was killed. If the `auto_restart` option is set to **true** (*default*), **mpv** is restarted again right away.
+  Whenever **MPV** has crashed or the process was killed. If the `auto_restart` option is set to **true** (*default*), **MPV** is restarted again right away.
 
   Use this event to for example reload your playlist, videos, etc when the player crashed
 
@@ -736,16 +715,16 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
   ```JavaScript
   {
-      "start": <timeposition before seeking>,
-      "end":   <timeposition after  seeking>
+  "start": <timeposition before seeking>,
+  "end": <timeposition after seeking>
   }
   ```
 
-  In case the seek can not be finished, for example because the file is changed while seeking, this event is not emitted. It is only emitted when the seeking has successfully finished.
+  In case the seek can not be finished, for example, because the file is changed while seeking, this event is not emitted. It is only emitted when the seeking has successfully finished.
 
 * **started**
 
-  Whenever **mpv** starts playing a song or video
+  Whenever **MPV** starts playing a song or video
 
 * **stopped**
 
@@ -753,54 +732,56 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
 * **paused**
 
-  Whenever **mpv** was paused
+  Whenever **MPV** was paused
 
 * **resumed**
 
-  Whenever **mpv** was resumed
+  Whenever **MPV** was resumed
 
 
 * **status** \<status object\>
 
-  Whenever the status of one of the observed properties changes, this event will be emitted providing the change to that property inthe form of
+  Whenever the status of one of the observed properties changes, this event will be emitted providing the change to that property in the form of
 
   ```JavaScript
-    {
-      "property": <propertyname>,
-      "value": <propertyvalue>
-    }
+  {
+    "property": <propertyname>,
+    "value": <propertyvalue>
+  }
   ```
 
-  By default various properties are already observed and the *status object* looks like the following
-  
-    * **mute**: *false*,
-    * **pause**: *false*,
-    * **duration**: *null*,
-    * **volume**: *100*,
-    * **filename**: *null*,
-    * **path**: *null*,
-    * **media-title**: *null*,
-    * **playlist-pos**: *0*,
-    * **playlist-count**: *0*,
-    * **loop**: *"no*"
+  By default, the following properties are observed
+ 
+   * **mute**
+   * **pause**
+   * **duration**
+   * **volume**
+   * **filename**
+   * **path**
+   * **media-title**
+   * **playlist-pos**
+   * **playlist-count**
+   * **loop**
 
   If the player is running in *video mode* the following properties are present as well.
 
-    * **fullscreen**: *false*,
-    * **sub-visibility**: *fals*e
-  
+    * **fullscreen**
+    * **sub-visibility**
+ 
 
 * **timeposition** \<seconds\>
 
   When a song or video is currently playing and the playback is not paused, this event will emit the current position in *seconds*.
 
-  When creating the **mpv** instance you can set a parameter, how often this event should occur. Default is every second
+  When creating the **MPV** instance you can set a parameter, how often this event should occur. Default is every second
 
 * **quit**
 
-   When mpv player was quit by the user on purpose, this event is emitted. It is **not** emitted, when the `quit()` method was used.
+  When MPV player was quit by the user on purpose, this event is emitted. It is **not** emitted, when the `quit()` method was used.
 
-   Use this to detect if the user has closed the player.
+  Use this to detect if the user has closed the player.
+
+
 
 ### Note
 
@@ -818,7 +799,7 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
 Because the *JSON IPC API* of **MPV** does not provide any useful error messages, except for *it worked* or *it didn't work*, I created an error object, that should help you to figure out what went wrong, and hint you into the right direction for fixing the issue.
 
-If there is any error with a method of this library, it will throw an exception (reject the promise) with an error object, that looks like the following.
+If there is an error with a method of this library, it will throw an exception (reject the promise) with an error object, that looks like the following.
 
 ``` JavaScript
 {
@@ -877,11 +858,11 @@ mpv.on('stopped', () => {
 
 ## Old MPV Version on Debian
 
-Debian took their stable policy a little to far and **MPV** is still on version **0.6.0**. Unfortunately the **IPC functionality** was only introduced with version **0.7.0**. Thus this module will **not work** with the debian packaged **MPV**. The dependecies to build **MPV** are also too old on Debian. Luckily there is [this](https://github.com/mpv-player/mpv-build) project, that helps you to build the dependencies and mpv afterwards. Using this you can easily get the latest stable **MPV Player** on Debian.
+Debian took their stable policy a little to far and **MPV** is still on version **0.6.0**. Unfortunately the **IPC functionality** was only introduced with version **0.7.0**. Thus this module will **not work** with the Debian packaged **MPV**. The dependencies to build **MPV** are also too old on Debian. Luckily there is [this](https://github.com/mpv-player/mpv-build) project, that helps you to build the dependencies and MPV afterwards. Using this you can easily get the latest stable **MPV Player** on Debian.
 
 ## IPC Command
 
-The command line argument to start the IPC socket has changed in mpv version **0.17.0** from `--input-unix-socket` to `--input-ipc-server`. This module uses regular expressions to find the version number from the `mpv --version` output. If mpv is compiled from source, the version number is stated as **UNKNOWN** and this module will assume, that you use the latest version and use the new command.
+The command-line argument to start the IPC socket has changed in MPV version **0.17.0** from `--input-unix-socket` to `--input-ipc-server`. This module uses regular expressions to find the version number from the `mpv --version` output. If MPV was compiled from source, the version number is stated as **UNKNOWN** and this module will assume, that you use the latest version and use the new command.
 
 **If you use self compiled version stating UNKNOWN as the version number below mpv version 0.17.0 you have to use the ipc_command option with '--input-unix-socket'.**
 
@@ -899,7 +880,7 @@ I filed an Issue and this is fixed with **0.17.1**
 
 ## MPV Player 0.18.1
 
-MPV Player version **0.18.1** has some issues that the player crashes sometimes, when sending commands through the *ipc socket*. If you're using version **0.18.1** try to use a newer (or older) version.
+MPV Player version **0.18.1** has some issues that the player crashes sometimes when sending commands through the *ipc socket*. If you're using version **0.18.1** try to use a newer (or older) version.
 
 To check your version number enter the following in your command shell
 
@@ -913,11 +894,11 @@ If your JS code is correct but you are still experiencing crashes, a good place 
 
 ```Javascript
 mpvPlayer = new mpv({
-  ...
+ ...
 },
 [
-  "--no-config",
-  "--load-scripts=no"
+ "--no-config",
+ "--load-scripts=no"
 ]);
 ```
 
@@ -926,3 +907,4 @@ For example, `autoload.lua` is known to cause problems when loading files in qui
 # Changelog
 
 See [changelog](CHANGELOG.md) for more information or API breaking changes
+
