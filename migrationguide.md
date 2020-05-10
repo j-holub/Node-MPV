@@ -13,6 +13,7 @@ If you've been using *Version 1* of **Node-MPV** here's how you can migrate your
 			- [mute](#mute)
 		- [loop](#loop)
 		- [loopPaylist & clearLoopPlaylist](#looppaylist--clearloopplaylist)
+	- [Error Handling with the new Error Object](#error-handling-with-the-new-error-object)
 	
 
 ## Starting MPV
@@ -180,3 +181,8 @@ Loop can be used exactly how it was used in Version 1 without causing any proble
 ### loopPaylist & clearLoopPlaylist
 
 The two methods `loopPlaylist()` and `clearLoopPlaylist()` are now one method `loopPlaylist`, which works exactly as the new `loop()` method, described in the paragraph before.
+
+
+## Error Handling with the new Error Object
+
+With Version 2, I introduced an error object, to help you out if something didn't work. You can read more about it [here](./readme.md#error-handling) (Just click on the `Error Handling` section in the table of contents). Make sure to make use of it, as it is pretty helpful.

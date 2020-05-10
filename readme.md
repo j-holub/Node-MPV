@@ -817,7 +817,9 @@ The **Node-MPV** module provides various *events* to notify about changes of the
 
 # Error Handling
 
-If a method's **promise** is *rejected* it returns an error object. This object looks like the following
+Because the *JSON IPC API* of **MPV** does not provide any useful error messages, except for *it worked* or *it didn't work*, I created an error object, that should help you to figure out what went wrong, and hint you into the right direction for fixing the issue.
+
+If there is any error with a method of this library, it will throw an exception (reject the promise) with an error object, that looks like the following.
 
 ``` JavaScript
 {
@@ -827,6 +829,7 @@ If a method's **promise** is *rejected* it returns an error object. This object 
     'arguments': List of arguments the method was called with
     'errmessage': More specific error message
     'options': JSON object with valid options for the method if possible
+    'stackTrace': The error stack trace
 }
 ```
 
