@@ -37,9 +37,8 @@ If you're already using **Node-MPV 1** please refer to this [Migration Guide](mi
       - [Windows](#windows)
 - [Usage](#usage)
   - [Promises](#promises)
-  - [Async / Await](#async--await)
   - [Hooking into a Running Instance of MPV](#hooking-into-a-running-instance-of-mpv)
-- [Methods](#methods)
+- [API](#api)
   - [Starting & Stopping](#starting--stopping)
   - [Load Content](#load-content)
   - [Controlling MPV](#controlling-mpv)
@@ -96,27 +95,28 @@ Go to the respective websites [mpv](https://mpv.io) and [youtube-dl](https://you
 
 # Usage
 
-Every single method of **Node-MPV** returns a **Promise**, more on that later.
+Every single method of **Node-MPV** returns a **Promise**, more on that later. The following example assumes, that it is put within an **async** function. For an example using the old `.then()` way, look a little further below
 
 ```Javascript
+// where you import your packages
 const mpvAPI = require('node-mpv');
+// where you want to initialise the API
 const mpv = new mpvAPI();
 
+// somewhere within an async context
 // starts MPV
-mpv.start()
-.then(() => {
-    // loads a file
-    return mpv.load('your/favorite/song.mp3');
-})
-.then(() => {
-    // file is playing
-    // sets volume to 70%
-    return mpv.volume(70);
-})
-// handle errors here
-.catch((error) => {
-    console.log(error);
-});
+try{
+  await mpv.start()
+  // loads a file
+  await mpv.load('your/favorite/song.mp3');
+  // file is playing
+  // sets volume to 70%
+  await mpv.volume(70);
+}
+catch (error) => {
+  // handle errors here
+  console.log(error);
+}
 ```
 
 You can optionally pass a JSON object with options to the constructor. Possible options, along with their default values are the following
@@ -156,19 +156,17 @@ const mpv = new mpvAPI({
   "--fps=60"
 ])
 
-mpv.start()
-.then(() => {
-	// Code
-});
+await mpv.start()
+// Code controlling mpv
 ```
 
 **mpv** is then easily controllable via simple function calls.
 
 ```JavaScript
-mpv.loadFile("/path/to/your/favorite/song.mp3");
+await mpv.loadFile("/path/to/your/favorite/song.mp3");
 ```
 ```JavaScript
-mpv.volume(70);
+await mpv.volume(70);
 ```
 
 Events are used to detect changes.
@@ -186,7 +184,7 @@ mpv.on('stopped', () => {
 
 ## Promises
 
-As stated above, *every single method* of **Node-MPV** returns a **Promise**. This means you will have to create a promise chain to control the player. The promise will be *resolved* if everything went fine and possibly returns some information and it will be *rejected* with a proper error message if something went wrong.
+If, for some reason, you don't want to use the `async/await` synthax, you can use Promises the old fashioned way. *Every single method* of **Node-MPV** returns a **Promise**. This means you will have to create a promise chain to control the player. The promise will be *resolved* if everything went fine and possibly returns some information and it will be *rejected* with a proper error message if something went wrong.
 
 ```JavaScript
 mpv.start()
@@ -212,11 +210,7 @@ mpv.start()
 }
 ```
 
-## Async / Await
-
-Starting from **Node 8.0.0** Async/Await is fully supported. If you're within an *async function* you can use *await* for better readability and code structure.
-
-The promise code from above becomes this
+Starting from **Node 8.0.0** Async/Await is fully supported. If you're within an *async function* you can use *await* for better readability and code structure. The promise code from above becomes this
 
 ```JavaScript
 someAsyncFunction = asnyc () => {
@@ -243,7 +237,7 @@ However, it is not possible to enable `auto_restart` or any error handling for a
 
 Since it is not possible to determine if an **mpv** instance, that has been started externally, has crashed or was properly quit, both events `crashed` and `quit` will be emitted if hooking into an existing instance. See the [Events](#events) section for more.
 
-# Methods
+# API
 
 ## Starting & Stopping
 
@@ -866,10 +860,6 @@ mpv.start()
 	// Set the volume to 50%
 	return mpv.volume(50);
 })
-.then(() => {
-	// Stop to song emitting the stopped event
-	return mpv.stop();
-})
 // this catches every arror from above
 .catch((error) => {
 	console.log(error);
@@ -887,11 +877,7 @@ mpv.on('stopped', () => {
 
 ## Old MPV Version on Debian
 
-Debian took their stable policy a little to far and **MPV** is still on version **0.6.0**. Unfortunately the **IPC functionality** was only introduced with version **0.7.0**. Thus this module will just **not work** with the debian packaged **MPV**.
-
-The dependecies to build **MPV** are also too old on Debian (but I guess they are stable, right?). Lucky there is [this](https://github.com/mpv-player/mpv-build) project, that helps you to build the dependencies and mpv afterwards.
-
-Using this you can easily get the latest stable **MPV Player** on Debian.
+Debian took their stable policy a little to far and **MPV** is still on version **0.6.0**. Unfortunately the **IPC functionality** was only introduced with version **0.7.0**. Thus this module will **not work** with the debian packaged **MPV**. The dependecies to build **MPV** are also too old on Debian. Luckily there is [this](https://github.com/mpv-player/mpv-build) project, that helps you to build the dependencies and mpv afterwards. Using this you can easily get the latest stable **MPV Player** on Debian.
 
 ## IPC Command
 
