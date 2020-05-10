@@ -1,23 +1,23 @@
 # Node-MPV 2
 
-A wrapper to comfortably use **[mpv player](https://github.com/mpv-player/mpv)** with **node**.js. It provides functions for most of the commands needed to control the player. It's easy to use and highly flexible.
+A wrapper, that allows you, to comfortably use **[mpv player](https://github.com/mpv-player/mpv)** with **NodeJs**. It offers an API for the most relevant functionalities and is highly flexible. The module keeps an instance of **mpv** running in the background (using mpv's `--idle`) and communicates over **mpv's** JSON IPC (Inter Process Communication) API.
 
-The module keeps an instance of **mpv** running in the background (using mpv's `--idle`) and communicates over the Json IPC API.
-
-It also provides direct access to the IPC socket. Thus this module is not only limited to the methods it provides, but can also fully communicate with the **mpv** API.
-
-This module makes heavy use of [Promises](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Promise) to deal with the asynchronous nature of sending message over a socket and waiting for the reponse.
+However, it doesn't stop there, it also privdes direct access to the IPC socket itself. Thus this module is not limited to the methods it provides, but an be used with the full extent of what **mpv** has to offer, even if some command is not supported by **Node-MPV**.
 
 Works on **UNIX** and **Windows**.
 
-**This module requires [mpv](https://github.com/mpv-player/mpv) to be installed on your system to work. On Windows you can provide the path to the mpv.exe using the `binary` option, when creating the mpv instance**
-
-**For streaming playback from sources such as YouTube and SoundCloud [youtube-dl](https://github.com/rg3/youtube-dl) is required**
+This module requires **[mpv](https://github.com/mpv-player/mpv)** to be installed on your system to work. For streaming playback from sources such as *YouTube* and *SoundCloud* **[youtube-dl](https://github.com/rg3/youtube-dl)** is required.
 
 
-## Important
+## Node-MPV 1
 
-With Version **2.0.0** the API how to initialize and start **MPV** has changed. See the **Usage** and **Example** section to see, how it changed.
+If you are looking for source code of the original Version 1 of this package, you can find it [here](https://github.com/j-holub/Node-MPV/tree/Node-MPV-1). Furthermore, you can install the latest **1.x.x** version using
+
+```
+npm install node-mpv@"^1.x.x"
+```
+
+This will install and update to the latest **1.x.x** verison, but never to anything >= **2.x.x**. With this, you will automatically get bug fixes for version 1, without having to worry about any API breaking changes. Keep in mind, that I most likely won't add any new features to Version 1, but only provide bug fixes. Also you should considder switching to Version 2, there is even a handy [migration guide](migrationguide.md).
 
 ## Migration to Node-MPV 2
 
@@ -27,11 +27,12 @@ If you're already using **Node-MPV 1** please refer to this [Migration Guide](mi
 # Table of Contents
 
 - [Node-MPV 2](#node-mpv-2)
-  - [Important](#important)
+  - [Node-MPV 1](#node-mpv-1)
   - [Migration to Node-MPV 2](#migration-to-node-mpv-2)
 - [Table of Contents](#table-of-contents)
 - [Install](#install)
-      - [OS X](#os-x)
+  - [Dependencies](#dependencies)
+      - [macOS](#macos)
       - [Linux (Ubuntu/Debian)](#linux-ubuntudebian)
       - [Windows](#windows)
 - [Usage](#usage)
@@ -69,7 +70,11 @@ If you're already using **Node-MPV 1** please refer to this [Migration Guide](mi
 npm install node-mpv
 ```
 
-#### OS X
+## Dependencies
+
+At least **[mpv](https://github.com/mpv-player/mpv)** is required, but **[youtube-dl](https://github.com/rg3/youtube-dl)** is recommended as well. **youtube-dl** is only required if you want to stream videos or music from *YouTube*, *SoundCloud* or other websites supported by **youtube-dl**. See [here](https://rg3.github.io/youtube-dl/supportedsites.html) for a list of supported websites.
+
+#### macOS
 
 ```
 brew install mpv youtube-dl
@@ -86,7 +91,7 @@ sudo apt-get install mpv youtube-dl
 Go to the respective websites [mpv](https://mpv.io) and [youtube-dl](https://youtube-dl.org) and follow the install instructions.
 
 
-**youtube-dl** is only required if you want to stream videos or music from *YouTube*, *SoundCloud* or other websites supported by **youtube-dl**. See [here](https://rg3.github.io/youtube-dl/supportedsites.html) for a list of supported websites.
+
 
 
 # Usage
