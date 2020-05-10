@@ -64,9 +64,10 @@ If you're already using **Node-MPV 1** please refer to this [Migration Guide](mi
 
 # Install
 
+As of now, Version 2 is still in beta, but has been used by many people over the last 2 years. It's very very close to a stable version.
 
 ```
-npm install node-mpv
+npm install node-mpv@beta
 ```
 
 ## Dependencies
