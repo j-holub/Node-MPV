@@ -112,7 +112,7 @@ try{
   // sets volume to 70%
   await mpv.volume(70);
 }
-catch (error) => {
+catch (error) {
   // handle errors here
   console.log(error);
 }
