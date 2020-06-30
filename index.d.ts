@@ -14,7 +14,7 @@ interface NodeMpvOptions {
 	// Don't open video display
 	audio_only?: boolean
 	// Auto-restart on a crash
-	auto_restart?: true
+	auto_restart?: boolean
 	// Time update for timeposition event
 	time_update?: number
 	// Path to mpv binary
