@@ -158,11 +158,12 @@ export default class NodeMpv extends EventEmitter {
 	goToPosition(seconds: number): Promise<void>
 
 	/**
-	 * Set loop mode
+	 * Set loop mode for current file
 	 *
-	 * @param times - either a number of loop iterations, 'inf' for infinite loop or 'no' to disable any loop
+	 * @param times - either a number of loop iterations, 'inf' for infinite loop or 'no' to disable loop.
+	 * If it's not specified, the property will cycle through inf and no.
 	 */
-	loop(times: RepeatMode): Promise<void>
+	loop(times?: RepeatMode): Promise<void>
 
 	// https://github.com/j-holub/Node-MPV/blob/master/lib/mpv/_commands.js
 	// List of mpv properties are available here: https://mpv.io/manual/stable/#property-list
@@ -399,10 +400,12 @@ export default class NodeMpv extends EventEmitter {
 	getPlaylistPosition1(): Promise<number>
 
 	/**
+	 * Set loop mode for playlist
 	 *
-	 * @param times
+	 * @param times - either a number of loop iterations, 'inf' for infinite loop or 'no' to disable loop.
+	 * If it's not specified, the property will cycle through inf and no.
 	 */
-	loopPlaylist(times: RepeatMode): Promise<void>
+	loopPlaylist(times?: RepeatMode): Promise<void>
 
 	// https://github.com/j-holub/Node-MPV/blob/master/lib/mpv/_startStop.js
 	/**
