@@ -3,6 +3,7 @@
   "version": "2.0.0-beta.0",
   "description": "A Node module for MPV",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
