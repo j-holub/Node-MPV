@@ -15,15 +15,20 @@ Works on **UNIX** and **Windows**.
 
 ## Version 2
 
-I'm currently developing a version **2** of this API, which can be found [here](https://github.com/00SteinsGate00/Node-MPV/tree/Node-MPV-2).
-Version **2** will change/break some part of the API since it will make quite some use of **Promises**. Due to the asynchronous nature of sending commands over a socket and waiting for a response to see if it actually worked (something that has not been done at all in version **1**) this was necessary. While I'm sorry that I have to break the API for people, it will make the module a lot more robust and better to use, I promise.
+It's recommended to use **version 2** of this package, which can be found [here](https://github.com/j-holub/Node-MPV). Version 1 had some problems as it didn't validate if any of the commands it sent over to **mpv** have worked or not. **Version 2** fixes that by using promises.
+
+I have created a [Migration Guide](https://github.com/j-holub/Node-MPV/blob/master/migrationguide.md) if you want to migrate your application from **version 1** to **version 2**.
+
+If you want to keep using **version 1**, keep in mind that I will not add new features but only provide bug fixes if possible. My focus is on making **version 2** the best mpv package it can be.
 
 
 # Install
 
+This will install the latest **1.x.x** version of the package and update it if bugfixes are available. It will never update to **2.x.x** or above.
+
 
 ```
-npm install node-mpv
+npm install node-mpv@"^1.x.x"
 ```
 
 #### OS X
