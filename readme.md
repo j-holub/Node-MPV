@@ -136,7 +136,7 @@ You can optionally pass a JSON object with options to the constructor. Possible 
 
 * `audio_only` will add the `--no-video` and `--no-audio-display` argument and start **mpv** in audio only mode
 * `auto_restart` - if set to true, **MPV** is restarted when it has crashed
-* `binary` will use the provied path to a mpv binary instead of using the one found in **$PATH**
+* `binary` will use the provided path to a mpv binary instead of using the one found in **$PATH**
 * `debug` prints error messages
 * `ipc_command` sets the ipc command to start the ipc socket. Possible options are **--input-unix-socket** and **--input-ipc-server**. This is usually not needed since  **Node-MPV** is able to determine the correct command on its own
 * `socket` specifies the socket **mpv** opens. **Node-MPV** will first check, if there's already an **mpv** instance running on that socket and hook into it
