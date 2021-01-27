@@ -2,8 +2,8 @@
   "name": "node-mpv",
   "version": "2.0.0-beta.1",
   "description": "A Node module for MPV",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
