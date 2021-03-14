@@ -269,7 +269,7 @@ Since it is not possible to determine if an **MPV** instance, that has been star
 
  * **load** (content, mode="replace", options)
 
-    Will load the `content` (either a **file** or a **url**) and start playing it. This behaviour can be changed using the `mode`  option
+    Will load the `content` (either a **file**, a **url** or any [supported protocol](https://mpv.io/manual/stable/#protocols)) and start playing it. This behaviour can be changed using the `mode`  option.
 
     * `mode`
     * `replace`*(default)* replace the current title and play it immediately
