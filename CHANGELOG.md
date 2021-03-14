@@ -9,6 +9,7 @@
   * `load()`, `append()`, `loadPlaylist()`, `prev()` and `next()` are a lot more robust and check if the file or stream could be played or not
   * Added the possibility to hook into a running instance of **mpv**
   * `start()` can also take mpv arguments
+  * Support any protocol that **mpv** supports
   * `mute()`, `unmute()` and `toggleMute()` are now one function `mute()` that can take a boolean as an argument
   * `loop()` can now also toggle the mute state by not passing an argument
   * `loopPlaylist()` and `clearLoopPlaylist()` were combined into `loopPlaylist()`, which works exactly as `loop()`
