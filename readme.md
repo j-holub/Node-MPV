@@ -8,6 +8,12 @@ Works on **UNIX** and **Windows**.
 
 This module requires **[mpv](https://github.com/mpv-player/mpv)** to be installed on your system to work. For streaming playback from sources such as *YouTube* and *SoundCloud* **[youtube-dl](https://github.com/rg3/youtube-dl)** is required.
 
+#### Support me
+
+Open-source software and this module is and should always be free. I have put countless hours of my free time into creating this NPM module, if you feel like donating the equivalent of a coffee as a token of gratitude, I'd appreciate that. Of course, it's perfectly fine if you choose not to as well.
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/B0B73Y30Q)
+
 
 ## Node-MPV 1
 
@@ -27,6 +33,7 @@ If you're already using **Node-MPV 1** please refer to this [Migration Guide](mi
 # Table of Contents
 
 - [Node-MPV 2](#node-mpv-2)
+      - [Support me](#support-me)
   - [Node-MPV 1](#node-mpv-1)
   - [Migration to Node-MPV 2](#migration-to-node-mpv-2)
 - [Table of Contents](#table-of-contents)
