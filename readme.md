@@ -863,6 +863,7 @@ The following **Error Codes** are available
 * **6** MPV is already running
 * **7** Could not send IPC message
 * **8** MPV is not running
+* **9** Unsupported protocol
 
 # Example
 
