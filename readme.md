@@ -213,7 +213,7 @@ mpv.start()
     // Maybe the video file does not exist or couldn't be loaded
     // Maybe someProperty is not a valid property
     console.log(error);
-}
+})
 ```
 
 Starting from **Node 8.0.0** Async/Await is fully supported. If you're within an *async function* you can use *await* for better readability and code structure. The promise code from above becomes this
