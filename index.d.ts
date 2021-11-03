@@ -632,7 +632,7 @@ export default class NodeMpv implements EventEmitter {
 	/**
 	 * Starts mpv, by spawning a child process or by attaching to existing socket
 	 */
-	start(): Promise<void>;
+	start(mpv_args?: Array<string|number>): Promise<void>;
 	/**
 	 * Closes mpv
 	 *
