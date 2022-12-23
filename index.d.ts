@@ -86,7 +86,12 @@ type EventListenerArgsWithMultipleData<
 	EventName extends EventNames,
 	DataType,
 	DataType1
-	> = [EventName, VoidCallbackWithData2<DataType, DataType1>];
+> = [EventName, VoidCallbackWithData2<DataType, DataType1>];
+
+interface Chapter {
+	title?: string;
+	time?: number;
+}
 
 export default class NodeMpv implements EventEmitter {
 	/**
@@ -535,6 +540,23 @@ export default class NodeMpv implements EventEmitter {
 	 * @param format 'stripped' remove the extension, default to 'full'
 	 */
 	getFilename(format?: "full" | "stripped"): Promise<string>;
+
+
+	/**
+	 * Retrieve chapter count
+	 */
+	getChapterCount(): Promise<number>;
+
+	/**
+	 * Retrieve a chapter by index
+	 * @param index 
+	 */
+	getChapter(index: number): Promise<Chapter>;
+
+	/**
+	 * Retrieve a chapter list
+	 */
+	getChapters(): Promise<Chapter[]>;
 
 	// https://github.com/j-holub/Node-MPV/blob/master/lib/mpv/_playlist.js
 	/**

@@ -396,6 +396,18 @@ Since it is not possible to determine if an **MPV** instance, that has been star
 
   Returns the *filename* (or *url*) of the currently playing track (as a *promise*).
 
+* **getChapterCount** ()
+
+  Returns current file chapter count
+
+* **getChapter** (index: number)
+
+  Returns specified chapter.
+
+* **getChapters** ()
+
+  Returns all chapters.
+
 ## Playlists
 
 * **loadPlaylist** (playlist, mode="replace")
