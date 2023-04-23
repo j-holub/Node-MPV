@@ -8,3 +8,4 @@ node_modules
 
 # mp3 files used for testing
 *.mp3
+*.tgz
