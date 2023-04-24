@@ -1,33 +1,33 @@
 {
-  "name": "node-mpv",
-  "version": "2.0.0-beta.3",
-  "description": "A Node module for MPV",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/j-holub/Node-MPV.git"
-  },
-  "keywords": [
-    "mpv",
-    "Audio",
-    "Video",
-    "Stream",
-    "multimedia"
-  ],
-  "author": "Jan Holub",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/j-holub/Node-MPV/blob/master/LICENSE.md"
-    }
-  ],
-  "bugs": {
-    "url": "https://github.com/j-holub/Node-MPV/issues"
-  },
-  "homepage": "https://github.com/j-holub/Node-MPV#readme",
-  "dependencies": {}
+    "name": "node-mpv-2",
+    "version": "2.0.0-beta.3",
+    "description": "A Node module for MPV",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/husudosu/Node-MPV.git"
+    },
+    "keywords": [
+        "mpv",
+        "Audio",
+        "Video",
+        "Stream",
+        "multimedia"
+    ],
+    "author": "Jan Holub",
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/husudosu/Node-MPV/blob/master/LICENSE.md"
+        }
+    ],
+    "bugs": {
+        "url": "https://github.com/j-holub/Node-MPV/issues"
+    },
+    "homepage": "https://github.com/husudosu/Node-MPV",
+    "dependencies": {}
 }
